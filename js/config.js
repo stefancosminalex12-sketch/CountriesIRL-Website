@@ -21,9 +21,9 @@ window.SITE_CONFIG = {
      ------------------------------------------------------------------ */
   brand: {
     name: 'CountriesIRL',
-    logo: 'assets/logo/mark.svg',
+    logo: 'assets/logo/IRLLOGO.png',
     // Used for SEO canonical + Open Graph tags. Include the trailing slash.
-    url: 'https://countriesirl.github.io/'
+    url: 'https://countriesirl.com/'
   },
 
   /* ------------------------------------------------------------------
