@@ -124,131 +124,23 @@ window.SITE_CONFIG = {
      each member when you have it. Two entries are flagged TODO where the
      screenshot cut off the name/handle before it could be confirmed.
      ------------------------------------------------------------------ */
-  members: {
+ 
+     members: {
     title: 'Members',
     lead:
-      'The accounts that make up the .irl network. ' +
-      'They are listed here in the order they appear in the network.',
+      'The accounts that make up the .irl network, founded and run from Romania. ' +
+      'Members are listed here roughly in order of country importance.',
     list: [
       {
-        name: 'United Kingdom',
-        country: 'United Kingdom',
+        // TODO: add the real Instagram handle — 'romania.irl' below is a guessed placeholder
+        name: 'Romania',
+        country: 'Romania',
         image: '',
         description:
-          'Represented by the Union Flag — the founding account behind the .irl network.',
+          "Founder's account and the home of the .irl network — flying Romania's blue, yellow and red tricolour.",
         website: '',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/unitedkingdomirl1' }
-        ]
-      },
-      {
-        name: 'Bahrain',
-        country: 'Bahrain',
-        image: '',
-        description:
-          "Bahrain's presence in the .irl network, flying the country's red-and-white serrated flag.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/bahrain.irl' }
-        ]
-      },
-      {
-        name: 'byzantineempire.irl',
-        country: 'Byzantine Empire (historical)',
-        image: '',
-        description:
-          "A historical entry in the .irl network, carrying the empire's gold cross on red.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/byzantineempire.irl' }
-        ]
-      },
-      {
-        name: 'croatiairl',
-        country: 'Croatia',
-        image: '',
-        description:
-          "Croatia's account in the .irl network, marked by the familiar red-and-white checkerboard shield.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/croatiairlmain' }
-        ]
-      },
-      {
-        name: 'Afghanistan',
-        country: 'Afghanistan',
-        image: '',
-        description:
-          "Afghanistan's presence in the .irl network, flying the black, red and green tricolour.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/afghanistan.irl' }
-        ]
-      },
-      {
-        name: 'Alabama',
-        country: 'United States (Alabama)',
-        image: '',
-        description:
-          "A US state entry in the .irl network, represented by Alabama's red St Andrew's cross.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/alabama.irl' }
-        ]
-      },
-      {
-        name: 'Antarctica',
-        country: 'Antarctica',
-        image: '',
-        description:
-          "Antarctica's seat in the .irl network — 'The Last Continent,' emblem and all.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/antarcticairlmain' }
-        ]
-      },
-      {
-        name: 'Bangladesh',
-        country: 'Bangladesh',
-        image: '',
-        description:
-          "Bangladesh's account in the .irl network, flying the green field and red disc.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/bangladesh.irl_' }
-        ]
-      },
-      {
-        name: 'Belgium',
-        country: 'Belgium',
-        image: '',
-        description:
-          "A verified presence in the .irl network, carrying Belgium's black, yellow and red tricolour.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/belgiumirl' }
-        ]
-      },
-      {
-        name: 'bosniaherzegovinairl',
-        country: 'Bosnia and Herzegovina',
-        image: '',
-        description:
-          "Bosnia and Herzegovina's entry in the .irl network, flying the blue field with the golden triangle and stars.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/bosniaherzegovinairl' }
-        ]
-      },
-      {
-        name: 'canadairl',
-        country: 'Canada',
-        image: '',
-        description:
-          "Canada's presence in the .irl network, flying the red maple leaf.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/canadairlmain' }
+          { label: 'Instagram', url: 'https://www.instagram.com/romania.irl' }
         ]
       },
       {
@@ -263,25 +155,80 @@ window.SITE_CONFIG = {
         ]
       },
       {
-        name: 'georgia',
-        country: 'Georgia',
+        name: 'United Kingdom',
+        country: 'United Kingdom',
         image: '',
         description:
-          "Georgia's account in the .irl network, marked by the five-cross white-and-red flag.",
+          'Represented by the Union Flag — one of the accounts in the .irl network.',
         website: '',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/sakartveloirl' }
+          { label: 'Instagram', url: 'https://www.instagram.com/unitedkingdomirl1' }
         ]
       },
       {
-        name: 'Hungary',
-        country: 'Hungary',
+        name: 'canadairl',
+        country: 'Canada',
         image: '',
         description:
-          "Hungary's presence in the .irl network, flying the red, white and green tricolour.",
+          "Canada's presence in the .irl network, flying the red maple leaf.",
         website: '',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/hungary.irl_' }
+          { label: 'Instagram', url: 'https://www.instagram.com/canadairlmain' }
+        ]
+      },
+      {
+        name: 'Switzerland',
+        country: 'Switzerland',
+        image: '',
+        description:
+          "Switzerland's entry in the .irl network, flying the white cross on red.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/switzerland.irl' }
+        ]
+      },
+      {
+        name: 'Belgium',
+        country: 'Belgium',
+        image: '',
+        description:
+          "A verified presence in the .irl network, carrying Belgium's black, yellow and red tricolour.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/belgiumirl' }
+        ]
+      },
+      {
+        name: 'poland',
+        country: 'Poland',
+        image: '',
+        description:
+          "Poland's official presence in the .irl network — the account's admin.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/poland.irl' }
+        ]
+      },
+      {
+        name: 'Pakistan',
+        country: 'Pakistan',
+        image: '',
+        description:
+          "Pakistan's presence in the .irl network, flying the green field with the white crescent and star.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/pakistaniirl' }
+        ]
+      },
+      {
+        name: 'Afghanistan',
+        country: 'Afghanistan',
+        image: '',
+        description:
+          "Afghanistan's presence in the .irl network, flying the black, red and green tricolour.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/afghanistan.irl' }
         ]
       },
       {
@@ -296,14 +243,58 @@ window.SITE_CONFIG = {
         ]
       },
       {
-        name: 'kingdomofpolandirl',
-        country: 'Poland (historical — Kingdom of Poland)',
+        name: 'SYRIAIRL',
+        country: 'Syria',
         image: '',
         description:
-          "A historical entry in the .irl network, carrying the white eagle on red of the old Kingdom of Poland.",
+          "Syria's presence in the .irl network, flying the green, white and black tricolour with red stars.",
         website: '',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/kingdomofpolandirl' }
+          { label: 'Instagram', url: 'https://www.instagram.com/syriairlmain' }
+        ]
+      },
+      {
+        name: 'Portugal irl',
+        country: 'Portugal',
+        image: '',
+        description:
+          "Portugal's account in the .irl network, marked by the green-and-red flag and national shield.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/portugalirlmain' }
+        ]
+      },
+      {
+        name: 'Hungary',
+        country: 'Hungary',
+        image: '',
+        description:
+          "Hungary's presence in the .irl network, flying the red, white and green tricolour.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/hungary.irl_' }
+        ]
+      },
+      {
+        name: 'Bangladesh',
+        country: 'Bangladesh',
+        image: '',
+        description:
+          "Bangladesh's account in the .irl network, flying the green field and red disc.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/bangladesh.irl_' }
+        ]
+      },
+      {
+        name: 'Turkmenistan',
+        country: 'Turkmenistan',
+        image: '',
+        description:
+          "Turkmenistan's presence in the .irl network, flying the green field with the ornate carpet-pattern stripe.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/turkmenistanirl' }
         ]
       },
       {
@@ -318,6 +309,17 @@ window.SITE_CONFIG = {
         ]
       },
       {
+        name: 'Bahrain',
+        country: 'Bahrain',
+        image: '',
+        description:
+          "Bahrain's presence in the .irl network, flying the country's red-and-white serrated flag.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/bahrain.irl' }
+        ]
+      },
+      {
         name: 'Lebanon',
         country: 'Lebanon',
         image: '',
@@ -326,6 +328,83 @@ window.SITE_CONFIG = {
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/lebanonirlmain' }
+        ]
+      },
+      {
+        name: 'georgia',
+        country: 'Georgia',
+        image: '',
+        description:
+          "Georgia's account in the .irl network, marked by the five-cross white-and-red flag.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/sakartveloirl' }
+        ]
+      },
+      {
+        name: 'Moldova',
+        country: 'Moldova',
+        image: '',
+        description:
+          "Moldova's presence in the .irl network, flying the blue, yellow and red tricolour with the national emblem.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/moldovaairl' }
+        ]
+      },
+      {
+        name: 'Slovakia',
+        country: 'Slovakia',
+        image: '',
+        description:
+          "Slovakia's presence in the .irl network, flying the white, blue and red tricolour with the national shield.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/slovakiairl' }
+        ]
+      },
+      {
+        name: 'bosniaherzegovinairl',
+        country: 'Bosnia and Herzegovina',
+        image: '',
+        description:
+          "Bosnia and Herzegovina's entry in the .irl network, flying the blue field with the golden triangle and stars.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/bosniaherzegovinairl' }
+        ]
+      },
+      {
+        name: 'croatiairl',
+        country: 'Croatia',
+        image: '',
+        description:
+          "Croatia's account in the .irl network, marked by the familiar red-and-white checkerboard shield.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/croatiairlmain' }
+        ]
+      },
+      {
+        name: 'Roman Empire.irl',
+        country: 'Roman Empire (historical)',
+        image: '',
+        description:
+          "A historical entry in the .irl network, carrying the SPQR laurel wreath of Rome.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/roman.empire.irl' }
+        ]
+      },
+      {
+        name: 'byzantineempire.irl',
+        country: 'Byzantine Empire (historical)',
+        image: '',
+        description:
+          "A historical entry in the .irl network, carrying the empire's gold cross on red.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/byzantineempire.irl' }
         ]
       },
       {
@@ -341,14 +420,85 @@ window.SITE_CONFIG = {
         ]
       },
       {
-        name: 'Moldova',
-        country: 'Moldova',
+        name: 'kingdomofpolandirl',
+        country: 'Poland (historical — Kingdom of Poland)',
         image: '',
         description:
-          "Moldova's presence in the .irl network, flying the blue, yellow and red tricolour with the national emblem.",
+          "A historical entry in the .irl network, carrying the white eagle on red of the old Kingdom of Poland.",
         website: '',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/moldovaairl' }
+          { label: 'Instagram', url: 'https://www.instagram.com/kingdomofpolandirl' }
+        ]
+      },
+      {
+        // TODO: name shown as "United States of K..." — inferred as Kurdistan from the
+        // flag colours (red/white/green with gold sun), please confirm.
+        name: 'United States of Kurdistan (name truncated, please confirm)',
+        country: 'Kurdistan (aspirational/fictional)',
+        image: '',
+        description:
+          "Kurdistan's presence in the .irl network, flying the red, white and green tricolour with the golden sun.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/kurdistanirl' }
+        ]
+      },
+      {
+        // TODO: both name and handle were cut off in the screenshot ("the.republic.of...").
+        // Flag looked like the Serbian tricolour with the double-headed eagle crest —
+        // please confirm the account before publishing, the URL below is a guess.
+        name: 'the.republic.of... (name & handle truncated, please confirm)',
+        country: 'Unconfirmed — flag resembles Serbia',
+        image: '',
+        description:
+          'Screenshot cut off before the full name and handle — confirm before publishing.',
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/the.republic.of' }
+        ]
+      },
+      {
+        name: 'Antarctica',
+        country: 'Antarctica',
+        image: '',
+        description:
+          "Antarctica's seat in the .irl network — 'The Last Continent,' emblem and all.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/antarcticairlmain' }
+        ]
+      },
+      {
+        name: 'Texas',
+        country: 'United States (Texas)',
+        image: '',
+        description:
+          "A US state entry in the .irl network, represented by the Texas Lone Star flag.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/texas.irl_' }
+        ]
+      },
+      {
+        name: 'ohio_irl',
+        country: 'United States (Ohio)',
+        image: '',
+        description:
+          "A US state entry in the .irl network, represented by Ohio's distinctive burgee flag.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/ohio_irl' }
+        ]
+      },
+      {
+        name: 'Alabama',
+        country: 'United States (Alabama)',
+        image: '',
+        description:
+          "A US state entry in the .irl network, represented by Alabama's red St Andrew's cross.",
+        website: '',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/alabama.irl' }
         ]
       },
       {
@@ -371,143 +521,6 @@ window.SITE_CONFIG = {
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/northpoleirl' }
-        ]
-      },
-      {
-        name: 'ohio_irl',
-        country: 'United States (Ohio)',
-        image: '',
-        description:
-          "A US state entry in the .irl network, represented by Ohio's distinctive burgee flag.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/ohio_irl' }
-        ]
-      },
-      {
-        name: 'Pakistan',
-        country: 'Pakistan',
-        image: '',
-        description:
-          "Pakistan's presence in the .irl network, flying the green field with the white crescent and star.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/pakistaniirl' }
-        ]
-      },
-      {
-        name: 'poland',
-        country: 'Poland',
-        image: '',
-        description:
-          "Poland's official presence in the .irl network — the account's admin.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/poland.irl' }
-        ]
-      },
-      {
-        name: 'Portugal irl',
-        country: 'Portugal',
-        image: '',
-        description:
-          "Portugal's account in the .irl network, marked by the green-and-red flag and national shield.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/portugalirlmain' }
-        ]
-      },
-      {
-        name: 'Roman Empire.irl',
-        country: 'Roman Empire (historical)',
-        image: '',
-        description:
-          "A historical entry in the .irl network, carrying the SPQR laurel wreath of Rome.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/roman.empire.irl' }
-        ]
-      },
-      {
-        name: 'Slovakia',
-        country: 'Slovakia',
-        image: '',
-        description:
-          "Slovakia's presence in the .irl network, flying the white, blue and red tricolour with the national shield.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/slovakiairl' }
-        ]
-      },
-      {
-        name: 'Switzerland',
-        country: 'Switzerland',
-        image: '',
-        description:
-          "Switzerland's entry in the .irl network, flying the white cross on red.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/switzerland.irl' }
-        ]
-      },
-      {
-        name: 'SYRIAIRL',
-        country: 'Syria',
-        image: '',
-        description:
-          "Syria's presence in the .irl network, flying the green, white and black tricolour with red stars.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/syriairlmain' }
-        ]
-      },
-      {
-        name: 'Texas',
-        country: 'United States (Texas)',
-        image: '',
-        description:
-          "A US state entry in the .irl network, represented by the Texas Lone Star flag.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/texas.irl_' }
-        ]
-      },
-      {
-        // TODO: both name and handle were cut off in the screenshot ("the.republic.of...").
-        // Flag looked like the Serbian tricolour with the double-headed eagle crest —
-        // please confirm the account before publishing, the URL below is a guess.
-        name: 'the.republic.of... (name & handle truncated, please confirm)',
-        country: 'Unconfirmed — flag resembles Serbia',
-        image: '',
-        description:
-          'Screenshot cut off before the full name and handle — confirm before publishing.',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/the.republic.of' }
-        ]
-      },
-      {
-        name: 'Turkmenistan',
-        country: 'Turkmenistan',
-        image: '',
-        description:
-          "Turkmenistan's presence in the .irl network, flying the green field with the ornate carpet-pattern stripe.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/turkmenistanirl' }
-        ]
-      },
-      {
-        // TODO: name shown as "United States of K..." — inferred as Kurdistan from the
-        // flag colours (red/white/green with gold sun), please confirm.
-        name: 'United States of Kurdistan (name truncated, please confirm)',
-        country: 'Kurdistan (aspirational/fictional)',
-        image: '',
-        description:
-          "Kurdistan's presence in the .irl network, flying the red, white and green tricolour with the golden sun.",
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/kurdistanirl' }
         ]
       }
     ]
