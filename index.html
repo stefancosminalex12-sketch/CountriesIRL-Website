@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- SEO defaults. These mirror `meta` and `brand` in js/config.js, which
+       also updates them at runtime — edit both if you change the wording. -->
+  <title>CountriesIRL — a creator network across borders</title>
+  <meta name="description" content="CountriesIRL is an independent creator network. Creators from different countries share what they know, collaborate on work, and grow together.">
+  <link rel="canonical" href="https://countriesirl.github.io/">
+  <meta name="theme-color" content="#fbfaf8">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="CountriesIRL">
+  <meta property="og:title" content="CountriesIRL — a creator network across borders">
+  <meta property="og:description" content="CountriesIRL is an independent creator network. Creators from different countries share what they know, collaborate on work, and grow together.">
+  <meta property="og:url" content="https://countriesirl.github.io/">
+  <meta property="og:image" content="https://countriesirl.github.io/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="CountriesIRL — a network of independent creators, working across borders.">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="assets/logo/mark.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/logo/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header__inner">
+      <a class="brand" href="#home">
+        <!-- alt is empty on purpose: the site name is right beside it, so the
+             link already reads as "CountriesIRL" without repeating it. -->
+        <img class="brand__mark" src="assets/logo/mark.svg" alt="" width="26" height="26"
+             data-attr-src="brand.logo">
+        <span class="brand__name" data-text="brand.name">CountriesIRL</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="nav-toggle__box" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="visually-hidden">Menu</span>
+      </button>
+
+      <nav class="nav" id="primary-nav" aria-label="Primary">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="#home">Home</a></li>
+          <li><a class="nav__link" href="#about">About</a></li>
+          <li><a class="nav__link" href="#members">Members</a></li>
+          <li><a class="nav__link" href="#community">Community</a></li>
+          <li><a class="nav__cta" href="#join">Join</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <noscript>
+    <div class="container noscript">
+      <p>
+        This page builds its content from a JavaScript configuration file, so it needs
+        JavaScript enabled. CountriesIRL is an independent network of creators working
+        across borders — write to <a href="mailto:hello@countriesirl.com">hello@countriesirl.com</a>
+        if you would like to know more or apply to join.
+      </p>
+    </div>
+  </noscript>
+
+  <main id="main" tabindex="-1">
+
+    <!-- ================= HOME ================= -->
+    <section class="hero" id="home" tabindex="-1">
+      <div class="container hero__grid">
+        <div>
+          <p class="hero__eyebrow" data-text="hero.eyebrow"></p>
+          <h1 data-text="hero.title"></h1>
+          <p class="hero__description" data-text="hero.description"></p>
+          <div class="btn-row">
+            <a class="btn btn--primary" data-cta="hero.primaryCta" href="#join"></a>
+            <a class="btn btn--secondary" data-cta="hero.secondaryCta" href="#about"></a>
+          </div>
+        </div>
+
+        <aside class="index" aria-labelledby="index-title">
+          <h2 class="index__title" id="index-title">Where members are based</h2>
+          <ol class="index__list" data-render="countryIndex"></ol>
+          <p class="index__foot" data-render="memberCount"></p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section class="section" id="about" tabindex="-1" aria-labelledby="about-title">
+      <div class="container">
+        <div class="about__grid">
+          <div class="about__heading">
+            <p class="section-index" data-index="01">About</p>
+            <h2 id="about-title" data-text="about.title"></h2>
+            <p class="lead" data-text="about.lead"></p>
+          </div>
+          <div class="prose" data-paragraphs="about.body"></div>
+        </div>
+
+        <ul class="principles" data-render="principles"></ul>
+      </div>
+    </section>
+
+    <!-- ================= MEMBERS ================= -->
+    <section class="section section--tint" id="members" tabindex="-1" aria-labelledby="members-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-index" data-index="02">Members</p>
+          <h2 id="members-title" data-text="members.title"></h2>
+          <p class="lead" data-text="members.lead"></p>
+        </div>
+
+        <div class="members__toolbar">
+          <div class="filter" id="member-filter" role="group" aria-label="Filter members by country"></div>
+          <p class="members__count" id="member-status" role="status"></p>
+        </div>
+
+        <div class="members__grid" id="member-grid"></div>
+        <p class="members__empty" id="member-empty" hidden>No members from that country yet.</p>
+      </div>
+    </section>
+
+    <!-- ================= COMMUNITY ================= -->
+    <section class="section section--bordered" id="community" tabindex="-1" aria-labelledby="community-title">
+      <div class="container">
+        <div class="community__grid">
+          <div>
+            <p class="section-index" data-index="03">Community</p>
+            <h2 id="community-title" data-text="community.title"></h2>
+            <p class="lead community__lead" data-text="community.lead"></p>
+            <div class="prose" data-paragraphs="community.body"></div>
+            <p class="community__cta">
+              <a class="link-arrow" data-cta="community.cta" href="#"></a>
+            </p>
+          </div>
+          <div>
+            <p class="label highlights__caption">What happens there</p>
+            <ul class="highlights" data-render="highlights"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= JOIN ================= -->
+    <section class="section join" id="join" tabindex="-1" aria-labelledby="join-title">
+      <div class="container join__grid">
+        <div>
+          <p class="section-index" data-index="04">Join</p>
+          <h2 id="join-title" data-text="join.title"></h2>
+          <p class="lead" data-text="join.lead"></p>
+          <div class="btn-row">
+            <a class="btn btn--invert" data-cta="join.cta" href="#"></a>
+          </div>
+          <p class="join__note" data-text="join.note"></p>
+        </div>
+
+        <div class="join__lists">
+          <div>
+            <h3 class="join__list-title" data-text="join.who.title"></h3>
+            <ul class="join__list" data-list="join.who.items"></ul>
+          </div>
+          <div>
+            <h3 class="join__list-title" data-text="join.gets.title"></h3>
+            <ul class="join__list" data-list="join.gets.items"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a class="brand" href="#home">
+            <img class="brand__mark" src="assets/logo/mark.svg" alt="" width="26" height="26"
+                 data-attr-src="brand.logo" data-attr-alt="brand.logoAlt">
+            <span class="brand__name" data-text="brand.name"></span>
+          </a>
+          <p class="footer__note" data-text="footer.note"></p>
+        </div>
+
+        <div>
+          <h2 class="footer__col-title">Sections</h2>
+          <ul class="footer__list">
+            <li><a href="#about">About</a></li>
+            <li><a href="#members">Members</a></li>
+            <li><a href="#community">Community</a></li>
+            <li><a href="#join">Join</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="footer__col-title">Elsewhere</h2>
+          <ul class="footer__list" data-render="social"></ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p><span data-render="year"></span> <span data-text="brand.name"></span></p>
+        <p data-render="contact"></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
