@@ -7,9 +7,6 @@
 
    Open config.html in a browser for a visual reference of every value here,
    plus a form that writes new member entries for you.
-
-   NOTE: the members further down are sample entries. Replace them with your
-   real creators (and their real links) before publishing the site.
    ========================================================================== */
 
 window.SITE_CONFIG = {
@@ -21,7 +18,11 @@ window.SITE_CONFIG = {
      ------------------------------------------------------------------ */
   brand: {
     name: 'CountriesIRL',
-    logo: 'assets/logo/IRLLOGO.png',
+    /* IRLLOGO.png is the full-size original (1532px, ~3MB). The header shows
+       the mark at 26px, so the site loads IRLLOGO-web.png — the same artwork
+       resized to 128px. Re-export it if you change the original. */
+    logo: 'assets/logo/IRLLOGO-web.png',
+    logoAlt: 'CountriesIRL',
     // Used for SEO canonical + Open Graph tags. Include the trailing slash.
     url: 'https://countriesirl.com/'
   },
@@ -30,10 +31,10 @@ window.SITE_CONFIG = {
      2. SEO / SOCIAL PREVIEW
      ------------------------------------------------------------------ */
   meta: {
-    title: 'CountriesIRL — a creator network across borders',
+    title: 'CountriesIRL — the biggest countries network in the world',
     description:
-      'CountriesIRL is an independent creator network. Creators from different ' +
-      'countries share what they know, collaborate on work, and grow together.',
+      'CountriesIRL is the biggest countries network in the world. Country ' +
+      'accounts from every corner of the map, working together in one place.',
     ogImage: 'assets/og-image.png'
   },
 
@@ -41,14 +42,20 @@ window.SITE_CONFIG = {
      3. HOME / HERO
      ------------------------------------------------------------------ */
   hero: {
-    eyebrow: 'Independent creator network',
-    title: 'Creators from different countries, working in the same room.',
+    title: 'The biggest countries network in the world.',
     description:
-      'CountriesIRL exists for creators who want collaborators instead of ' +
-      'competitors — people to build with, ask for a second opinion, and share ' +
-      'an audience with. One network, many borders.',
+      'No other countries network comes close. Country accounts from every ' +
+      'corner of the map, in one place, run by the people behind them. ' +
+      'Members collab on posts, swap ideas and grow each other\'s pages.',
     primaryCta: { label: 'Apply to join', href: '#join' },
-    secondaryCta: { label: 'What the network is', href: '#about' }
+    secondaryCta: { label: 'About', href: '#about' },
+    /* The three figures under the hero buttons. `value: 'auto'` is filled in
+       from the member list below, so the numbers can never go stale. */
+    stats: [
+      { value: 'auto:members',   label: 'Country accounts' },
+      { value: '100m+',          label: 'Views across the network' },
+      { value: 'No.1',           label: 'In the world' }
+    ]
   },
 
   /* ------------------------------------------------------------------
@@ -58,39 +65,38 @@ window.SITE_CONFIG = {
   about: {
     title: 'What CountriesIRL is',
     lead:
-      'A network, not a platform. There is no algorithm here — just creators ' +
-      'who decided that working alone was the slow way round.',
+      'The biggest countries network in the world, run by the people behind ' +
+      'the accounts.',
     body: [
-      'CountriesIRL started with a handful of creators who kept hitting the ' +
-      'same wall: work they were proud of, an audience that grew a few people ' +
-      'at a time, and nobody to compare notes with. The network is the answer ' +
-      'to that. Members bring what they know — editing, research, reach, a ' +
-      'language, a local audience — and put it in reach of everyone else.',
-      'Members are spread across time zones and make very different things. ' +
-      'That is deliberate. A creator in Manila and a creator in Lisbon are not ' +
-      'fighting over the same viewers, which makes it far easier to be ' +
-      'genuinely useful to each other.'
+      'CountriesIRL started with a few country accounts who kept running into ' +
+      'the same thing. You post, you grow slowly, and there\'s nobody to ' +
+      'compare notes with. The network came out of that. Whatever a member ' +
+      'has figured out, everyone else gets to use.',
+      'The accounts are spread across a lot of time zones and they don\'t all ' +
+      'post the same thing, which is the point. Two accounts from different ' +
+      'countries aren\'t chasing the same followers, so helping each other ' +
+      'costs nothing.'
     ],
     /* Three short statements about how the network actually operates.
        Add a fourth if you need one — the layout takes any number. */
     principles: [
       {
-        title: 'Collaboration over competition',
+        title: 'Collabs',
         text:
-          'Members are matched for joint videos, guest appearances, translation ' +
-          'help and cross-promotion. Nobody is asked to hand over their audience.'
+          'Members team up on posts, edits and shoutouts. Nobody is asked to ' +
+          'hand over their account or their followers.'
       },
       {
-        title: 'Growth you can point at',
+        title: 'Second opinions',
         text:
-          'Feedback rounds on work before it ships, shared analytics benchmarks, ' +
-          'and members who have already solved the problem you are stuck on.'
+          'Members ask each other before something goes out. Somebody in the ' +
+          'server has usually already hit whatever you\'re stuck on.'
       },
       {
-        title: 'A community with a door',
+        title: 'New accounts',
         text:
-          'Small enough that people know each other, open enough that new ' +
-          'members are introduced properly rather than dropped into a channel.'
+          'The network keeps growing. New members get introduced to everyone ' +
+          'else properly, so nobody\'s joining a room full of strangers.'
       }
     ]
   },
@@ -106,8 +112,8 @@ window.SITE_CONFIG = {
      >>>   {
      >>>     name:        'Channel or creator name',   // required
      >>>     country:     'Country',                   // required
-     >>>     image:       'assets/members/file.jpg',   // optional — leave '' for initials
-     >>>     description: 'One or two sentences.',     // required
+     >>>     image:       'assets/members/file.jpg',   // optional — leave '' for the flag
+     >>>     description: 'One or two sentences.',     // optional
      >>>     website:     'https://example.com',       // optional
      >>>     links: [                                  // optional, any platform
      >>>       { label: 'YouTube',   url: 'https://…' },
@@ -116,39 +122,37 @@ window.SITE_CONFIG = {
      >>>   }
      >>>
      >>> Profile images: square, at least 200×200px, saved in assets/members/.
-     >>> If `image` is empty or the file is missing, the card falls back to the
-     >>> member's initials — so a missing photo never breaks the layout.
+     >>> With no image the card shows the country's flag, and with no flag on
+     >>> file it shows the member's initials. A missing photo never breaks it.
 
-     NOTE: Descriptions below are generic placeholders based on each account's
-     flag/name, since no real bios were available — swap in proper copy for
-     each member when you have it. Two entries are flagged TODO where the
-     screenshot cut off the name/handle before it could be confirmed.
+     NOTE ON DESCRIPTIONS: most entries deliberately have none. The ones that
+     were here before only restated the flag already shown on the card, in the
+     same sentence 35 times over, which is the single clearest tell that copy
+     was generated rather than written. Add a real line when you know one —
+     what the account actually posts — and it will appear on the card. An
+     empty description simply renders nothing.
      ------------------------------------------------------------------ */
  
      members: {
     title: 'Members',
     lead:
-      'The accounts that make up the .irl network, founded and run from Romania. ' +
-      'Members are listed here roughly in order of country importance.',
+      'Every account in the network, each one run by a different person.',
     list: [
       {
-        // TODO: add the real Instagram handle — 'romania.irl' below is a guessed placeholder
         name: 'Romania',
         country: 'Romania',
         image: '',
-        description:
-          "Founder's account and the home of the .irl network — flying Romania's blue, yellow and red tricolour.",
+        description: 'Founder\'s account. The network started here.',
         website: '',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/romania.irl' }
+          { label: 'Instagram', url: 'https://www.instagram.com/romaniairl' }
         ]
       },
       {
         name: 'chinairl',
         country: 'China',
         image: '',
-        description:
-          "China's entry in the .irl network, flying the red field with gold stars.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/chinairlmain' }
@@ -158,8 +162,7 @@ window.SITE_CONFIG = {
         name: 'United Kingdom',
         country: 'United Kingdom',
         image: '',
-        description:
-          'Represented by the Union Flag — one of the accounts in the .irl network.',
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/unitedkingdomirl1' }
@@ -169,8 +172,7 @@ window.SITE_CONFIG = {
         name: 'canadairl',
         country: 'Canada',
         image: '',
-        description:
-          "Canada's presence in the .irl network, flying the red maple leaf.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/canadairlmain' }
@@ -180,8 +182,7 @@ window.SITE_CONFIG = {
         name: 'Switzerland',
         country: 'Switzerland',
         image: '',
-        description:
-          "Switzerland's entry in the .irl network, flying the white cross on red.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/switzerland.irl' }
@@ -191,8 +192,7 @@ window.SITE_CONFIG = {
         name: 'Belgium',
         country: 'Belgium',
         image: '',
-        description:
-          "A verified presence in the .irl network, carrying Belgium's black, yellow and red tricolour.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/belgiumirl' }
@@ -202,8 +202,7 @@ window.SITE_CONFIG = {
         name: 'poland',
         country: 'Poland',
         image: '',
-        description:
-          "Poland's official presence in the .irl network — the account's admin.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/poland.irl' }
@@ -213,8 +212,7 @@ window.SITE_CONFIG = {
         name: 'Pakistan',
         country: 'Pakistan',
         image: '',
-        description:
-          "Pakistan's presence in the .irl network, flying the green field with the white crescent and star.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/pakistaniirl' }
@@ -224,8 +222,7 @@ window.SITE_CONFIG = {
         name: 'Afghanistan',
         country: 'Afghanistan',
         image: '',
-        description:
-          "Afghanistan's presence in the .irl network, flying the black, red and green tricolour.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/afghanistan.irl' }
@@ -235,8 +232,7 @@ window.SITE_CONFIG = {
         name: 'IRAQ',
         country: 'Iraq',
         image: '',
-        description:
-          "Iraq's entry in the .irl network, flying the red, white and black tricolour.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/iraqirl_' }
@@ -246,8 +242,7 @@ window.SITE_CONFIG = {
         name: 'SYRIAIRL',
         country: 'Syria',
         image: '',
-        description:
-          "Syria's presence in the .irl network, flying the green, white and black tricolour with red stars.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/syriairlmain' }
@@ -257,8 +252,7 @@ window.SITE_CONFIG = {
         name: 'Portugal irl',
         country: 'Portugal',
         image: '',
-        description:
-          "Portugal's account in the .irl network, marked by the green-and-red flag and national shield.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/portugalirlmain' }
@@ -268,8 +262,7 @@ window.SITE_CONFIG = {
         name: 'Hungary',
         country: 'Hungary',
         image: '',
-        description:
-          "Hungary's presence in the .irl network, flying the red, white and green tricolour.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/hungary.irl_' }
@@ -279,8 +272,7 @@ window.SITE_CONFIG = {
         name: 'Bangladesh',
         country: 'Bangladesh',
         image: '',
-        description:
-          "Bangladesh's account in the .irl network, flying the green field and red disc.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/bangladesh.irl_' }
@@ -290,8 +282,7 @@ window.SITE_CONFIG = {
         name: 'Turkmenistan',
         country: 'Turkmenistan',
         image: '',
-        description:
-          "Turkmenistan's presence in the .irl network, flying the green field with the ornate carpet-pattern stripe.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/turkmenistanirl' }
@@ -301,8 +292,7 @@ window.SITE_CONFIG = {
         name: 'Kyrgyzstan.irl',
         country: 'Kyrgyzstan',
         image: '',
-        description:
-          "Kyrgyzstan's presence in the .irl network, flying the red field with the golden sun and tunduk.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/kyrgyzstan.irl' }
@@ -312,8 +302,7 @@ window.SITE_CONFIG = {
         name: 'Bahrain',
         country: 'Bahrain',
         image: '',
-        description:
-          "Bahrain's presence in the .irl network, flying the country's red-and-white serrated flag.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/bahrain.irl' }
@@ -323,8 +312,7 @@ window.SITE_CONFIG = {
         name: 'Lebanon',
         country: 'Lebanon',
         image: '',
-        description:
-          "Lebanon's account in the .irl network, marked by the green cedar on red and white.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/lebanonirlmain' }
@@ -334,8 +322,7 @@ window.SITE_CONFIG = {
         name: 'georgia',
         country: 'Georgia',
         image: '',
-        description:
-          "Georgia's account in the .irl network, marked by the five-cross white-and-red flag.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/sakartveloirl' }
@@ -345,8 +332,7 @@ window.SITE_CONFIG = {
         name: 'Moldova',
         country: 'Moldova',
         image: '',
-        description:
-          "Moldova's presence in the .irl network, flying the blue, yellow and red tricolour with the national emblem.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/moldovaairl' }
@@ -356,8 +342,7 @@ window.SITE_CONFIG = {
         name: 'Slovakia',
         country: 'Slovakia',
         image: '',
-        description:
-          "Slovakia's presence in the .irl network, flying the white, blue and red tricolour with the national shield.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/slovakiairl' }
@@ -367,8 +352,7 @@ window.SITE_CONFIG = {
         name: 'bosniaherzegovinairl',
         country: 'Bosnia and Herzegovina',
         image: '',
-        description:
-          "Bosnia and Herzegovina's entry in the .irl network, flying the blue field with the golden triangle and stars.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/bosniaherzegovinairl' }
@@ -378,8 +362,7 @@ window.SITE_CONFIG = {
         name: 'croatiairl',
         country: 'Croatia',
         image: '',
-        description:
-          "Croatia's account in the .irl network, marked by the familiar red-and-white checkerboard shield.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/croatiairlmain' }
@@ -387,10 +370,9 @@ window.SITE_CONFIG = {
       },
       {
         name: 'Roman Empire.irl',
-        country: 'Roman Empire (historical)',
+        country: 'Roman Empire',
         image: '',
-        description:
-          "A historical entry in the .irl network, carrying the SPQR laurel wreath of Rome.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/roman.empire.irl' }
@@ -398,22 +380,20 @@ window.SITE_CONFIG = {
       },
       {
         name: 'byzantineempire.irl',
-        country: 'Byzantine Empire (historical)',
+        country: 'Byzantine Empire',
         image: '',
-        description:
-          "A historical entry in the .irl network, carrying the empire's gold cross on red.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/byzantineempire.irl' }
         ]
       },
       {
-        // TODO: name was truncated in the screenshot ("Make Yugoslav...") — confirm full text
-        name: 'Make Yugoslavia... (name truncated, please confirm)',
-        country: 'Yugoslavia (historical)',
+        // Display name was cut off in the screenshot ("Make Yugoslav..."); using the handle.
+        name: 'yugosiavia',
+        country: 'Yugoslavia',
         image: '',
-        description:
-          "A historical entry in the .irl network, carrying the blue, white and red tricolour and red star of the former Yugoslavia.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/yugosiavia' }
@@ -421,48 +401,44 @@ window.SITE_CONFIG = {
       },
       {
         name: 'kingdomofpolandirl',
-        country: 'Poland (historical — Kingdom of Poland)',
+        country: 'Kingdom of Poland',
         image: '',
-        description:
-          "A historical entry in the .irl network, carrying the white eagle on red of the old Kingdom of Poland.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/kingdomofpolandirl' }
         ]
       },
       {
-        // TODO: name shown as "United States of K..." — inferred as Kurdistan from the
-        // flag colours (red/white/green with gold sun), please confirm.
-        name: 'United States of Kurdistan (name truncated, please confirm)',
-        country: 'Kurdistan (aspirational/fictional)',
+        // TODO: confirm this handle. Display name was cut off ("United States of K...").
+        name: 'kurdistanirl',
+        country: 'Kurdistan',
         image: '',
-        description:
-          "Kurdistan's presence in the .irl network, flying the red, white and green tricolour with the golden sun.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/kurdistanirl' }
         ]
       },
+      /* Not published: the screenshot cut off both the name and the handle, and
+         the flag only resembled Serbia. Fill in the real details and uncomment.
+
       {
-        // TODO: both name and handle were cut off in the screenshot ("the.republic.of...").
-        // Flag looked like the Serbian tricolour with the double-headed eagle crest —
-        // please confirm the account before publishing, the URL below is a guess.
-        name: 'the.republic.of... (name & handle truncated, please confirm)',
-        country: 'Unconfirmed — flag resembles Serbia',
+        name: '',
+        country: '',
         image: '',
-        description:
-          'Screenshot cut off before the full name and handle — confirm before publishing.',
+        description: '',
         website: '',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/the.republic.of' }
+          { label: 'Instagram', url: '' }
         ]
       },
+      */
       {
         name: 'Antarctica',
         country: 'Antarctica',
         image: '',
-        description:
-          "Antarctica's seat in the .irl network — 'The Last Continent,' emblem and all.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/antarcticairlmain' }
@@ -472,8 +448,7 @@ window.SITE_CONFIG = {
         name: 'Texas',
         country: 'United States (Texas)',
         image: '',
-        description:
-          "A US state entry in the .irl network, represented by the Texas Lone Star flag.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/texas.irl_' }
@@ -483,8 +458,7 @@ window.SITE_CONFIG = {
         name: 'ohio_irl',
         country: 'United States (Ohio)',
         image: '',
-        description:
-          "A US state entry in the .irl network, represented by Ohio's distinctive burgee flag.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/ohio_irl' }
@@ -494,8 +468,7 @@ window.SITE_CONFIG = {
         name: 'Alabama',
         country: 'United States (Alabama)',
         image: '',
-        description:
-          "A US state entry in the .irl network, represented by Alabama's red St Andrew's cross.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/alabama.irl' }
@@ -505,8 +478,7 @@ window.SITE_CONFIG = {
         name: 'Nebraska',
         country: 'United States (Nebraska)',
         image: '',
-        description:
-          "A US state entry in the .irl network, represented by Nebraska's blue state seal.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/nebraskairl' }
@@ -514,10 +486,9 @@ window.SITE_CONFIG = {
       },
       {
         name: 'North Pole',
-        country: 'North Pole (fictional)',
+        country: 'North Pole',
         image: '',
-        description:
-          "A fictional entry in the .irl network, flying the North Pole, Alaska badge.",
+        description: '',
         website: '',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/northpoleirl' }
@@ -531,24 +502,14 @@ window.SITE_CONFIG = {
   community: {
     title: 'The community',
     lead:
-      'The network runs on a private server where the actual work of being a ' +
-      'network happens.',
+      'The network runs on a Discord server. That\'s where most of it happens.',
     body: [
-      'Most of what CountriesIRL does is unglamorous and useful: someone posts ' +
-      'a rough cut and gets six honest replies, a member in another country ' +
-      'records a voice-over overnight, two channels realise their next videos ' +
-      'overlap and decide to make one instead.',
-      'There are weekly feedback threads, a channel for briefs and paid work ' +
-      'that members pass on to each other, and a monthly call where whoever ' +
-      'shows up talks through what worked and what did not.'
+      'Most of what happens there is unglamorous. Members plan collabs, ask ' +
+      'each other for a second opinion before they post, and pass on things ' +
+      'they can\'t take themselves. It\'s the part of the network that never ' +
+      'shows up on any of the accounts.'
     ],
-    highlights: [
-      'Weekly feedback rounds on work in progress',
-      'Collaboration matching across countries and formats',
-      'Briefs, rates and opportunities shared between members',
-      'A monthly call, recorded for anyone in the wrong time zone'
-    ],
-    cta: { label: 'Visit the community', href: 'https://discord.gg/countriesirl' }
+    cta: { label: 'Visit the community', href: 'https://discord.gg/w9qV9nzG2Y' }
   },
 
   /* ------------------------------------------------------------------
@@ -559,29 +520,26 @@ window.SITE_CONFIG = {
   join: {
     title: 'Join the network',
     lead:
-      'Applications are read by existing members. We keep the network small ' +
-      'enough that everyone can actually know everyone.',
+      'Applications are read by the members already here.',
     who: {
       title: 'Who we are looking for',
       items: [
-        'Creators publishing consistently — the format and the size of the audience matter less than the habit',
-        'People who will give feedback as often as they ask for it',
-        'Anyone whose work is rooted in a place, a language or a culture they know well',
-        'Editors, illustrators, translators and producers, not only on-camera creators'
+        'Accounts that post consistently, whatever the follower count',
+        'People who give feedback as often as they ask for it',
+        'Anyone who actually knows the country they post about',
+        'Editors, designers and translators are welcome too'
       ]
     },
     gets: {
       title: 'What members get',
       items: [
-        'A listing on this page with your links',
-        'Introductions to members who make work adjacent to yours',
-        'Feedback on drafts before they go out',
-        'First sight of paid briefs and partnerships that come to the network',
-        'A say in who joins next'
+        'A spot on this page with your links',
+        'Introductions to the accounts closest to yours',
+        'Feedback before you post'
       ]
     },
     cta: { label: 'Start an application', href: 'mailto:join@countriesirl.com?subject=CountriesIRL%20application' },
-    note: 'Applications are reviewed in batches. Expect a reply within two weeks.'
+    note: 'Every application gets read.'
   },
 
   /* ------------------------------------------------------------------
@@ -596,13 +554,13 @@ window.SITE_CONFIG = {
     { label: 'YouTube', url: 'https://www.youtube.com/@countriesirl' },
     { label: 'Instagram', url: 'https://www.instagram.com/countriesirl' },
     { label: 'X', url: 'https://x.com/countriesirl' },
-    { label: 'Discord', url: 'https://discord.gg/countriesirl' }
+    { label: 'Discord', url: 'https://discord.gg/w9qV9nzG2Y' }
   ],
 
   /* ------------------------------------------------------------------
      9. FOOTER
      ------------------------------------------------------------------ */
   footer: {
-    note: 'An independent network. Every member owns their own work.'
+    note: 'An independent network. Everyone owns their own account.'
   }
 };

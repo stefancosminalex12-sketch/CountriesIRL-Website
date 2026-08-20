@@ -60,17 +60,18 @@ Add a comma after the final `}` in the list, then paste a new block:
       }
 ```
 
-Save, reload, and the card appears. Nothing else needs changing — the country filter,
-the country index in the hero and the member count all update themselves.
+Save, reload, and the card appears. Nothing else needs changing — the member count and
+the hero figures update themselves, and the card picks up its country's flag.
 
 ### The fields
 
 | Field | Required | Notes |
 | --- | --- | --- |
 | `name` | yes | Shown as the card heading. |
-| `country` | yes | Also feeds the country filter and the hero index. Spell it the same way each time — `UK` and `United Kingdom` count as two countries. |
-| `description` | yes | One or two sentences. Around 120–180 characters keeps the cards even. |
-| `image` | no | Path to a profile image or channel logo. Leave as `''` to use initials. |
+| `country` | yes | Also chooses the flag on the card and feeds the counts. Spell it the same way each time — `UK` and `United Kingdom` count as two countries. |
+| `description` | no | One or two sentences about what the account actually posts. Leave it `''` and the card shows just the flag, name and links — better than a line that restates the flag. |
+| `image` | no | Path to a profile image or channel logo. Leave as `''` to use the country's flag. |
+| `flag` | no | Path to a flag image, when the country is not one of the 120 in `assets/flags/`. Falls back to initials if there is nothing to show. |
 | `website` | no | Added to the card as a **Website** link. |
 | `links` | no | Any number of platforms. Each is a `label` and a `url`. |
 
@@ -155,11 +156,11 @@ above the tags saying so.
 
 | Key | What it does |
 | --- | --- |
-| `hero.eyebrow` | Small line above the headline. |
 | `hero.title` | The headline. |
 | `hero.description` | Paragraph beneath it. |
 | `hero.primaryCta` | The filled button — `{ label, href }`. |
 | `hero.secondaryCta` | The outlined button — `{ label, href }`. |
+| `hero.stats` | The three figures in the band below the hero. Each is `{ value, label }`; `'auto:members'` and `'auto:countries'` are counted from the member list, and any value starting with a number counts up as you scroll onto it. |
 
 An `href` starting with `#` scrolls to that section. A full `https://` address opens in
 a new tab. Both button styles accept either.
@@ -169,7 +170,7 @@ a new tab. Both button styles accept either.
 | Key | What it does |
 | --- | --- |
 | `about.title` | Section heading. |
-| `about.lead` | The larger opening line on the left. |
+| `about.lead` | The larger opening line under the heading. |
 | `about.body` | A list of paragraphs. Add or remove entries freely. |
 | `about.principles` | The rows beneath the text. Each is `{ title, text }`. Any number works. |
 
@@ -181,8 +182,9 @@ a new tab. Both button styles accept either.
 | `members.lead` | Line under the heading. |
 | `members.list` | The creators. See [Adding a member](#adding-a-member). |
 
-The country filter appears automatically once members come from three or more
-countries. Below that it would be pointless, so it stays hidden.
+Flags come from `assets/flags/`, one PNG per ISO country code, matched on the member's
+`country`. Qualifiers in brackets are ignored, so `United States (Texas)` flies the US
+flag. Historical and fictional entries have no flag file and fall back to initials.
 
 ### `community`
 

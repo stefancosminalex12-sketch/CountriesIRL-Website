@@ -131,18 +131,55 @@
   }
 
   var renderers = {
-    countryIndex: function (node) {
-      node.replaceChildren.apply(node, countriesByCount().map(function (entry) {
+    /* Hero figures. Anything written as 'auto:…' in config is counted from the
+       member list, so the numbers cannot drift away from the truth. */
+    stats: function (node) {
+      var auto = {
+        'auto:members': String(members.length),
+        'auto:countries': String(countriesByCount().length)
+      };
+      var items = (get('hero.stats') || []).filter(function (s) { return s && s.label; });
+      node.replaceChildren.apply(node, items.map(function (item) {
+        var text = auto[item.value] || item.value || '';
         var li = el('li');
-        li.append(el('span', 'index__country', entry.country));
-        /* A column of "1"s says nothing — only show a number worth reading. */
-        if (entry.count > 1) li.append(el('span', 'index__count', String(entry.count)));
+        var value = el('span', 'stats__value', text);
+        /* Numbers count up on reveal, suffix and all ('100M+'); anything that
+           does not start with a digit ('No.1') simply appears. */
+        var number = /^(\d+)(.*)$/.exec(text);
+        if (number) {
+          value.dataset.count = number[1];
+          value.dataset.suffix = number[2];
+        }
+        li.append(value, el('span', 'stats__label', item.label));
         return li;
       }));
     },
 
-    memberCount: function (node) {
-      node.textContent = plural(members.length, 'member');
+    /* A moving strip of every flag in the network, doubled so the loop has no
+       seam. Decorative only — screen readers skip it via aria-hidden. */
+    flagMarquee: function (node) {
+      var sources = [];
+      members.forEach(function (member) {
+        var source = flagSource(member);
+        if (source && sources.indexOf(source) === -1) sources.push(source);
+      });
+      if (!sources.length) return;
+
+      function row() {
+        var div = el('div', 'marquee__row');
+        sources.forEach(function (source) {
+          var img = el('img', 'marquee__flag');
+          img.src = source;
+          img.alt = '';
+          img.width = 39;
+          img.height = 26;
+          img.loading = 'lazy';
+          div.append(img);
+        });
+        return div;
+      }
+
+      node.replaceChildren(row(), row());
     },
 
     principles: function (node) {
@@ -151,13 +188,6 @@
         var li = el('li');
         li.append(el('h3', null, item.title), el('p', null, item.text));
         return li;
-      }));
-    },
-
-    highlights: function (node) {
-      var items = get('community.highlights') || [];
-      node.replaceChildren.apply(node, items.map(function (text) {
-        return el('li', null, text);
       }));
     },
 
@@ -192,6 +222,68 @@
      Member cards
      ---------------------------------------------------------------------- */
 
+  /* --------------------------------------------------------------------
+     Flags
+     --------------------------------------------------------------------
+     Flag emoji are built from ISO country codes, so the map below is just
+     name -> code. A member entry can always override the result with its
+     own `flag: '\uD83C\uDDF7\uD83C\uDDF4'` value, and anything unmatched
+     falls back to the member's initials rather than showing nothing.
+     -------------------------------------------------------------------- */
+  var COUNTRY_CODES = {
+    'afghanistan': 'AF', 'albania': 'AL', 'algeria': 'DZ', 'andorra': 'AD',
+    'angola': 'AO', 'antarctica': 'AQ', 'argentina': 'AR', 'armenia': 'AM',
+    'australia': 'AU', 'austria': 'AT', 'azerbaijan': 'AZ', 'bahrain': 'BH',
+    'bangladesh': 'BD', 'belarus': 'BY', 'belgium': 'BE', 'bolivia': 'BO',
+    'bosnia and herzegovina': 'BA', 'brazil': 'BR', 'bulgaria': 'BG',
+    'cambodia': 'KH', 'cameroon': 'CM', 'canada': 'CA', 'chile': 'CL',
+    'china': 'CN', 'colombia': 'CO', 'costa rica': 'CR', 'croatia': 'HR',
+    'cuba': 'CU', 'cyprus': 'CY', 'czechia': 'CZ', 'czech republic': 'CZ',
+    'denmark': 'DK', 'dominican republic': 'DO', 'ecuador': 'EC', 'egypt': 'EG',
+    'estonia': 'EE', 'ethiopia': 'ET', 'finland': 'FI', 'france': 'FR',
+    'georgia': 'GE', 'germany': 'DE', 'ghana': 'GH', 'greece': 'GR',
+    'guatemala': 'GT', 'hong kong': 'HK', 'hungary': 'HU', 'iceland': 'IS',
+    'india': 'IN', 'indonesia': 'ID', 'iran': 'IR', 'iraq': 'IQ',
+    'ireland': 'IE', 'israel': 'IL', 'italy': 'IT', 'jamaica': 'JM',
+    'japan': 'JP', 'jordan': 'JO', 'kazakhstan': 'KZ', 'kenya': 'KE', 'kingdom of poland': 'PL',
+    'kuwait': 'KW', 'kyrgyzstan': 'KG', 'latvia': 'LV', 'lebanon': 'LB',
+    'libya': 'LY', 'lithuania': 'LT', 'luxembourg': 'LU', 'malaysia': 'MY',
+    'malta': 'MT', 'mexico': 'MX', 'moldova': 'MD', 'monaco': 'MC',
+    'mongolia': 'MN', 'montenegro': 'ME', 'morocco': 'MA', 'nepal': 'NP',
+    'netherlands': 'NL', 'new zealand': 'NZ', 'nigeria': 'NG',
+    'north macedonia': 'MK', 'norway': 'NO', 'oman': 'OM', 'pakistan': 'PK',
+    'palestine': 'PS', 'panama': 'PA', 'paraguay': 'PY', 'peru': 'PE',
+    'philippines': 'PH', 'poland': 'PL', 'portugal': 'PT', 'qatar': 'QA',
+    'romania': 'RO', 'russia': 'RU', 'saudi arabia': 'SA', 'senegal': 'SN',
+    'serbia': 'RS', 'singapore': 'SG', 'slovakia': 'SK', 'slovenia': 'SI',
+    'south africa': 'ZA', 'south korea': 'KR', 'korea': 'KR', 'spain': 'ES',
+    'sri lanka': 'LK', 'sweden': 'SE', 'switzerland': 'CH', 'syria': 'SY',
+    'taiwan': 'TW', 'tanzania': 'TZ', 'thailand': 'TH', 'tunisia': 'TN',
+    'turkey': 'TR', 'turkmenistan': 'TM', 'uganda': 'UG', 'ukraine': 'UA',
+    'united arab emirates': 'AE', 'united kingdom': 'GB', 'uk': 'GB',
+    'united states': 'US', 'usa': 'US', 'uruguay': 'UY', 'uzbekistan': 'UZ',
+    'venezuela': 'VE', 'vietnam': 'VN', 'yemen': 'YE', 'zimbabwe': 'ZW'
+  };
+
+  /* 'United States (Texas)' and 'Poland (historical — Kingdom of Poland)' both
+     want the parent country's flag, so trim qualifiers before looking up. */
+  function baseCountry(country) {
+    return String(country)
+      .replace(/\(.*?\)/g, ' ')
+      .split('\u2014')[0]
+      .replace(/\s+/g, ' ')
+      .trim()
+      .toLowerCase();
+  }
+
+  /* Flag artwork lives in assets/flags/, one PNG per ISO code. Historical and
+     fictional entries have no flag file, so their cards fall back to initials. */
+  function flagSource(member) {
+    if (member.flag) return member.flag;
+    var code = COUNTRY_CODES[baseCountry(member.country)];
+    return code ? 'assets/flags/' + code.toLowerCase() + '.png' : '';
+  }
+
   /* Ampersands are already stripped by the split below. */
   var SKIP_WORDS = ['the', 'and', 'of', 'a', 'an'];
 
@@ -209,7 +301,20 @@
     var fallback = el('span', 'member__avatar', initials(member.name));
     fallback.setAttribute('aria-hidden', 'true');
 
-    if (!member.image) return fallback;
+    /* A member photo wins if there is one; otherwise the country's flag. */
+    if (!member.image) {
+      var source = flagSource(member);
+      if (!source) return fallback;
+
+      var flag = el('img', 'member__flag');
+      flag.src = source;
+      flag.alt = '';
+      flag.width = 46;
+      flag.height = 31;
+      flag.loading = 'lazy';
+      flag.addEventListener('error', function () { flag.replaceWith(fallback); });
+      return flag;
+    }
 
     var img = el('img', 'member__avatar');
     img.src = member.image;
@@ -217,7 +322,7 @@
        screen readers say it twice. Decorative by intent. */
     img.alt = '';
     img.width = 46;
-    img.height = 46;
+    img.height = 31;
     img.loading = 'lazy';
     img.addEventListener('error', function () {
       img.replaceWith(fallback);
@@ -243,19 +348,28 @@
     return ul;
   }
 
+  function sameWord(a, b) {
+    var strip = function (v) { return String(v).toLowerCase().replace(/[^a-z]/g, ''); };
+    return strip(a) === strip(b);
+  }
+
   function memberCard(member) {
     var card = el('article', 'member');
     card.dataset.country = member.country;
 
     var head = el('div', 'member__head');
     var meta = el('div');
-    meta.append(
-      el('h3', 'member__name', member.name),
-      el('p', 'member__country', member.country)
-    );
+    meta.append(el('h3', 'member__name', member.name));
+
+    /* Half the accounts are named after their country, and the flag is right
+       there — printing the country again would say it for a third time. */
+    if (!sameWord(member.name, member.country)) {
+      meta.append(el('p', 'member__country', member.country));
+    }
     head.append(avatar(member), meta);
 
-    card.append(head, el('p', 'member__desc', member.description || ''));
+    card.append(head);
+    if (member.description) card.append(el('p', 'member__desc', member.description));
 
     var links = memberLinks(member);
     if (links) card.append(links);
@@ -263,64 +377,48 @@
     return card;
   }
 
+  /* How many accounts are on screen before the roster asks to be expanded. */
+  var VISIBLE = 20;
+
   function initMembers() {
     var grid = document.getElementById('member-grid');
-    var filterBar = document.getElementById('member-filter');
     var status = document.getElementById('member-status');
-    var empty = document.getElementById('member-empty');
     if (!grid) return;
 
-    grid.replaceChildren.apply(grid, members.map(memberCard));
+    var cards = members.map(memberCard);
+    grid.replaceChildren.apply(grid, cards);
 
-    function setStatus(country, shown) {
-      if (!status) return;
-      status.textContent = country
-        ? plural(shown, 'creator') + ' in ' + country
-        : plural(members.length, 'creator') + ' from ' +
-          plural(countriesByCount().length, 'country', 'countries');
+    if (status) {
+      status.textContent = plural(members.length, 'account') + ' in the network';
     }
 
-    setStatus('', members.length);
+    var hiddenCards = cards.slice(VISIBLE);
+    if (!hiddenCards.length) return;
 
-    if (!filterBar) return;
+    hiddenCards.forEach(function (card) { card.hidden = true; });
 
-    var countries = countriesByCount()
-      .map(function (c) { return c.country; })
-      .sort(function (a, b) { return a.localeCompare(b); });
+    var label = 'View all ' + members.length + ' accounts';
+    var toggle = el('button', 'btn btn--secondary', label);
+    toggle.type = 'button';
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-controls', 'member-grid');
 
-    /* A filter is only worth showing once there is something to filter. */
-    if (countries.length < 3) {
-      filterBar.remove();
-      return;
-    }
+    var row = el('div', 'members__more');
+    row.append(toggle);
+    grid.after(row);
 
-    ['All'].concat(countries).forEach(function (country, i) {
-      var button = el('button', 'filter__btn', country);
-      button.type = 'button';
-      button.dataset.country = i === 0 ? '' : country;
-      button.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
-      filterBar.append(button);
-    });
+    toggle.addEventListener('click', function () {
+      var open = toggle.getAttribute('aria-expanded') === 'true';
 
-    filterBar.addEventListener('click', function (event) {
-      var button = event.target.closest('.filter__btn');
-      if (!button) return;
+      hiddenCards.forEach(function (card) { card.hidden = open; });
+      toggle.setAttribute('aria-expanded', String(!open));
+      toggle.textContent = open ? label : 'Show fewer';
 
-      var country = button.dataset.country;
-
-      Array.prototype.forEach.call(filterBar.children, function (b) {
-        b.setAttribute('aria-pressed', String(b === button));
-      });
-
-      var shown = 0;
-      Array.prototype.forEach.call(grid.children, function (card) {
-        var match = !country || card.dataset.country === country;
-        card.hidden = !match;
-        if (match) shown++;
-      });
-
-      setStatus(country, shown);
-      if (empty) empty.hidden = shown > 0;
+      /* Collapsing from the bottom of a long list would otherwise leave the
+         reader stranded somewhere below the section. */
+      if (open && grid.getBoundingClientRect().top < 0) {
+        grid.scrollIntoView({ block: 'start' });
+      }
     });
   }
 
@@ -463,6 +561,68 @@
   }
 
   /* ----------------------------------------------------------------------
+     Scroll reveal
+     --------------------------------------------------------------------
+     The hero figures sit low in the dark band, so they arrive as you scroll:
+     each one lifts into place and its number counts up. Anything marked
+     [data-reveal] gets the lift; [data-count] gets the count.
+     ---------------------------------------------------------------------- */
+
+  var STILL = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function countUp(node, target) {
+    var duration = 900;
+    var start = 0;
+
+    var suffix = node.dataset.suffix || '';
+
+    function frame(now) {
+      if (!start) start = now;
+      var t = Math.min((now - start) / duration, 1);
+      /* Ease out — fast first, settles on the real number. */
+      var eased = 1 - Math.pow(1 - t, 3);
+      node.textContent = Math.round(target * eased) + suffix;
+      if (t < 1) window.requestAnimationFrame(frame);
+    }
+
+    node.textContent = '0' + suffix;
+    window.requestAnimationFrame(frame);
+  }
+
+  function reveal(node) {
+    node.setAttribute('data-revealed', 'true');
+    each('[data-count]', function (value) {
+      if (!node.contains(value)) return;
+      countUp(value, Number(value.dataset.count));
+    });
+  }
+
+  function initReveal() {
+    var targets = document.querySelectorAll('[data-reveal]');
+    if (!targets.length) return;
+
+    /* No observer, or the visitor asked for less motion: show it all now. */
+    if (STILL.matches || !('IntersectionObserver' in window)) {
+      Array.prototype.forEach.call(targets, function (node) {
+        node.setAttribute('data-revealed', 'true');
+      });
+      return;
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        reveal(entry.target);
+        observer.unobserve(entry.target);
+      });
+      /* A low threshold on purpose: tall blocks (the member grid) can never
+         show a quarter of themselves at once. */
+    }, { threshold: 0.01, rootMargin: '0px 0px -8% 0px' });
+
+    Array.prototype.forEach.call(targets, function (node) { observer.observe(node); });
+  }
+
+  /* ----------------------------------------------------------------------
      Start
      ---------------------------------------------------------------------- */
 
@@ -471,4 +631,5 @@
   initMembers();
   applyMeta();
   initNav();
+  initReveal();
 })();

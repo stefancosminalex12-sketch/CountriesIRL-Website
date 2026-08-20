@@ -77,11 +77,10 @@ paste a block like this:
       }
 ```
 
-Save and reload. The card appears, and the country filter, the country index in the
-hero and the member count all update on their own — the member list is defined once and
-read everywhere.
+Save and reload. The card appears with its country's flag, and the figures under the
+hero update on their own — the member list is defined once and read everywhere.
 
-Only `name`, `country` and `description` are required.
+Only `name` and `country` are required.
 
 - **`image`** — optional. Save a square image of at least 200 × 200 pixels in
   `assets/members/` and reference it as `'assets/members/filename.jpg'`. Leave it as
