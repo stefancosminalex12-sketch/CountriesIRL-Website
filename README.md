@@ -104,7 +104,7 @@ Put your file in `assets/logo/` and point `brand.logo` at it:
 ```js
 brand: {
   name: 'CountriesIRL',
-  logo: 'assets/logo/mark.svg',
+  logo: 'assets/logo/IRLLOGO-web.png',
   ...
 }
 ```
@@ -114,7 +114,7 @@ at least 128 × 128 pixels works best.
 
 The browser-tab icon and the home-screen icon are loaded before any JavaScript runs, so
 they are referenced directly in the `<head>` of `index.html`. If you replace the logo,
-replace `assets/logo/mark.svg` and `assets/logo/apple-touch-icon.png` too — details in
+replace `assets/logo/favicon.png` and `assets/logo/apple-touch-icon.png` too — details in
 [CONFIG.md](CONFIG.md#changing-the-logo).
 
 ---

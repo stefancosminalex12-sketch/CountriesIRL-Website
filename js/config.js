@@ -5,8 +5,7 @@
    Everything below is plain JavaScript: text in quotes, lists in [ brackets ],
    groups in { braces }. Keep the commas where they are and you cannot go wrong.
 
-   Open config.html in a browser for a visual reference of every value here,
-   plus a form that writes new member entries for you.
+   CONFIG.md explains what every value below does, and how to add a member.
    ========================================================================== */
 
 window.SITE_CONFIG = {
@@ -31,10 +30,10 @@ window.SITE_CONFIG = {
      2. SEO / SOCIAL PREVIEW
      ------------------------------------------------------------------ */
   meta: {
-    title: 'CountriesIRL — the biggest countries network in the world',
+    title: 'CountriesIRL — the creators behind the world’s countries',
     description:
-      'CountriesIRL is the biggest countries network in the world. Country ' +
-      'accounts from every corner of the map, working together in one place.',
+      'CountriesIRL is a global network of creators representing the countries ' +
+      'they know — through entertainment, culture, history and current events.',
     ogImage: 'assets/og-image.png'
   },
 
@@ -42,18 +41,22 @@ window.SITE_CONFIG = {
      3. HOME / HERO
      ------------------------------------------------------------------ */
   hero: {
-    title: 'The biggest countries network in the world.',
+    // The small line above the headline. Set it to '' to hide it entirely.
+    eyebrow: 'EST. 2026',
+    title: 'The global network of creators behind the world’s countries.',
     description:
-      'No other countries network comes close. Country accounts from every ' +
-      'corner of the map, in one place, run by the people behind them. ' +
-      'Members collab on posts, swap ideas and grow each other\'s pages.',
+      'CountriesIRL brings creators together to represent the countries they ' +
+      'know and care about, through entertainment, culture, history, current ' +
+      'events and more. We believe content can help people look beyond ' +
+      'borders, understand different perspectives, and discover the world ' +
+      'through the people who live it.',
     primaryCta: { label: 'Apply to join', href: '#join' },
     secondaryCta: { label: 'About', href: '#about' },
-    /* The three figures under the hero buttons. `value: 'auto'` is filled in
-       from the member list below, so the numbers can never go stale. */
+    /* The three figures under the hero buttons. `value: 'auto:...'` is filled
+       in from the member list below, so the numbers can never go stale. */
     stats: [
       { value: 'auto:members',   label: 'Country accounts' },
-      { value: '100m+',          label: 'Views across the network' },
+      { value: '300K+',          label: 'Followers across the network' },
       { value: 'No.1',           label: 'In the world' }
     ]
   },
@@ -65,38 +68,57 @@ window.SITE_CONFIG = {
   about: {
     title: 'What CountriesIRL is',
     lead:
-      'The biggest countries network in the world, run by the people behind ' +
-      'the accounts.',
+      'A creator and media network built around countries, cultures and the ' +
+      'people who represent them.',
     body: [
-      'CountriesIRL started with a few country accounts who kept running into ' +
-      'the same thing. You post, you grow slowly, and there\'s nobody to ' +
-      'compare notes with. The network came out of that. Whatever a member ' +
-      'has figured out, everyone else gets to use.',
-      'The accounts are spread across a lot of time zones and they don\'t all ' +
-      'post the same thing, which is the point. Two accounts from different ' +
-      'countries aren\'t chasing the same followers, so helping each other ' +
-      'costs nothing.'
+      'Members are creators and teams who cover a country from the inside — ' +
+      'their own knowledge, language and point of view, turned into content ' +
+      'about the people, history, traditions and current events behind a part ' +
+      'of the world. Some of it is funny, some of it is serious, and most of ' +
+      'it would not read the same coming from anyone else.',
+      'It began as a handful of country-focused social accounts and is growing ' +
+      'past that. Short-form and memes are where most members work today. ' +
+      'Satire, explainers, history, geography and longer documentary work are ' +
+      'the direction it is heading in.'
     ],
+
+    /* The short version of where the network came from. Sits between the
+       paragraphs above and the three points below. */
+    origin: {
+      title: 'How it started',
+      body: [
+        'CountriesIRL started in March 2026 with Romania IRL and a simple ' +
+        'idea: get the people behind country pages talking to each other. ' +
+        'There was no organisation behind it and no plan longer than a ' +
+        'paragraph.',
+        'Other creators saw where it was going and joined. One account became ' +
+        'a handful, the handful became a network, and it is still getting ' +
+        'bigger.'
+      ]
+    },
+
     /* Three short statements about how the network actually operates.
        Add a fourth if you need one — the layout takes any number. */
     principles: [
       {
-        title: 'Collabs',
+        title: 'Represented by people who know it',
         text:
-          'Members team up on posts, edits and shoutouts. Nobody is asked to ' +
-          'hand over their account or their followers.'
+          'A country should be covered by someone with a real connection to ' +
+          'it — born there, raised there, living there, or close enough that ' +
+          'it never shows. For smaller countries that often means creators ' +
+          'abroad who carry the culture with them.'
       },
       {
-        title: 'Second opinions',
+        title: 'Entertainment first',
         text:
-          'Members ask each other before something goes out. Somebody in the ' +
-          'server has usually already hit whatever you\'re stuck on.'
+          'Nothing here is a lecture. Culture, history and current events ' +
+          'travel further when the content is worth watching on its own.'
       },
       {
-        title: 'New accounts',
+        title: 'Bigger than one account',
         text:
-          'The network keeps growing. New members get introduced to everyone ' +
-          'else properly, so nobody\'s joining a room full of strangers.'
+          'Members share what they have worked out, build on each other’s ' +
+          'reach, and take on projects no single page would get to alone.'
       }
     ]
   },
@@ -136,7 +158,9 @@ window.SITE_CONFIG = {
      members: {
     title: 'Members',
     lead:
-      'Every account in the network, each one run by a different person.',
+      'The people behind the pages — individual creators now, creative teams ' +
+      'before long. Each covers a country, a region or a piece of history ' +
+      'they know from the inside, in their own language.',
     list: [
       {
         name: 'Romania',
@@ -502,44 +526,91 @@ window.SITE_CONFIG = {
   community: {
     title: 'The community',
     lead:
-      'The network runs on a Discord server. That\'s where most of it happens.',
+      'CountriesIRL is not only the creators. It is also everyone who turns ' +
+      'up for the content.',
     body: [
-      'Most of what happens there is unglamorous. Members plan collabs, ask ' +
-      'each other for a second opinion before they post, and pass on things ' +
-      'they can\'t take themselves. It\'s the part of the network that never ' +
-      'shows up on any of the accounts.'
+      'Around the accounts there is a growing audience of people who like ' +
+      'finding out how somewhere else actually works — the geography, the ' +
+      'history, the news that never travels, the jokes that only land if you ' +
+      'live there.',
+      'The Discord is where that crowd and the creators end up in the same ' +
+      'room. Ask a member something, settle an argument about a flag, or ' +
+      'watch the next round of posts come together.'
     ],
-    cta: { label: 'Visit the community', href: 'https://discord.gg/w9qV9nzG2Y' }
+    cta: { label: 'Join the Discord', href: 'https://discord.gg/w9qV9nzG2Y' }
   },
 
   /* ------------------------------------------------------------------
      7. JOIN
      `cta.href` — point this at your application form, or leave it as
      'mailto:' + your contact email to take applications over email.
+
+     The two lists below accept either a plain string or a { title, text }
+     pair. A pair puts the title on its own line above the description.
      ------------------------------------------------------------------ */
   join: {
     title: 'Join the network',
-    lead:
-      'Applications are read by the members already here.',
+    lead: 'Every application is reviewed by our team.',
     who: {
       title: 'Who we are looking for',
       items: [
-        'Accounts that post consistently, whatever the follower count',
-        'People who give feedback as often as they ask for it',
-        'Anyone who actually knows the country they post about',
-        'Editors, designers and translators are welcome too'
+        {
+          title: 'Consistent creators',
+          text:
+            'Accounts that post regularly and mean to keep building. Minimum ' +
+            '1K–3K followers — not a popularity bar, just a sign you are ' +
+            'already committed and likely to still be posting next month.'
+        },
+        {
+          title: 'Authentic country representation',
+          text:
+            'You know the country you represent: the culture, the people, the ' +
+            'language, the context behind the news. Living there is not ' +
+            'required if the connection is genuine.'
+        },
+        {
+          title: 'Additional creative skills',
+          text:
+            'Video editing, graphic design, animation, motion design, writing ' +
+            '— anything that can feed the wider projects the network takes on.'
+        }
       ]
     },
     gets: {
       title: 'What members get',
       items: [
-        'A spot on this page with your links',
-        'Introductions to the accounts closest to yours',
-        'Feedback before you post'
+        {
+          title: 'Network',
+          text: 'A place among creators working on the same idea from across the map.'
+        },
+        {
+          title: 'Support',
+          text: 'People to compare notes with, solve problems with and learn from.'
+        },
+        {
+          title: 'Reach',
+          text: 'A line into established country pages and the audiences behind them.'
+        },
+        {
+          title: 'Identity',
+          text: 'Your page becomes part of something with a name, not just another account.'
+        },
+        {
+          title: 'Opportunities',
+          text: 'First access to collaborations and creative projects that come out of the network.'
+        },
+        {
+          title: 'Earnings',
+          text:
+            'As CountriesIRL expands, members will have the chance to take ' +
+            'part in paid projects and other ways of earning through it.'
+        }
       ]
     },
     cta: { label: 'Start an application', href: 'mailto:join@countriesirl.com?subject=CountriesIRL%20application' },
-    note: 'Every application gets read.'
+    /* The lead above already promises a review, so this line carries the
+       practical part instead of repeating it two lines later. */
+    note: 'Tell us which country you represent and link your account.'
   },
 
   /* ------------------------------------------------------------------

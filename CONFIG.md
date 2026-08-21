@@ -108,8 +108,8 @@ Delete their `{ … }` block, including the comma that separates it from the nex
 ```js
 brand: {
   name: 'CountriesIRL',
-  logo: 'assets/logo/mark.svg',
-  url: 'https://countriesirl.github.io/'
+  logo: 'assets/logo/IRLLOGO-web.png',
+  url: 'https://countriesirl.com/'
 }
 ```
 
@@ -122,8 +122,8 @@ these too:
 
 | File | Used for | Referenced in |
 | --- | --- | --- |
-| `assets/logo/mark.svg` | Browser tab icon | `<link rel="icon">` in `index.html` |
-| `assets/logo/apple-touch-icon.png` | Home-screen icon (180 × 180) | `<link rel="apple-touch-icon">` in `index.html` |
+| `assets/logo/favicon.png` | Browser tab icon | `<link rel="icon">` in `index.html` |
+| `assets/logo/apple-touch-icon.png` | Home-screen icon | `<link rel="apple-touch-icon">` in `index.html` |
 | `assets/og-image.png` | Link preview when the site is shared (1200 × 630) | `meta.ogImage`, plus `og:image` in `index.html` |
 
 ---
@@ -156,6 +156,7 @@ above the tags saying so.
 
 | Key | What it does |
 | --- | --- |
+| `hero.eyebrow` | The small line above the headline (currently `EST. 2026`). Set it to `''` to hide it. |
 | `hero.title` | The headline. |
 | `hero.description` | Paragraph beneath it. |
 | `hero.primaryCta` | The filled button — `{ label, href }`. |
@@ -172,6 +173,8 @@ a new tab. Both button styles accept either.
 | `about.title` | Section heading. |
 | `about.lead` | The larger opening line under the heading. |
 | `about.body` | A list of paragraphs. Add or remove entries freely. |
+| `about.origin.title` | Caption above the origin story. |
+| `about.origin.body` | The origin story, as a list of paragraphs. |
 | `about.principles` | The rows beneath the text. Each is `{ title, text }`. Any number works. |
 
 ### `members`
@@ -193,7 +196,6 @@ flag. Historical and fictional entries have no flag file and fall back to initia
 | `community.title` | Section heading. |
 | `community.lead` | The larger opening line. |
 | `community.body` | A list of paragraphs. |
-| `community.highlights` | The numbered list on the right. |
 | `community.cta` | Where the community link points — `{ label, href }`. |
 
 ### `join`
@@ -204,6 +206,10 @@ flag. Historical and fictional entries have no flag file and fall back to initia
 | `join.lead` | The larger opening line. |
 | `join.who.title` / `join.who.items` | Heading and list for who the network is looking for. |
 | `join.gets.title` / `join.gets.items` | Heading and list for what members receive. |
+
+Both `items` lists take either a plain string or a `{ title, text }` pair. A pair puts
+the title on its own line above the description — which is how both lists read now.
+Mixing the two forms in one list is fine.
 | `join.cta` | The application button — `{ label, href }`. Use a form URL, or a `mailto:` address to take applications by email. |
 | `join.note` | Small line under the button. |
 

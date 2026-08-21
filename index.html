@@ -6,20 +6,20 @@
 
   <!-- SEO defaults. These mirror `meta` and `brand` in js/config.js, which
        also updates them at runtime — edit both if you change the wording. -->
-  <title>CountriesIRL — the biggest countries network in the world</title>
-  <meta name="description" content="CountriesIRL is the biggest countries network in the world. Country accounts from every corner of the map, working together in one place.">
-  <link rel="canonical" href="https://countriesirl.github.io/">
+  <title>CountriesIRL — the creators behind the world's countries</title>
+  <meta name="description" content="CountriesIRL is a global network of creators representing the countries they know — through entertainment, culture, history and current events.">
+  <link rel="canonical" href="https://countriesirl.com/">
   <meta name="theme-color" content="#16181c">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="CountriesIRL">
-  <meta property="og:title" content="CountriesIRL — the biggest countries network in the world">
-  <meta property="og:description" content="CountriesIRL is the biggest countries network in the world. Country accounts from every corner of the map, working together in one place.">
-  <meta property="og:url" content="https://countriesirl.github.io/">
-  <meta property="og:image" content="https://countriesirl.github.io/assets/og-image.png">
+  <meta property="og:title" content="CountriesIRL — the creators behind the world's countries">
+  <meta property="og:description" content="CountriesIRL is a global network of creators representing the countries they know — through entertainment, culture, history and current events.">
+  <meta property="og:url" content="https://countriesirl.com/">
+  <meta property="og:image" content="https://countriesirl.com/assets/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="CountriesIRL — the biggest countries network in the world.">
+  <meta property="og:image:alt" content="CountriesIRL — the creators behind the world’s countries.">
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="icon" href="assets/logo/favicon.png" type="image/png" sizes="64x64">
@@ -62,7 +62,8 @@
     <div class="container noscript">
       <p>
         This page builds its content from a JavaScript configuration file, so it needs
-        JavaScript enabled. CountriesIRL is the biggest countries network in the world — write to <a href="mailto:hello@countriesirl.com">hello@countriesirl.com</a>
+        JavaScript enabled. CountriesIRL is a global network of creators representing
+        the countries they know — write to <a href="mailto:hello@countriesirl.com">hello@countriesirl.com</a>
         if you would like to know more or apply to join.
       </p>
     </div>
@@ -73,6 +74,7 @@
     <!-- ================= HOME ================= -->
     <section class="hero" id="home" tabindex="-1">
       <div class="container hero__inner">
+        <p class="hero__eyebrow" data-text="hero.eyebrow"></p>
         <h1 data-text="hero.title"></h1>
         <p class="hero__description" data-text="hero.description"></p>
         <div class="btn-row">
@@ -105,6 +107,11 @@
         <!-- One column, one comfortable measure — easier to read than the
              two-column split this used to be. -->
         <div class="prose prose--lead" data-paragraphs="about.body"></div>
+
+        <div class="about__origin">
+          <h3 class="about__origin-title" data-text="about.origin.title"></h3>
+          <div class="prose prose--lead" data-paragraphs="about.origin.body"></div>
+        </div>
 
         <ul class="principles" data-render="principles"></ul>
       </div>

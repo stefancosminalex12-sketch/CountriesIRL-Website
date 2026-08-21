@@ -67,7 +67,11 @@
   function applyBindings() {
     each('[data-text]', function (node) {
       var value = get(node.dataset.text);
-      if (typeof value === 'string') node.textContent = value;
+      if (typeof value !== 'string') return;
+      node.textContent = value;
+      /* An empty value in config hides the element instead of leaving a
+         blank line where its margin used to be. */
+      node.hidden = value === '';
     });
 
     each('[data-attr-src]', function (node) {
@@ -96,12 +100,17 @@
       }));
     });
 
-    /* Arrays of strings rendered as list items. */
+    /* Lists take either a plain string or a { title, text } pair. A pair
+       puts the title on its own line above the description. */
     each('[data-list]', function (node) {
       var items = get(node.dataset.list);
       if (!Array.isArray(items)) return;
-      node.replaceChildren.apply(node, items.map(function (text) {
-        return el('li', null, text);
+      node.replaceChildren.apply(node, items.map(function (item) {
+        if (typeof item === 'string') return el('li', null, item);
+        var li = el('li');
+        if (item.title) li.append(el('strong', null, item.title));
+        if (item.text) li.append(document.createTextNode(item.text));
+        return li;
       }));
     });
   }

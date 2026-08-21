@@ -79,6 +79,7 @@ body {
 }
 
 img, svg { display: block; max-width: 100%; }
+[hidden] { display: none !important; }
 img { height: auto; }
 
 ul, ol { margin: 0; padding: 0; list-style: none; }
@@ -440,7 +441,14 @@ a:hover { color: var(--accent-dark); }
   to { transform: translateX(-100%); }
 }
 
-.hero h1 { max-width: 16ch; margin-bottom: 1.75rem; }
+.hero__eyebrow {
+  margin-bottom: 1.5rem;
+  font-size: var(--size-small);
+  letter-spacing: 0.08em;
+  color: #8d939d;
+}
+
+.hero h1 { max-width: 19ch; margin-bottom: 1.75rem; }
 .hero__description {
   max-width: 54ch;
   font-size: var(--size-lead);
@@ -508,6 +516,20 @@ a:hover { color: var(--accent-dark); }
   color: var(--ink-soft);
 }
 .prose--lead > p + p { margin-top: 1.4em; }
+
+/* The origin story. Set apart by a rule rather than a box, so it reads as
+   the next beat of the section instead of a callout. */
+.about__origin {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  padding-top: clamp(1.75rem, 3.5vw, 2.5rem);
+  border-top: 1px solid var(--line);
+}
+.about__origin-title {
+  margin-bottom: 0.875rem;
+  font-size: var(--size-small);
+  font-weight: 400;
+  color: var(--muted);
+}
 
 .principles {
   margin-top: clamp(3rem, 6vw, 4.5rem);
@@ -669,6 +691,12 @@ a:hover { color: var(--accent-dark); }
   font-weight: 400;
   color: #9aa0aa;
 }
+.join__list strong {
+  display: block;
+  margin-bottom: 0.1875rem;
+  color: var(--paper);
+  font-weight: 600;
+}
 .join__list li {
   padding-block: 0.875rem;
   border-bottom: 1px solid #26292f;
@@ -685,6 +713,14 @@ a:hover { color: var(--accent-dark); }
 }
 @media (min-width: 52em) {
   .join__lists { grid-template-columns: 1fr; gap: 2.5rem; }
+
+  /* The two lists on the right run about four times the height of the heading
+     beside them. Letting the heading and the button travel keeps the apply
+     link in reach and stops the left column stranding a screen of empty ink. */
+  .join__grid > :first-child {
+    position: sticky;
+    top: calc(var(--header-h) + 3rem);
+  }
 }
 
 /* --------------------------------------------------------------------------
