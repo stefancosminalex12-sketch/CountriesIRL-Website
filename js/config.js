@@ -43,13 +43,19 @@ window.SITE_CONFIG = {
   hero: {
     // The small line above the headline. Set it to '' to hide it entirely.
     eyebrow: 'EST. 2026',
-    title: 'The global network of creators behind the world’s countries.',
-    description:
-      'CountriesIRL brings creators together to represent the countries they ' +
-      'know and care about, through entertainment, culture, history, current ' +
-      'events and more. We believe content can help people look beyond ' +
-      'borders, understand different perspectives, and discover the world ' +
-      'through the people who live it.',
+    title: 'A global network of creators connecting the world.',
+    // One entry per paragraph.
+    description: [
+      'CountriesIRL connects creators from around the world to share the ' +
+      'stories, history, culture, and events that make each country unique. ' +
+      'We want to help people discover countries they may know little about, ' +
+      'uncover things they’ve never heard of, and see the world from ' +
+      'different perspectives.',
+      'Through entertaining content, documentaries, and educational projects, ' +
+      'we aim to make learning about the world more accessible while ' +
+      'promoting the places, people, and cultures that deserve to be ' +
+      'discovered.'
+    ],
     primaryCta: { label: 'Apply to join', href: '#join' },
     secondaryCta: { label: 'About', href: '#about' },
     /* The three figures under the hero buttons. `value: 'auto:...'` is filled
@@ -126,35 +132,27 @@ window.SITE_CONFIG = {
 /* ------------------------------------------------------------------
      5. MEMBERS
      --------------------------------------------------------------------
-     >>> TO ADD A MEMBER: copy the block between the braces below, paste it
-     >>> at the end of the list, and edit the values. Mind the comma between
-     >>> entries. The website builds the member cards from this list, so
-     >>> nothing else needs changing.
+     >>> TO ADD A MEMBER: copy one of the blocks below, paste it at the end
+     >>> of the list, and edit the values. Mind the comma between entries.
+     >>> The cards are built from this list, and the count above them is
+     >>> simply how many entries are here.
      >>>
      >>>   {
-     >>>     name:        'Channel or creator name',   // required
-     >>>     country:     'Country',                   // required
-     >>>     image:       'assets/members/file.jpg',   // optional — leave '' for the flag
-     >>>     description: 'One or two sentences.',     // optional
-     >>>     website:     'https://example.com',       // optional
-     >>>     links: [                                  // optional, any platform
-     >>>       { label: 'YouTube',   url: 'https://…' },
-     >>>       { label: 'Instagram', url: 'https://…' }
-     >>>     ]
+     >>>     name: 'Country',                      // required, the only text on the card
+     >>>     flag: 'assets/flags/xx.png',          // the flag shown beside it
+     >>>     links: []                             // add links here when you have them
      >>>   }
      >>>
-     >>> Profile images: square, at least 200×200px, saved in assets/members/.
-     >>> With no image the card shows the country's flag, and with no flag on
-     >>> file it shows the member's initials. A missing photo never breaks it.
-
-     NOTE ON DESCRIPTIONS: most entries deliberately have none. The ones that
-     were here before only restated the flag already shown on the card, in the
-     same sentence 35 times over, which is the single clearest tell that copy
-     was generated rather than written. Add a real line when you know one —
-     what the account actually posts — and it will appear on the card. An
-     empty description simply renders nothing.
+     >>> `flag` is an explicit path, so an entry can fly a flag that is not
+     >>> its own — Ottoman Empire uses tr.png, Nebraska uses us.png. Flags
+     >>> live in assets/flags/, one PNG per ISO code. If the file is missing
+     >>> the card falls back to the member's initials rather than breaking.
+     >>>
+     >>> A member may also carry `country`, `image`, `description` and
+     >>> `website`; all four are optional and none are in use right now,
+     >>> because the cards are meant to show the name and nothing else.
      ------------------------------------------------------------------ */
- 
+
      members: {
     title: 'Members',
     lead:
@@ -163,360 +161,152 @@ window.SITE_CONFIG = {
       'they know from the inside, in their own language.',
     list: [
       {
-        name: 'Romania',
-        country: 'Romania',
-        image: '',
-        description: 'Founder\'s account. The network started here.',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/romaniairl' }
-        ]
+        name: 'Romania',              flag: 'assets/flags/ro.png',
+        links: []
       },
       {
-        name: 'chinairl',
-        country: 'China',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/chinairlmain' }
-        ]
+        name: 'Pakistan',             flag: 'assets/flags/pk.png',
+        links: []
       },
       {
-        name: 'United Kingdom',
-        country: 'United Kingdom',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/unitedkingdomirl1' }
-        ]
+        name: 'Italy',                flag: 'assets/flags/it.png',
+        links: []
       },
       {
-        name: 'canadairl',
-        country: 'Canada',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/canadairlmain' }
-        ]
+        name: 'Belgium',              flag: 'assets/flags/be.png',
+        links: []
       },
       {
-        name: 'Switzerland',
-        country: 'Switzerland',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/switzerland.irl' }
-        ]
+        name: 'USSR',                 flag: 'assets/flags/ru.png',
+        links: []
       },
       {
-        name: 'Belgium',
-        country: 'Belgium',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/belgiumirl' }
-        ]
+        name: 'Portugal',             flag: 'assets/flags/pt.png',
+        links: []
       },
       {
-        name: 'poland',
-        country: 'Poland',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/poland.irl' }
-        ]
+        name: 'Czech Republic',       flag: 'assets/flags/cz.png',
+        links: []
       },
       {
-        name: 'Pakistan',
-        country: 'Pakistan',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/pakistaniirl' }
-        ]
+        name: 'Greece',               flag: 'assets/flags/gr.png',
+        links: []
       },
       {
-        name: 'Afghanistan',
-        country: 'Afghanistan',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/afghanistan.irl' }
-        ]
+        name: 'Lithuania',            flag: 'assets/flags/lt.png',
+        links: []
       },
       {
-        name: 'IRAQ',
-        country: 'Iraq',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/iraqirl_' }
-        ]
+        name: 'Syria',                flag: 'assets/flags/sy.png',
+        links: []
       },
       {
-        name: 'SYRIAIRL',
-        country: 'Syria',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/syriairlmain' }
-        ]
+        name: 'Turkmenistan',         flag: 'assets/flags/tm.png',
+        links: []
       },
       {
-        name: 'Portugal irl',
-        country: 'Portugal',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/portugalirlmain' }
-        ]
+        name: 'Poland',               flag: 'assets/flags/pl.png',
+        links: []
       },
       {
-        name: 'Hungary',
-        country: 'Hungary',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/hungary.irl_' }
-        ]
+        name: 'United States',        flag: 'assets/flags/us.png',
+        links: []
       },
       {
-        name: 'Bangladesh',
-        country: 'Bangladesh',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/bangladesh.irl_' }
-        ]
+        name: 'Türkiye',              flag: 'assets/flags/tr.png',
+        links: []
       },
       {
-        name: 'Turkmenistan',
-        country: 'Turkmenistan',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/turkmenistanirl' }
-        ]
+        name: 'Ottoman Empire',       flag: 'assets/flags/tr.png',
+        links: []
       },
       {
-        name: 'Kyrgyzstan.irl',
-        country: 'Kyrgyzstan',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/kyrgyzstan.irl' }
-        ]
+        name: 'San Marino',           flag: 'assets/flags/sm.png',
+        links: []
       },
       {
-        name: 'Bahrain',
-        country: 'Bahrain',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/bahrain.irl' }
-        ]
+        name: 'Russia',               flag: 'assets/flags/ru.png',
+        links: []
       },
       {
-        name: 'Lebanon',
-        country: 'Lebanon',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/lebanonirlmain' }
-        ]
+        name: 'Afghanistan',          flag: 'assets/flags/af.png',
+        links: []
       },
       {
-        name: 'georgia',
-        country: 'Georgia',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/sakartveloirl' }
-        ]
+        name: 'France',               flag: 'assets/flags/fr.png',
+        links: []
       },
       {
-        name: 'Moldova',
-        country: 'Moldova',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/moldovaairl' }
-        ]
+        name: 'North Macedonia',      flag: 'assets/flags/mk.png',
+        links: []
       },
       {
-        name: 'Slovakia',
-        country: 'Slovakia',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/slovakiairl' }
-        ]
+        name: 'Croatia',              flag: 'assets/flags/hr.png',
+        links: []
       },
       {
-        name: 'bosniaherzegovinairl',
-        country: 'Bosnia and Herzegovina',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/bosniaherzegovinairl' }
-        ]
+        name: 'Fiji',                 flag: 'assets/flags/fj.png',
+        links: []
       },
       {
-        name: 'croatiairl',
-        country: 'Croatia',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/croatiairlmain' }
-        ]
+        name: 'Byzantine Empire',     flag: 'assets/flags/gr.png',
+        links: []
       },
       {
-        name: 'Roman Empire.irl',
-        country: 'Roman Empire',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/roman.empire.irl' }
-        ]
+        name: 'Roman Empire',         flag: 'assets/flags/it.png',
+        links: []
       },
       {
-        name: 'byzantineempire.irl',
-        country: 'Byzantine Empire',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/byzantineempire.irl' }
-        ]
+        name: 'United Kingdom',       flag: 'assets/flags/gb.png',
+        links: []
       },
       {
-        // Display name was cut off in the screenshot ("Make Yugoslav..."); using the handle.
-        name: 'yugosiavia',
-        country: 'Yugoslavia',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/yugosiavia' }
-        ]
+        name: 'China',                flag: 'assets/flags/cn.png',
+        links: []
       },
       {
-        name: 'kingdomofpolandirl',
-        country: 'Kingdom of Poland',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/kingdomofpolandirl' }
-        ]
+        name: 'Nebraska',             flag: 'assets/flags/us.png',
+        links: []
       },
       {
-        // TODO: confirm this handle. Display name was cut off ("United States of K...").
-        name: 'kurdistanirl',
-        country: 'Kurdistan',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/kurdistanirl' }
-        ]
-      },
-      /* Not published: the screenshot cut off both the name and the handle, and
-         the flag only resembled Serbia. Fill in the real details and uncomment.
-
-      {
-        name: '',
-        country: '',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: '' }
-        ]
-      },
-      */
-      {
-        name: 'Antarctica',
-        country: 'Antarctica',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/antarcticairlmain' }
-        ]
+        name: 'Bahrain',              flag: 'assets/flags/bh.png',
+        links: []
       },
       {
-        name: 'Texas',
-        country: 'United States (Texas)',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/texas.irl_' }
-        ]
+        name: 'Gibraltar',            flag: 'assets/flags/gi.png',
+        links: []
       },
       {
-        name: 'ohio_irl',
-        country: 'United States (Ohio)',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/ohio_irl' }
-        ]
+        name: 'Lebanon',              flag: 'assets/flags/lb.png',
+        links: []
       },
       {
-        name: 'Alabama',
-        country: 'United States (Alabama)',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/alabama.irl' }
-        ]
+        name: 'Iraq',                 flag: 'assets/flags/iq.png',
+        links: []
       },
       {
-        name: 'Nebraska',
-        country: 'United States (Nebraska)',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/nebraskairl' }
-        ]
+        name: 'Alabama',              flag: 'assets/flags/us.png',
+        links: []
       },
       {
-        name: 'North Pole',
-        country: 'North Pole',
-        image: '',
-        description: '',
-        website: '',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/northpoleirl' }
-        ]
+        name: 'Bangladesh',           flag: 'assets/flags/bd.png',
+        links: []
+      },
+      {
+        name: 'Ohio',                 flag: 'assets/flags/us.png',
+        links: []
+      },
+      {
+        name: 'Hungary',              flag: 'assets/flags/hu.png',
+        links: []
+      },
+      {
+        name: 'Finland',              flag: 'assets/flags/fi.png',
+        links: []
+      },
+      {
+        name: 'Georgia (Sakartvelo)', flag: 'assets/flags/ge.png',
+        links: []
       }
     ]
   },

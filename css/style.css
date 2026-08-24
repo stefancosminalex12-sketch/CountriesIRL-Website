@@ -422,12 +422,20 @@ a:hover { color: var(--accent-dark); }
   -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
           mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
 }
+/* One long track made of identical rows. It slides left by exactly one row's
+   width, so the row arriving behind is pixel-identical to the one leaving and
+   the loop point never shows. main.js appends as many rows as the viewport
+   needs and sets --marquee-shift to a single row's width. */
+.marquee__track {
+  display: flex;
+  flex: none;
+  animation: marquee 70s linear infinite;
+}
 .marquee__row {
   display: flex;
   flex: none;
   gap: 1rem;
   padding-right: 1rem;
-  animation: marquee 70s linear infinite;
 }
 .marquee__flag {
   width: 2.4375rem;
@@ -437,8 +445,10 @@ a:hover { color: var(--accent-dark); }
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
   opacity: 0.8;
 }
+/* Shift by one row, not by the whole track — the track grows with the
+   viewport, a single row is the tile that repeats. */
 @keyframes marquee {
-  to { transform: translateX(-100%); }
+  to { transform: translateX(calc(-1 * var(--marquee-shift, 0px))); }
 }
 
 .hero__eyebrow {
@@ -455,6 +465,9 @@ a:hover { color: var(--accent-dark); }
   line-height: 1.6;
   color: #c9cbcf;
 }
+/* The copy runs to more than one paragraph; type and colour still come from
+   the block above, this only opens the gap between them. */
+.hero__description > p + p { margin-top: 1em; }
 
 /* The network in numbers — its own band under the hero, on paper. */
 .stats-band {
@@ -788,7 +801,7 @@ a:hover { color: var(--accent-dark); }
   .stats li { opacity: 1; transform: none; transition: none; }
   .member:hover .member__flag,
   .member:hover .member__avatar { transform: none; }
-  .marquee__row { animation: none; }
+  .marquee__track { animation: none; }
 
   html { scroll-behavior: auto; }
   *, *::before, *::after {

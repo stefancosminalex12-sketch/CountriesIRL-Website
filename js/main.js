@@ -120,12 +120,14 @@
      ---------------------------------------------------------------------- */
 
   var members = (get('members.list') || []).filter(function (m) {
-    return m && m.name && m.country;
+    /* `country` is optional: entries that name their own flag do not need it. */
+    return m && m.name;
   });
 
   function countriesByCount() {
     var counts = {};
     members.forEach(function (m) {
+      if (!m.country) return;
       counts[m.country] = (counts[m.country] || 0) + 1;
     });
     return Object.keys(counts)
@@ -164,8 +166,10 @@
       }));
     },
 
-    /* A moving strip of every flag in the network, doubled so the loop has no
-       seam. Decorative only — screen readers skip it via aria-hidden. */
+    /* A moving strip of every flag in the network. The track is a run of
+       identical rows that slides left by exactly one row's width, so the row
+       arriving behind is pixel-identical to the one leaving and the loop point
+       never shows. Decorative only — screen readers skip it via aria-hidden. */
     flagMarquee: function (node) {
       var sources = [];
       members.forEach(function (member) {
@@ -182,13 +186,47 @@
           img.alt = '';
           img.width = 39;
           img.height = 26;
-          img.loading = 'lazy';
+          /* Every copy crosses the screen during the loop, and they all reuse
+             the first row's cached files, so there is nothing worth deferring
+             — while a lazy flag could scroll into view still blank. */
+          img.decoding = 'async';
           div.append(img);
         });
         return div;
       }
 
-      node.replaceChildren(row(), row());
+      var track = el('div', 'marquee__track');
+      track.append(row());
+      node.replaceChildren(track);
+
+      /* Flag size is fixed in CSS, so a row measures the same whether or not
+         the images have arrived. This width is the tile the loop repeats on. */
+      var period = track.firstElementChild.getBoundingClientRect().width;
+      if (!period) return;
+
+      track.style.setProperty('--marquee-shift', period + 'px');
+
+      /* The slide consumes one row, so the rows behind it have to cover the
+         strip by themselves — otherwise the end of the track drifts into view
+         and leaves a blank stretch before the loop restarts.
+
+         Grows only. Appending leaves the running animation alone, whereas
+         rebuilding the track would snap it back to the start of the loop. */
+      function fill() {
+        var visible = node.getBoundingClientRect().width || window.innerWidth;
+        var needed = Math.ceil(visible / period) + 1;
+        while (track.children.length < needed) track.append(row());
+      }
+
+      fill();
+
+      /* Both, deliberately. The observer catches every reason the strip can
+         change width, not just a window drag; the resize event covers the
+         case where observer callbacks are not being delivered because the
+         page is not painting. fill() is idempotent, so running twice costs
+         a comparison. */
+      window.addEventListener('resize', fill);
+      if (window.ResizeObserver) new ResizeObserver(fill).observe(node);
     },
 
     principles: function (node) {
@@ -364,7 +402,7 @@
 
   function memberCard(member) {
     var card = el('article', 'member');
-    card.dataset.country = member.country;
+    if (member.country) card.dataset.country = member.country;
 
     var head = el('div', 'member__head');
     var meta = el('div');
@@ -372,7 +410,7 @@
 
     /* Half the accounts are named after their country, and the flag is right
        there — printing the country again would say it for a third time. */
-    if (!sameWord(member.name, member.country)) {
+    if (member.country && !sameWord(member.name, member.country)) {
       meta.append(el('p', 'member__country', member.country));
     }
     head.append(avatar(member), meta);
@@ -398,7 +436,7 @@
     grid.replaceChildren.apply(grid, cards);
 
     if (status) {
-      status.textContent = plural(members.length, 'account') + ' in the network';
+      status.textContent = plural(members.length, 'member');
     }
 
     var hiddenCards = cards.slice(VISIBLE);
@@ -406,7 +444,7 @@
 
     hiddenCards.forEach(function (card) { card.hidden = true; });
 
-    var label = 'View all ' + members.length + ' accounts';
+    var label = 'View all ' + members.length + ' members';
     var toggle = el('button', 'btn btn--secondary', label);
     toggle.type = 'button';
     toggle.setAttribute('aria-expanded', 'false');
