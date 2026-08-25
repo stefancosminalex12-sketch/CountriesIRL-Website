@@ -229,6 +229,15 @@
       if (window.ResizeObserver) new ResizeObserver(fill).observe(node);
     },
 
+    principles: function (node) {
+      var items = get('about.principles') || [];
+      node.replaceChildren.apply(node, items.map(function (item) {
+        var li = el('li');
+        li.append(el('h3', null, item.title), el('p', null, item.text));
+        return li;
+      }));
+    },
+
     social: function (node) {
       var items = (get('social') || []).filter(function (s) { return s && s.label && s.url; });
       node.replaceChildren.apply(node, items.map(function (item) {
@@ -404,13 +413,16 @@
     if (member.country && !sameWord(member.name, member.country)) {
       meta.append(el('p', 'member__country', member.country));
     }
+
+    /* Sits inside the name block, not under the card, so it reads as a second
+       line belonging to the member rather than a footer on the row. */
+    var links = memberLinks(member);
+    if (links) meta.append(links);
+
     head.append(avatar(member), meta);
 
     card.append(head);
     if (member.description) card.append(el('p', 'member__desc', member.description));
-
-    var links = memberLinks(member);
-    if (links) card.append(links);
 
     return card;
   }

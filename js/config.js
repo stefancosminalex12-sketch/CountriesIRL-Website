@@ -101,7 +101,32 @@ window.SITE_CONFIG = {
         'a handful, the handful became a network, and it is still getting ' +
         'bigger.'
       ]
-    }
+    },
+
+    /* Three short statements about how the network actually operates.
+       Add a fourth if you need one — the layout takes any number. */
+    principles: [
+      {
+        title: 'Represented by people who know it',
+        text:
+          'A country should be covered by someone with a real connection to ' +
+          'it — born there, raised there, living there, or close enough that ' +
+          'it never shows. For smaller countries that often means creators ' +
+          'abroad who carry the culture with them.'
+      },
+      {
+        title: 'Entertainment first',
+        text:
+          'Nothing here is a lecture. Culture, history and current events ' +
+          'travel further when the content is worth watching on its own.'
+      },
+      {
+        title: 'Bigger than one account',
+        text:
+          'Members share what they have worked out, build on each other’s ' +
+          'reach, and take on projects no single page would get to alone.'
+      }
+    ]
   },
 
 /* ------------------------------------------------------------------
@@ -136,152 +161,263 @@ window.SITE_CONFIG = {
       'they know from the inside, in their own language.',
     list: [
       {
-        name: 'Romania',              flag: 'assets/flags/ro.png',
-        links: []
+        name: 'Romania (Owner)',
+        flag: 'assets/flags/ro.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/romaniairl/' }
+        ]
       },
       {
-        name: 'Pakistan',             flag: 'assets/flags/pk.png',
-        links: []
+        name: 'Pakistan',
+        flag: 'assets/flags/pk.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/pakistaniirl/' }
+        ]
       },
       {
-        name: 'Italy',                flag: 'assets/flags/it.png',
-        links: []
+        name: 'Italy',
+        flag: 'assets/flags/it.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/italyirl/' }
+        ]
       },
       {
-        name: 'Belgium',              flag: 'assets/flags/be.png',
-        links: []
+        name: 'Belgium',
+        flag: 'assets/flags/be.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/belgiumirl/' }
+        ]
       },
       {
-        name: 'USSR',                 flag: 'assets/flags/ru.png',
-        links: []
+        name: 'USSR',
+        flag: 'assets/flags/ru.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/sovietunionirl/' }
+        ]
       },
       {
-        name: 'Portugal',             flag: 'assets/flags/pt.png',
-        links: []
+        name: 'Portugal',
+        flag: 'assets/flags/pt.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/portugalirlmain/' }
+        ]
       },
       {
-        name: 'Czech Republic',       flag: 'assets/flags/cz.png',
-        links: []
+        name: 'Czech Republic',
+        flag: 'assets/flags/cz.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/czechrepublicirl/' }
+        ]
       },
       {
-        name: 'Greece',               flag: 'assets/flags/gr.png',
-        links: []
+        name: 'Greece',
+        flag: 'assets/flags/gr.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/greeceirlmain/' }
+        ]
       },
       {
-        name: 'Lithuania',            flag: 'assets/flags/lt.png',
-        links: []
+        name: 'Lithuania',
+        flag: 'assets/flags/lt.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/lithuaniairl/' }
+        ]
       },
       {
-        name: 'Syria',                flag: 'assets/flags/sy.png',
-        links: []
+        name: 'Syria',
+        flag: 'assets/flags/sy.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/syriairlmain/' }
+        ]
       },
       {
-        name: 'Turkmenistan',         flag: 'assets/flags/tm.png',
-        links: []
+        name: 'Turkmenistan',
+        flag: 'assets/flags/tm.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/turkmenistanirl/' }
+        ]
       },
       {
-        name: 'Poland',               flag: 'assets/flags/pl.png',
-        links: []
+        name: 'Poland',
+        flag: 'assets/flags/pl.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/poland.irl/' }
+        ]
       },
       {
-        name: 'United States',        flag: 'assets/flags/us.png',
-        links: []
+        name: 'United States',
+        flag: 'assets/flags/us.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/unitedstatesirl/' }
+        ]
       },
       {
-        name: 'Türkiye',              flag: 'assets/flags/tr.png',
-        links: []
+        name: 'Türkiye',
+        flag: 'assets/flags/tr.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/ottoman_irl/' }
+        ]
       },
       {
-        name: 'Ottoman Empire',       flag: 'assets/flags/tr.png',
-        links: []
+        name: 'Ottoman Empire',
+        flag: 'assets/flags/tr.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/ottoman_irl/' }
+        ]
       },
       {
-        name: 'San Marino',           flag: 'assets/flags/sm.png',
-        links: []
+        name: 'San Marino',
+        flag: 'assets/flags/sm.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/sanmarinoirl/' }
+        ]
       },
       {
-        name: 'Russia',               flag: 'assets/flags/ru.png',
-        links: []
+        name: 'Russia',
+        flag: 'assets/flags/ru.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/russiairlmain/' }
+        ]
       },
       {
-        name: 'Afghanistan',          flag: 'assets/flags/af.png',
-        links: []
+        name: 'Afghanistan',
+        flag: 'assets/flags/af.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/afghanistan.irl/' }
+        ]
       },
       {
-        name: 'France',               flag: 'assets/flags/fr.png',
-        links: []
+        name: 'France',
+        flag: 'assets/flags/fr.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/franceirlmain/' }
+        ]
       },
       {
-        name: 'North Macedonia',      flag: 'assets/flags/mk.png',
-        links: []
+        name: 'North Macedonia',
+        flag: 'assets/flags/mk.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/macedonia.irl/' }
+        ]
       },
       {
-        name: 'Croatia',              flag: 'assets/flags/hr.png',
-        links: []
+        name: 'Croatia',
+        flag: 'assets/flags/hr.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/croatiairl_/' }
+        ]
       },
       {
-        name: 'Fiji',                 flag: 'assets/flags/fj.png',
-        links: []
+        name: 'Fiji',
+        flag: 'assets/flags/fj.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/fijiirlmain/' }
+        ]
       },
       {
-        name: 'Byzantine Empire',     flag: 'assets/flags/gr.png',
-        links: []
+        name: 'Byzantine Empire',
+        flag: 'assets/flags/gr.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/byzantineempire.irl/' }
+        ]
       },
       {
-        name: 'Roman Empire',         flag: 'assets/flags/it.png',
-        links: []
+        name: 'Roman Empire',
+        flag: 'assets/flags/it.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/romanempireirl/' }
+        ]
       },
       {
-        name: 'United Kingdom',       flag: 'assets/flags/gb.png',
-        links: []
+        name: 'United Kingdom',
+        flag: 'assets/flags/gb.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/brituishirl/' }
+        ]
       },
       {
-        name: 'China',                flag: 'assets/flags/cn.png',
-        links: []
+        name: 'China',
+        flag: 'assets/flags/cn.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/chinairlmain/' }
+        ]
       },
       {
-        name: 'Nebraska',             flag: 'assets/flags/us.png',
-        links: []
+        name: 'Nebraska',
+        flag: 'assets/flags/us.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/nebraskairl/' }
+        ]
       },
       {
-        name: 'Bahrain',              flag: 'assets/flags/bh.png',
-        links: []
+        name: 'Bahrain',
+        flag: 'assets/flags/bh.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/bahrainirl_/' }
+        ]
       },
       {
-        name: 'Gibraltar',            flag: 'assets/flags/gi.png',
-        links: []
+        name: 'Gibraltar',
+        flag: 'assets/flags/gi.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/gibraltar_irl/' }
+        ]
       },
       {
-        name: 'Lebanon',              flag: 'assets/flags/lb.png',
-        links: []
+        name: 'Lebanon',
+        flag: 'assets/flags/lb.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/lebanonirlmain/' }
+        ]
       },
       {
-        name: 'Iraq',                 flag: 'assets/flags/iq.png',
-        links: []
+        name: 'Iraq',
+        flag: 'assets/flags/iq.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/iraqirl_/' }
+        ]
       },
       {
-        name: 'Alabama',              flag: 'assets/flags/us.png',
-        links: []
+        name: 'Alabama',
+        flag: 'assets/flags/us.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/alabama.irl/' }
+        ]
       },
       {
-        name: 'Bangladesh',           flag: 'assets/flags/bd.png',
-        links: []
+        name: 'Bangladesh',
+        flag: 'assets/flags/bd.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/bangladesh.irl_/' }
+        ]
       },
       {
-        name: 'Ohio',                 flag: 'assets/flags/us.png',
-        links: []
+        name: 'Ohio',
+        flag: 'assets/flags/us.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/ohio_irl/' }
+        ]
       },
       {
-        name: 'Hungary',              flag: 'assets/flags/hu.png',
-        links: []
+        name: 'Hungary',
+        flag: 'assets/flags/hu.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/hungary.irl_/' }
+        ]
       },
       {
-        name: 'Finland',              flag: 'assets/flags/fi.png',
-        links: []
+        name: 'Finland',
+        flag: 'assets/flags/fi.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/finlandirl_/' }
+        ]
       },
       {
-        name: 'Georgia (Sakartvelo)', flag: 'assets/flags/ge.png',
-        links: []
+        name: 'Georgia (Sakartvelo)',
+        flag: 'assets/flags/ge.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/sakartveloirl/' }
+        ]
       }
     ]
   },

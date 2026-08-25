@@ -544,6 +544,23 @@ a:hover { color: var(--accent-dark); }
   color: var(--muted);
 }
 
+.principles {
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  border-top: 1px solid var(--line);
+}
+.principles li {
+  display: grid;
+  gap: 0.5rem 3rem;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  padding-block: 1.75rem;
+  border-bottom: 1px solid var(--line);
+}
+.principles p { color: var(--ink-soft); max-width: var(--measure); }
+
+@media (max-width: 48em) {
+  .principles li { grid-template-columns: 1fr; gap: 0.375rem; }
+}
+
 /* --------------------------------------------------------------------------
    9. Members
    -------------------------------------------------------------------------- */
@@ -618,11 +635,12 @@ a:hover { color: var(--accent-dark); }
   color: var(--ink-soft);
 }
 
+/* Second line of the name block — same weight as the country line it sits in
+   place of, so the member's name stays the loudest thing on the card. */
 .member__links {
   display: flex;
   flex-wrap: wrap;
   gap: 0.375rem 1rem;
-  margin-top: 0.5rem;
 }
 
 .member__links a {
