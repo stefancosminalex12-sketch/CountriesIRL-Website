@@ -662,62 +662,13 @@ a:hover { color: var(--accent-dark); }
 }
 .join .lead { color: #c9cbcf; }
 
-.join__grid {
-  display: grid;
-  gap: clamp(2.5rem, 5vw, 4.5rem);
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  align-items: start;
-}
+.join__inner { max-width: 44rem; }
 
 .join__note {
   margin-top: 1.25rem;
+  max-width: 46ch;
   font-size: var(--size-small);
   color: #8d939d;
-}
-
-.join__lists {
-  display: grid;
-  gap: 2.5rem;
-}
-
-.join__list-title {
-  padding-bottom: 0.75rem;
-  margin-bottom: 0.25rem;
-  border-bottom: 1px solid #33373e;
-  font-size: var(--size-small);
-  font-weight: 400;
-  color: #9aa0aa;
-}
-.join__list strong {
-  display: block;
-  margin-bottom: 0.1875rem;
-  color: var(--paper);
-  font-weight: 600;
-}
-.join__list li {
-  padding-block: 0.875rem;
-  border-bottom: 1px solid #26292f;
-  font-size: var(--size-small);
-  line-height: 1.6;
-  color: #d5d7db;
-}
-
-@media (max-width: 52em) {
-  .join__grid { grid-template-columns: 1fr; }
-}
-@media (min-width: 40em) {
-  .join__lists { grid-template-columns: 1fr 1fr; gap: 2rem; }
-}
-@media (min-width: 52em) {
-  .join__lists { grid-template-columns: 1fr; gap: 2.5rem; }
-
-  /* The two lists on the right run about four times the height of the heading
-     beside them. Letting the heading and the button travel keeps the apply
-     link in reach and stops the left column stranding a screen of empty ink. */
-  .join__grid > :first-child {
-    position: sticky;
-    top: calc(var(--header-h) + 3rem);
-  }
 }
 
 /* --------------------------------------------------------------------------

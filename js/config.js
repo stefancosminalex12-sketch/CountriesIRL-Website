@@ -427,66 +427,12 @@ window.SITE_CONFIG = {
   join: {
     title: 'Join the network',
     lead: 'Every application is reviewed by our team.',
-    who: {
-      title: 'Who we are looking for',
-      items: [
-        {
-          title: 'Consistent creators',
-          text:
-            'Accounts that post regularly and mean to keep building. Minimum ' +
-            '1K–3K followers — not a popularity bar, just a sign you are ' +
-            'already committed and likely to still be posting next month.'
-        },
-        {
-          title: 'Authentic country representation',
-          text:
-            'You know the country you represent: the culture, the people, the ' +
-            'language, the context behind the news. Living there is not ' +
-            'required if the connection is genuine.'
-        },
-        {
-          title: 'Additional creative skills',
-          text:
-            'Video editing, graphic design, animation, motion design, writing ' +
-            '— anything that can feed the wider projects the network takes on.'
-        }
-      ]
-    },
-    gets: {
-      title: 'What members get',
-      items: [
-        {
-          title: 'Network',
-          text: 'A place among creators working on the same idea from across the map.'
-        },
-        {
-          title: 'Support',
-          text: 'People to compare notes with, solve problems with and learn from.'
-        },
-        {
-          title: 'Reach',
-          text: 'A line into established country pages and the audiences behind them.'
-        },
-        {
-          title: 'Identity',
-          text: 'Your page becomes part of something with a name, not just another account.'
-        },
-        {
-          title: 'Opportunities',
-          text: 'First access to collaborations and creative projects that come out of the network.'
-        },
-        {
-          title: 'Earnings',
-          text:
-            'As CountriesIRL expands, members will have the chance to take ' +
-            'part in paid projects and other ways of earning through it.'
-        }
-      ]
-    },
     cta: { label: 'Start an application', href: 'mailto:join@countriesirl.com?subject=CountriesIRL%20application' },
     /* The lead above already promises a review, so this line carries the
        practical part instead of repeating it two lines later. */
-    note: 'Tell us which country you represent and link your account.'
+    /* Second button, for anyone not ready to apply yet. */
+    discordCta: { label: 'Join our Discord', href: 'https://discord.gg/w9qV9nzG2Y' },
+    note: 'Tell us which country you represent and link your account. Not ready to apply? Come and ask in the Discord.'
   },
 
   /* ------------------------------------------------------------------
