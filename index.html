@@ -25,11 +25,7 @@
   <link rel="icon" href="assets/logo/favicon.png" type="image/png" sizes="64x64">
   <link rel="apple-touch-icon" href="assets/logo/apple-touch-icon.png">
 
-  <!-- ?v= is a cache buster. GitHub Pages serves assets with a ten minute
-       max-age, so without it a fresh index.html can pair with a stale
-       stylesheet or config and render a half-broken page. Bump it on any
-       change to css/style.css, js/config.js or js/main.js. -->
-  <link rel="stylesheet" href="css/style.css?v=202608251647">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -81,10 +77,10 @@
         <p class="hero__eyebrow" data-text="hero.eyebrow"></p>
         <h1 data-text="hero.title"></h1>
         <div class="hero__description" data-paragraphs="hero.description"></div>
-          <div class="btn-row">
+        <div class="btn-row">
           <a class="btn btn--invert" data-cta="hero.primaryCta" href="#join"></a>
           <a class="btn btn--ghost" data-cta="hero.secondaryCta" href="#about"></a>
-          </div>
+        </div>
       </div>
 
       <!-- Every flag in the network, drifting across the foot of the hero.
@@ -142,6 +138,7 @@
           <h2 id="community-title" data-text="community.title"></h2>
           <p class="lead community__lead" data-text="community.lead"></p>
           <div class="prose prose--lead" data-paragraphs="community.body"></div>
+          <p class="community__prompt" data-text="community.ctaPrompt"></p>
           <p class="community__cta">
             <a class="link-arrow" data-cta="community.cta" href="#"></a>
           </p>
@@ -157,15 +154,20 @@
           <p class="lead" data-text="join.lead"></p>
           <div class="btn-row">
             <a class="btn btn--invert" data-cta="join.cta" href="#"></a>
-            <a class="btn btn--ghost" data-cta="join.discordCta" href="#"></a>
           </div>
           <p class="join__note" data-text="join.note"></p>
         </div>
 
-        <aside class="join__aside">
-          <p class="join__aside-title" data-text="join.aside.title"></p>
-          <p class="join__aside-text" data-text="join.aside.text"></p>
-        </aside>
+        <div class="join__lists">
+          <div>
+            <h3 class="join__list-title" data-text="join.who.title"></h3>
+            <ul class="join__list" data-list="join.who.items"></ul>
+          </div>
+          <div>
+            <h3 class="join__list-title" data-text="join.gets.title"></h3>
+            <ul class="join__list" data-list="join.gets.items"></ul>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -206,7 +208,7 @@
     </div>
   </footer>
 
-  <script src="js/config.js?v=202608251647"></script>
-  <script src="js/main.js?v=202608251647"></script>
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

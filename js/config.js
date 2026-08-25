@@ -402,18 +402,22 @@ window.SITE_CONFIG = {
   community: {
     title: 'The community',
     lead:
-      'CountriesIRL is not only the creators. It is also everyone who turns ' +
-      'up for the content.',
+      'CountriesIRL brings creators together from around the world, giving ' +
+      'them the opportunity to grow their platforms, represent their ' +
+      'countries, and collaborate with other creators as part of a larger ' +
+      'network.',
     body: [
-      'Around the accounts there is a growing audience of people who like ' +
-      'finding out how somewhere else actually works — the geography, the ' +
-      'history, the news that never travels, the jokes that only land if you ' +
-      'live there.',
-      'The Discord is where that crowd and the creators end up in the same ' +
-      'room. Ask a member something, settle an argument about a flag, or ' +
-      'watch the next round of posts come together.'
+      'Through the network, we aim to produce content that makes learning ' +
+      'about the world more accessible and engaging. This includes history, ' +
+      'culture, geography, tourism, current events, geopolitics, and the ' +
+      'stories and facts that are often overlooked.',
+      'As CountriesIRL expands, creators can work together on larger projects ' +
+      'and reach audiences around the world, with each member contributing ' +
+      'their own knowledge, perspective, and experience.'
     ],
-    cta: { label: 'Join the Discord', href: 'https://discord.gg/w9qV9nzG2Y' }
+    // The quiet line above the Discord link. Set it to '' to hide it.
+    ctaPrompt: 'Want to learn more about us?',
+    cta: { label: 'Join our Discord', href: 'https://discord.gg/w9qV9nzG2Y' }
   },
 
   /* ------------------------------------------------------------------
@@ -427,21 +431,66 @@ window.SITE_CONFIG = {
   join: {
     title: 'Join the network',
     lead: 'Every application is reviewed by our team.',
+    who: {
+      title: 'Who we are looking for',
+      items: [
+        {
+          title: 'Consistent creators',
+          text:
+            'Accounts that post regularly and mean to keep building. Minimum ' +
+            '1K–3K followers — not a popularity bar, just a sign you are ' +
+            'already committed and likely to still be posting next month.'
+        },
+        {
+          title: 'Authentic country representation',
+          text:
+            'You know the country you represent: the culture, the people, the ' +
+            'language, the context behind the news. Living there is not ' +
+            'required if the connection is genuine.'
+        },
+        {
+          title: 'Additional creative skills',
+          text:
+            'Video editing, graphic design, animation, motion design, writing ' +
+            '— anything that can feed the wider projects the network takes on.'
+        }
+      ]
+    },
+    gets: {
+      title: 'What members get',
+      items: [
+        {
+          title: 'Network',
+          text: 'A place among creators working on the same idea from across the map.'
+        },
+        {
+          title: 'Support',
+          text: 'People to compare notes with, solve problems with and learn from.'
+        },
+        {
+          title: 'Reach',
+          text: 'A line into established country pages and the audiences behind them.'
+        },
+        {
+          title: 'Identity',
+          text: 'Your page becomes part of something with a name, not just another account.'
+        },
+        {
+          title: 'Opportunities',
+          text: 'First access to collaborations and creative projects that come out of the network.'
+        },
+        {
+          title: 'Earnings',
+          text:
+            'As CountriesIRL expands, members will have the chance to take ' +
+            'part in paid projects and other ways of earning through it.'
+        }
+      ]
+    },
     cta: { label: 'Start an application', href: 'mailto:join@countriesirl.com?subject=CountriesIRL%20application' },
     /* The lead above already promises a review, so this line carries the
        practical part instead of repeating it two lines later. */
-    /* The short block beside the form. Keep it to a line or two — the long
-       lists that used to live here swamped the section. */
-    aside: {
-      title: 'Who it\'s for',
-      text:
-        'Country accounts with 1K+ followers that post regularly, run by ' +
-        'someone who knows the place from the inside.'
-    },
-
-    /* Second button, for anyone not ready to apply yet. */
-    discordCta: { label: 'Join our Discord', href: 'https://discord.gg/w9qV9nzG2Y' },
-    note: 'Tell us which country you represent and link your account. Not ready to apply? Come and ask in the Discord.'
+    note: 'Tell us which country you represent and link your account.'
   },
 
   /* ------------------------------------------------------------------

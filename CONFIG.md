@@ -196,6 +196,7 @@ flag. Historical and fictional entries have no flag file and fall back to initia
 | `community.title` | Section heading. |
 | `community.lead` | The larger opening line. |
 | `community.body` | A list of paragraphs. |
+| `community.ctaPrompt` | The quiet line above the community link. Set it to `''` to hide it. |
 | `community.cta` | Where the community link points — `{ label, href }`. |
 
 ### `join`
