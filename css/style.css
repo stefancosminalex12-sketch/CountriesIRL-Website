@@ -662,7 +662,32 @@ a:hover { color: var(--accent-dark); }
 }
 .join .lead { color: #c9cbcf; }
 
-.join__inner { max-width: 44rem; }
+.join__grid {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 5rem);
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.85fr);
+  align-items: start;
+}
+
+/* Deliberately short. Whatever goes here should fit in a couple of lines. */
+.join__aside {
+  padding-top: 1.25rem;
+  border-top: 1px solid #33373e;
+}
+.join__aside-title {
+  margin-bottom: 0.5rem;
+  font-size: var(--size-small);
+  color: #9aa0aa;
+}
+.join__aside-text {
+  font-size: var(--size-small);
+  line-height: 1.6;
+  color: #d5d7db;
+}
+
+@media (max-width: 52em) {
+  .join__grid { grid-template-columns: 1fr; }
+}
 
 .join__note {
   margin-top: 1.25rem;

@@ -430,6 +430,15 @@ window.SITE_CONFIG = {
     cta: { label: 'Start an application', href: 'mailto:join@countriesirl.com?subject=CountriesIRL%20application' },
     /* The lead above already promises a review, so this line carries the
        practical part instead of repeating it two lines later. */
+    /* The short block beside the form. Keep it to a line or two — the long
+       lists that used to live here swamped the section. */
+    aside: {
+      title: 'Who it\'s for',
+      text:
+        'Country accounts with 1K+ followers that post regularly, run by ' +
+        'someone who knows the place from the inside.'
+    },
+
     /* Second button, for anyone not ready to apply yet. */
     discordCta: { label: 'Join our Discord', href: 'https://discord.gg/w9qV9nzG2Y' },
     note: 'Tell us which country you represent and link your account. Not ready to apply? Come and ask in the Discord.'

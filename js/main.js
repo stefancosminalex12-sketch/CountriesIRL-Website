@@ -82,7 +82,13 @@
     /* {label, href} pairs — one config entry drives both the text and target. */
     each('[data-cta]', function (node) {
       var cta = get(node.dataset.cta);
-      if (!cta || !cta.href) return;
+      /* No entry in config means nothing to link to. Bailing out early used to
+         leave the empty button sitting there as a blank box, so hide it. */
+      if (!cta || !cta.href) {
+        node.hidden = true;
+        return;
+      }
+      node.hidden = false;
       node.textContent = cta.label || '';
       node.setAttribute('href', cta.href);
       if (isExternal(cta.href)) {
