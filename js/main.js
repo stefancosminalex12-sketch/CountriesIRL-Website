@@ -229,15 +229,6 @@
       if (window.ResizeObserver) new ResizeObserver(fill).observe(node);
     },
 
-    principles: function (node) {
-      var items = get('about.principles') || [];
-      node.replaceChildren.apply(node, items.map(function (item) {
-        var li = el('li');
-        li.append(el('h3', null, item.title), el('p', null, item.text));
-        return li;
-      }));
-    },
-
     social: function (node) {
       var items = (get('social') || []).filter(function (s) { return s && s.label && s.url; });
       node.replaceChildren.apply(node, items.map(function (item) {

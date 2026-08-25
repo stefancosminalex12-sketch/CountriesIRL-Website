@@ -101,32 +101,7 @@ window.SITE_CONFIG = {
         'a handful, the handful became a network, and it is still getting ' +
         'bigger.'
       ]
-    },
-
-    /* Three short statements about how the network actually operates.
-       Add a fourth if you need one — the layout takes any number. */
-    principles: [
-      {
-        title: 'Represented by people who know it',
-        text:
-          'A country should be covered by someone with a real connection to ' +
-          'it — born there, raised there, living there, or close enough that ' +
-          'it never shows. For smaller countries that often means creators ' +
-          'abroad who carry the culture with them.'
-      },
-      {
-        title: 'Entertainment first',
-        text:
-          'Nothing here is a lecture. Culture, history and current events ' +
-          'travel further when the content is worth watching on its own.'
-      },
-      {
-        title: 'Bigger than one account',
-        text:
-          'Members share what they have worked out, build on each other’s ' +
-          'reach, and take on projects no single page would get to alone.'
-      }
-    ]
+    }
   },
 
 /* ------------------------------------------------------------------
