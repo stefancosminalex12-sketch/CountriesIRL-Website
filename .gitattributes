@@ -1,0 +1,5 @@
+# Uploads through the GitHub web UI arrive with CRLF line endings, which
+# rewrites every line of every file and turns each sync into a whole-file
+# conflict. Normalise to LF in the repository regardless of the source.
+* text=auto eol=lf
+*.png binary

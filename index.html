@@ -25,7 +25,11 @@
   <link rel="icon" href="assets/logo/favicon.png" type="image/png" sizes="64x64">
   <link rel="apple-touch-icon" href="assets/logo/apple-touch-icon.png">
 
-  <link rel="stylesheet" href="css/style.css">
+  <!-- ?v= is a cache buster. GitHub Pages serves assets with a ten minute
+       max-age, so without it a fresh index.html can pair with a stale
+       stylesheet or config and render a half-broken page. Bump it on any
+       change to css/style.css, js/config.js or js/main.js. -->
+  <link rel="stylesheet" href="css/style.css?v=202608251659">
 </head>
 
 <body>
@@ -154,20 +158,16 @@
           <p class="lead" data-text="join.lead"></p>
           <div class="btn-row">
             <a class="btn btn--invert" data-cta="join.cta" href="#"></a>
+            <a class="btn btn--ghost" data-cta="join.discordCta" href="#"></a>
           </div>
           <p class="join__note" data-text="join.note"></p>
         </div>
 
-        <div class="join__lists">
-          <div>
-            <h3 class="join__list-title" data-text="join.who.title"></h3>
-            <ul class="join__list" data-list="join.who.items"></ul>
-          </div>
-          <div>
-            <h3 class="join__list-title" data-text="join.gets.title"></h3>
-            <ul class="join__list" data-list="join.gets.items"></ul>
-          </div>
-        </div>
+        <aside class="join__quote">
+          <blockquote>
+            <p data-text="join.quote"></p>
+          </blockquote>
+        </aside>
       </div>
     </section>
 
@@ -208,7 +208,7 @@
     </div>
   </footer>
 
-  <script src="js/config.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/config.js?v=202608251659"></script>
+  <script src="js/main.js?v=202608251659"></script>
 </body>
 </html>
