@@ -1,1 +1,4 @@
 .DS_Store
+
+# Local preview-server config, not part of the site
+.claude/
