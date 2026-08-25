@@ -25,7 +25,11 @@
   <link rel="icon" href="assets/logo/favicon.png" type="image/png" sizes="64x64">
   <link rel="apple-touch-icon" href="assets/logo/apple-touch-icon.png">
 
-  <link rel="stylesheet" href="css/style.css">
+  <!-- ?v= is a cache buster. GitHub Pages serves assets with a ten minute
+       max-age, so without it a fresh index.html can pair with a stale
+       stylesheet or config and render a half-broken page. Bump it on any
+       change to css/style.css, js/config.js or js/main.js. -->
+  <link rel="stylesheet" href="css/style.css?v=202608251647">
 </head>
 
 <body>
@@ -202,7 +206,7 @@
     </div>
   </footer>
 
-  <script src="js/config.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/config.js?v=202608251647"></script>
+  <script src="js/main.js?v=202608251647"></script>
 </body>
 </html>

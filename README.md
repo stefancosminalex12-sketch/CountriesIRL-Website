@@ -176,3 +176,14 @@ Replace them with your real creators, and work through the checklist at the end 
 
 No license file is included. Add one that suits the network before making the
 repository public — member descriptions, images and links belong to the members.
+
+## Deploying
+
+Push to `main` and GitHub Pages rebuilds within a minute.
+
+**One rule when you change `css/style.css`, `js/config.js` or `js/main.js`:**
+bump the `?v=` number on that file's tag in `index.html` (any new value —
+the date and time works). GitHub Pages serves assets with a ten minute
+cache, so without it a visitor can load the new `index.html` against an old
+stylesheet or config and see a half-broken page: buttons with no label,
+columns that do not appear, copy that is one version behind.
