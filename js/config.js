@@ -68,7 +68,7 @@ window.SITE_CONFIG = {
   stats: [
     { value: '300K+',           label: 'Followers across the network' },
     { value: 'auto:members',    label: 'Creators in the network' },
-    { value: 'Est. March 2026', label: 'CountriesIRL founded' }
+    { value: 'Est. 2026',       label: 'Founded in March, 2026' }
   ],
   /* ------------------------------------------------------------------
      4. ABOUT
