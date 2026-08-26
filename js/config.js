@@ -57,14 +57,7 @@ window.SITE_CONFIG = {
       'discovered.'
     ],
     primaryCta: { label: 'Apply to join', href: '#join' },
-    secondaryCta: { label: 'About', href: '#about' },
-    /* The three figures under the hero buttons. `value: 'auto:...'` is filled
-       in from the member list below, so the numbers can never go stale. */
-    stats: [
-      { value: 'auto:members',   label: 'Country accounts' },
-      { value: '300K+',          label: 'Followers across the network' },
-      { value: 'No.1',           label: 'In the world' }
-    ]
+    secondaryCta: { label: 'About', href: '#about' }
   },
 
   /* ------------------------------------------------------------------

@@ -1,0 +1,404 @@
+{
+ "generatedAt": "2026-08-26T12:08:44.781Z",
+ "coverageHours": 0.43,
+ "accounts": 39,
+ "totals": {
+  "followers": 254541,
+  "hour": null,
+  "day": null,
+  "views": null,
+  "viewsFrom": 0
+ },
+ "list": [
+  {
+   "username": "romaniairl",
+   "label": "Romania",
+   "followers": 53253,
+   "posts": 196,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "poland.irl",
+   "label": "Poland",
+   "followers": 23948,
+   "posts": 205,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "afghanistan.irl",
+   "label": "Afghanistan",
+   "followers": 21703,
+   "posts": 81,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "belgiumirl",
+   "label": "Belgium",
+   "followers": 21223,
+   "posts": 80,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "unitedstatesirl",
+   "label": "United States",
+   "followers": 12742,
+   "posts": 109,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "iraqirl_",
+   "label": "Iraq",
+   "followers": 10890,
+   "posts": 85,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "finlandirl_",
+   "label": "Finland",
+   "followers": 9870,
+   "posts": 125,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "czechrepublicirl",
+   "label": "Czech Republic",
+   "followers": 8940,
+   "posts": 113,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "lithuaniairl",
+   "label": "Lithuania",
+   "followers": 7067,
+   "posts": 52,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "sanmarinoirl",
+   "label": "San Marino",
+   "followers": 6988,
+   "posts": 177,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "lebanonirlmain",
+   "label": "Lebanon",
+   "followers": 6451,
+   "posts": 11,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "bangladesh.irl_",
+   "label": "Bangladesh",
+   "followers": 5824,
+   "posts": 47,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "italyirl",
+   "label": "Italy",
+   "followers": 5812,
+   "posts": 35,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "hungary.irl_",
+   "label": "Hungary",
+   "followers": 5399,
+   "posts": 115,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "sovietunionirl",
+   "label": "USSR",
+   "followers": 4988,
+   "posts": 339,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "texas.irl_",
+   "label": "Texas",
+   "followers": 4387,
+   "posts": 99,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "russiairlmain",
+   "label": "Russia",
+   "followers": 4099,
+   "posts": 130,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "byzantineempire.irl",
+   "label": "Byzantine Empire",
+   "followers": 3944,
+   "posts": 54,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "macedonia.irl",
+   "label": "Macedonia",
+   "followers": 3748,
+   "posts": 111,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "ottoman_irl",
+   "label": "Ottoman Empire",
+   "followers": 2947,
+   "posts": 124,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "syriairlmain",
+   "label": "Syria",
+   "followers": 2735,
+   "posts": 57,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "nebraskairl",
+   "label": "Nebraska",
+   "followers": 2475,
+   "posts": 299,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "alabama.irl",
+   "label": "Alabama",
+   "followers": 2473,
+   "posts": 70,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "fijiirlmain",
+   "label": "Fiji",
+   "followers": 2441,
+   "posts": 76,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "turkmenistanirl",
+   "label": "Turkmenistan",
+   "followers": 2412,
+   "posts": 61,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "gibraltar_irl",
+   "label": "Gibraltar",
+   "followers": 2332,
+   "posts": 46,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "franceirlmain",
+   "label": "France",
+   "followers": 1834,
+   "posts": 36,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "the.republic.of.serbia",
+   "label": "Serbia",
+   "followers": 1725,
+   "posts": 13,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "pakistaniirl",
+   "label": "Pakistan",
+   "followers": 1689,
+   "posts": 61,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "sakartveloirl",
+   "label": "Georgia",
+   "followers": 1597,
+   "posts": 116,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "greeceirlmain",
+   "label": "Greece",
+   "followers": 1520,
+   "posts": 70,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "chinairlmain",
+   "label": "China",
+   "followers": 1425,
+   "posts": 67,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "croatiairl_",
+   "label": "Croatia",
+   "followers": 1424,
+   "posts": 31,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "portugalirlmain",
+   "label": "Portugal",
+   "followers": 1163,
+   "posts": 58,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "ohio_irl",
+   "label": "Ohio",
+   "followers": 1030,
+   "posts": 128,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "bahrainirl_",
+   "label": "Bahrain",
+   "followers": 816,
+   "posts": 68,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "romanempireirl",
+   "label": "Roman Empire",
+   "followers": 534,
+   "posts": 18,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "panamairl",
+   "label": "Panamá",
+   "followers": 526,
+   "posts": 22,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  },
+  {
+   "username": "brituishirl",
+   "label": "Brituishirl",
+   "followers": 167,
+   "posts": 13,
+   "views": null,
+   "hour": null,
+   "day": null,
+   "approximate": false
+  }
+ ]
+}

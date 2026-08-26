@@ -29,7 +29,7 @@
        max-age, so without it a fresh index.html can pair with a stale
        stylesheet or config and render a half-broken page. Bump it on any
        change to css/style.css, js/config.js or js/main.js. -->
-  <link rel="stylesheet" href="css/style.css?v=202608251659">
+  <link rel="stylesheet" href="css/style.css?v=202608261220">
 </head>
 
 <body>
@@ -94,10 +94,10 @@
 
     <!-- The network in numbers. Its own band, below the fold, so the figures
          count themselves up as you scroll onto them. -->
-    <section class="stats-band" aria-label="The network in numbers">
-      <div class="container">
-        <ul class="stats" data-render="stats" data-reveal></ul>
-      </div>
+    <!-- Filled from data/stats.json, which the follower tracker writes. The
+         band stays hidden until real figures arrive: no data, no claim. -->
+    <section class="stats-band" aria-label="The network in numbers" hidden>
+      <div class="container network" id="network"></div>
     </section>
 
     <!-- ================= ABOUT ================= -->
@@ -208,7 +208,7 @@
     </div>
   </footer>
 
-  <script src="js/config.js?v=202608251659"></script>
-  <script src="js/main.js?v=202608251659"></script>
+  <script src="js/config.js?v=202608261220"></script>
+  <script src="js/main.js?v=202608261220"></script>
 </body>
 </html>

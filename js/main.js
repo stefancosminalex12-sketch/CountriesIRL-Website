@@ -150,91 +150,6 @@
   var renderers = {
     /* Hero figures. Anything written as 'auto:…' in config is counted from the
        member list, so the numbers cannot drift away from the truth. */
-    stats: function (node) {
-      var auto = {
-        'auto:members': String(members.length),
-        'auto:countries': String(countriesByCount().length)
-      };
-      var items = (get('hero.stats') || []).filter(function (s) { return s && s.label; });
-      node.replaceChildren.apply(node, items.map(function (item) {
-        var text = auto[item.value] || item.value || '';
-        var li = el('li');
-        var value = el('span', 'stats__value', text);
-        /* Numbers count up on reveal, suffix and all ('100M+'); anything that
-           does not start with a digit ('No.1') simply appears. */
-        var number = /^(\d+)(.*)$/.exec(text);
-        if (number) {
-          value.dataset.count = number[1];
-          value.dataset.suffix = number[2];
-        }
-        li.append(value, el('span', 'stats__label', item.label));
-        return li;
-      }));
-    },
-
-    /* A moving strip of every flag in the network. The track is a run of
-       identical rows that slides left by exactly one row's width, so the row
-       arriving behind is pixel-identical to the one leaving and the loop point
-       never shows. Decorative only — screen readers skip it via aria-hidden. */
-    flagMarquee: function (node) {
-      var sources = [];
-      members.forEach(function (member) {
-        var source = flagSource(member);
-        if (source && sources.indexOf(source) === -1) sources.push(source);
-      });
-      if (!sources.length) return;
-
-      function row() {
-        var div = el('div', 'marquee__row');
-        sources.forEach(function (source) {
-          var img = el('img', 'marquee__flag');
-          img.src = source;
-          img.alt = '';
-          img.width = 39;
-          img.height = 26;
-          /* Every copy crosses the screen during the loop, and they all reuse
-             the first row's cached files, so there is nothing worth deferring
-             — while a lazy flag could scroll into view still blank. */
-          img.decoding = 'async';
-          div.append(img);
-        });
-        return div;
-      }
-
-      var track = el('div', 'marquee__track');
-      track.append(row());
-      node.replaceChildren(track);
-
-      /* Flag size is fixed in CSS, so a row measures the same whether or not
-         the images have arrived. This width is the tile the loop repeats on. */
-      var period = track.firstElementChild.getBoundingClientRect().width;
-      if (!period) return;
-
-      track.style.setProperty('--marquee-shift', period + 'px');
-
-      /* The slide consumes one row, so the rows behind it have to cover the
-         strip by themselves — otherwise the end of the track drifts into view
-         and leaves a blank stretch before the loop restarts.
-
-         Grows only. Appending leaves the running animation alone, whereas
-         rebuilding the track would snap it back to the start of the loop. */
-      function fill() {
-        var visible = node.getBoundingClientRect().width || window.innerWidth;
-        var needed = Math.ceil(visible / period) + 1;
-        while (track.children.length < needed) track.append(row());
-      }
-
-      fill();
-
-      /* Both, deliberately. The observer catches every reason the strip can
-         change width, not just a window drag; the resize event covers the
-         case where observer callbacks are not being delivered because the
-         page is not painting. fill() is idempotent, so running twice costs
-         a comparison. */
-      window.addEventListener('resize', fill);
-      if (window.ResizeObserver) new ResizeObserver(fill).observe(node);
-    },
-
     social: function (node) {
       var items = (get('social') || []).filter(function (s) { return s && s.label && s.url; });
       node.replaceChildren.apply(node, items.map(function (item) {
@@ -400,6 +315,10 @@
   function memberCard(member) {
     var card = el('article', 'member');
     if (member.country) card.dataset.country = member.country;
+
+    /* The handle is how a row is matched to its figures in data/stats.json. */
+    var handle = memberHandle(member);
+    if (handle) card.dataset.handle = handle;
 
     var head = el('div', 'member__head');
     var meta = el('div');
@@ -608,6 +527,164 @@
   }
 
   /* ----------------------------------------------------------------------
+     Live figures
+     --------------------------------------------------------------------
+     data/stats.json is written by the follower tracker (see the README). It
+     carries the current follower count per account plus the 1h and 24h
+     movement, already worked out. Anything the tracker could not measure
+     arrives as null and is simply not drawn, so the page never invents a
+     number or shows a dash where a figure should be.
+     ---------------------------------------------------------------------- */
+
+  var STATS_URL = 'data/stats.json';
+
+  function group(n) {
+    return Math.abs(n).toLocaleString('en-GB');
+  }
+
+  function signed(n) {
+    return (n < 0 ? '\u2212' : '+') + group(n);
+  }
+
+  /* 'brituishirl' out of 'https://www.instagram.com/brituishirl/'. */
+  function handleFrom(url) {
+    var match = /instagram\.com\/([^\/?#]+)/i.exec(String(url || ''));
+    return match ? match[1].toLowerCase() : null;
+  }
+
+  function memberHandle(member) {
+    var found = null;
+    (member.links || []).forEach(function (link) {
+      if (!found) found = handleFrom(link && link.url);
+    });
+    return found;
+  }
+
+  function trendItem(label, value) {
+    var li = el('li', 'trend');
+    li.append(
+      el('span', 'trend__value', signed(value)),
+      el('span', 'trend__label', label)
+    );
+    if (value < 0) li.dataset.direction = 'down';
+    return li;
+  }
+
+  function renderNetwork(stats) {
+    var band = document.querySelector('.stats-band');
+    var node = document.getElementById('network');
+    if (!band || !node || !stats || !stats.totals) return;
+
+    var totals = stats.totals;
+    var figure = el('div', 'network__figure');
+    var value = el('p', 'network__value', group(totals.followers));
+    value.dataset.count = String(totals.followers);
+    figure.append(value, el('p', 'network__label',
+      'followers across ' + plural(stats.accounts, 'account')));
+
+    node.replaceChildren(figure);
+
+    /* The tracker needs an hour of readings before it can say what changed in
+       an hour, and a day before it can say what changed in a day. */
+    var trends = el('ul', 'network__trends');
+    if (totals.hour !== null && totals.hour !== undefined) {
+      trends.append(trendItem('past hour', totals.hour));
+    }
+    if (totals.day !== null && totals.day !== undefined) {
+      trends.append(trendItem('past 24 hours', totals.day));
+    }
+    if (trends.children.length) node.append(trends);
+
+    var stamp = el('p', 'network__stamp');
+    var when = new Date(stats.generatedAt);
+    stamp.textContent = 'Counted ' + when.toLocaleDateString('en-GB', {
+      day: 'numeric', month: 'long'
+    }) + ' at ' + when.toLocaleTimeString('en-GB', {
+      hour: '2-digit', minute: '2-digit'
+    });
+    node.append(stamp);
+
+    band.hidden = false;
+    band.setAttribute('data-reveal', '');
+    revealOn(band);
+  }
+
+  /* Follower count and 24h movement on each row of the roster. */
+  function renderMemberStats(stats) {
+    var byHandle = {};
+    (stats.list || []).forEach(function (account) {
+      byHandle[account.username.toLowerCase()] = account;
+    });
+
+    each('.member', function (card) {
+      var handle = card.dataset.handle;
+      var account = handle && byHandle[handle];
+      if (!account) return;
+
+      var existing = card.querySelector('.member__stat');
+      if (existing) existing.remove();
+
+      var wrap = el('div', 'member__stat');
+      var count = el('span', 'member__count', group(account.followers));
+      if (account.approximate) count.title = 'Instagram rounds this one';
+      wrap.append(count);
+
+      if (account.day !== null && account.day !== undefined && account.day !== 0) {
+        var delta = el('span', 'member__delta', signed(account.day));
+        if (account.day < 0) delta.dataset.direction = 'down';
+        wrap.append(delta);
+      }
+
+      var head = card.querySelector('.member__head');
+      if (head) head.append(wrap);
+    });
+  }
+
+  /* How often an open page re-reads the figures. The file only changes when
+     the tracker publishes, so this is cheap: a few hundred bytes, and the
+     browser gets a 304 whenever nothing has moved. */
+  var STATS_POLL_MS = 60000;
+
+  function initLiveFigures() {
+    if (typeof fetch !== 'function') return;
+
+    /* Same cache-buster the assets use, so a fresh page never reads figures
+       the browser cached an hour ago. */
+    var version = (document.currentScript && document.currentScript.src || '').split('?v=')[1];
+    var url = STATS_URL + (version ? '?v=' + version : '?t=' + Date.now());
+
+    fetch(url, { cache: 'no-cache' })
+      .then(function (response) {
+        if (!response.ok) throw new Error('stats.json ' + response.status);
+        return response.json();
+      })
+      .then(function (stats) {
+        renderNetwork(stats);
+        renderMemberStats(stats);
+      })
+      .catch(function (error) {
+        /* No figures is a fine outcome: the band stays hidden and the roster
+           reads as it did before. Nothing on the page depends on this. */
+        console.warn('CountriesIRL: live figures unavailable —', error.message);
+      });
+  }
+
+  function pollLiveFigures() {
+    fetch(STATS_URL + '?t=' + Date.now(), { cache: 'no-store' })
+      .then(function (response) { return response.ok ? response.json() : null; })
+      .then(function (stats) {
+        if (!stats) return;
+        renderNetwork(stats);
+        renderMemberStats(stats);
+        /* The band has already been revealed by now, so show it outright
+           rather than animating the new figures in from nothing. */
+        var band = document.querySelector('.stats-band');
+        if (band) band.setAttribute('data-revealed', 'true');
+      })
+      .catch(function () { /* a failed poll just means the last figures stand */ });
+  }
+
+  /* ----------------------------------------------------------------------
      Scroll reveal
      --------------------------------------------------------------------
      The hero figures sit low in the dark band, so they arrive as you scroll:
@@ -628,7 +705,9 @@
       var t = Math.min((now - start) / duration, 1);
       /* Ease out — fast first, settles on the real number. */
       var eased = 1 - Math.pow(1 - t, 3);
-      node.textContent = Math.round(target * eased) + suffix;
+      /* Grouped as it climbs — 254,541 reads as a number, 254541 reads as
+         a serial. */
+      node.textContent = Math.round(target * eased).toLocaleString('en-GB') + suffix;
       if (t < 1) window.requestAnimationFrame(frame);
     }
 
@@ -642,6 +721,22 @@
       if (!node.contains(value)) return;
       countUp(value, Number(value.dataset.count));
     });
+  }
+
+  /* Reveal a single node that arrived after the initial pass. */
+  function revealOn(node) {
+    if (STILL.matches || !('IntersectionObserver' in window)) {
+      reveal(node);
+      return;
+    }
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        reveal(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.01, rootMargin: '0px 0px -8% 0px' });
+    observer.observe(node);
   }
 
   function initReveal() {
@@ -679,4 +774,6 @@
   applyMeta();
   initNav();
   initReveal();
+  initLiveFigures();
+  if (typeof fetch === 'function') window.setInterval(pollLiveFigures, STATS_POLL_MS);
 })();

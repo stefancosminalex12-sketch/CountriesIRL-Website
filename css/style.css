@@ -469,50 +469,78 @@ a:hover { color: var(--accent-dark); }
    the block above, this only opens the gap between them. */
 .hero__description > p + p { margin-top: 1em; }
 
-/* The network in numbers — its own band under the hero, on paper. */
+/* The network in numbers — real counts from the follower tracker. */
 .stats-band {
   padding-block: clamp(2.75rem, 5vw, 4.5rem);
   border-bottom: 1px solid var(--line);
 }
 
-.stats {
+.network {
   display: grid;
-  gap: clamp(2rem, 5vw, 4rem);
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem clamp(2rem, 5vw, 4rem);
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
 }
-.stats li {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--line-strong);
-}
-.stats__value {
+
+.network__value {
   font-family: var(--font-display);
-  font-size: clamp(2.25rem, 1.3rem + 2.8vw, 3.5rem);
+  font-size: clamp(2.5rem, 1.4rem + 3.2vw, 4rem);
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
 }
-.stats__label {
+.network__label {
+  margin-top: 0.625rem;
   font-size: var(--size-small);
   color: var(--muted);
 }
 
-/* Only the figures animate. A fade on every block reads as a template;
-   one thing moving, where the movement means something, does not. */
-.stats li {
+/* Movement sits beside the total, quieter than it and in the same serif, so
+   the two read as one figure rather than a dashboard of tiles. */
+.network__trends {
+  display: flex;
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+.trend__value {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.trend__label {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: var(--size-small);
+  color: var(--muted);
+}
+/* Only a fall is coloured. Growth is the expected direction and does not need
+   announcing in red and green. */
+.trend[data-direction="down"] .trend__value { color: var(--accent); }
+
+.network__stamp {
+  grid-column: 1 / -1;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: var(--size-label);
+  color: var(--muted);
+}
+
+/* Arrives on scroll, and the total counts itself up as it does. */
+.stats-band[data-reveal] .network > * {
   opacity: 0;
-  transform: translateY(1.25rem);
+  transform: translateY(1rem);
   transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
-.stats li:nth-child(2) { transition-delay: 0.12s; }
-.stats li:nth-child(3) { transition-delay: 0.24s; }
-.stats[data-revealed] li { opacity: 1; transform: none; }
+.stats-band[data-reveal] .network__trends { transition-delay: 0.1s; }
+.stats-band[data-reveal] .network__stamp { transition-delay: 0.18s; }
+.stats-band[data-revealed] .network > * { opacity: 1; transform: none; }
 
-@media (max-width: 46em) {
-  .stats { grid-template-columns: 1fr; gap: 1.75rem; }
+@media (max-width: 40em) {
+  .network { grid-template-columns: 1fr; align-items: start; }
+  .network__trends { gap: 2rem; }
 }
 
 /* --------------------------------------------------------------------------
@@ -607,6 +635,28 @@ a:hover { color: var(--accent-dark); }
   font-weight: 700;
   color: var(--muted);
 }
+
+/* Pushed to the right of the row, aligned on the digits so the column reads
+   down cleanly whatever the name beside it is doing. */
+.member__stat {
+  margin-left: auto;
+  padding-left: 0.75rem;
+  text-align: right;
+}
+.member__count {
+  display: block;
+  font-size: var(--size-small);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+}
+.member__delta {
+  display: block;
+  margin-top: 0.0625rem;
+  font-size: var(--size-label);
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+.member__delta[data-direction="down"] { color: var(--accent); }
 
 .member__name { margin-bottom: 0.0625rem; }
 .member__country { font-size: var(--size-small); color: var(--muted); }
