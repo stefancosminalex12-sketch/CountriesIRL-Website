@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>CountriesIRL — live figures</title>
-  <meta name="description" content="Live follower, view and like counts for every account in the CountriesIRL network, ranked, with hourly and daily movement.">
+  <title>CountriesIRL — the network in numbers</title>
+  <meta name="description" content="Follower counts for every account in the CountriesIRL network, ranked by size across Instagram, YouTube and TikTok.">
   <link rel="canonical" href="https://countriesirl.com/stats/">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#16181c">
@@ -13,8 +13,8 @@
   <link rel="icon" href="../assets/logo/favicon.png" type="image/png" sizes="64x64">
   <link rel="apple-touch-icon" href="../assets/logo/apple-touch-icon.png">
 
-  <link rel="stylesheet" href="../css/style.css?v=202608261241">
-  <link rel="stylesheet" href="board.css?v=202608261241">
+  <link rel="stylesheet" href="../css/style.css?v=202608261658">
+  <link rel="stylesheet" href="board.css?v=202608261658">
 </head>
 
 <body>
@@ -41,15 +41,11 @@
 
     <section class="board-head">
       <div class="container">
-        <p class="board-live" id="live" data-state="waiting">
-          <span class="board-live__dot" aria-hidden="true"></span>
-          <span id="live-text">connecting</span>
-        </p>
-
-        <h1>Live figures</h1>
+        <h1>The network in numbers</h1>
         <p class="lead">Followers for every account in the network, on each
-          platform it posts to. Instagram is re-read continuously; YouTube and
-          TikTok are read each time the figures are published.</p>
+          platform it posts to. YouTube is read from its official API each time
+          the figures are published; Instagram and TikTok show the last count
+          taken.</p>
 
         <div class="totals" id="totals"></div>
       </div>
@@ -95,6 +91,6 @@
     </div>
   </footer>
 
-  <script src="board.js?v=202608261241"></script>
+  <script src="board.js?v=202608261658"></script>
 </body>
 </html>

@@ -1,8 +1,7 @@
 /* ==========================================================================
-   CountriesIRL — live figures
+   CountriesIRL — the network in numbers
 
-   Reads ../data/stats.json every few seconds and keeps the table in step with
-   it. Rows do not jump when the order changes: their old positions are
+   Reads ../data/stats.json and keeps the table in step with it. Rows do not jump when the order changes: their old positions are
    measured, the new order is written, and each row is animated from where it
    was to where it now belongs.
 
@@ -15,20 +14,16 @@
   'use strict';
 
   var STATS_URL = '../data/stats.json';
-  var POLL_MS = 5000;
-  /* Two missed polls in a row and the badge stops claiming to be live. */
-  var STALE_AFTER = POLL_MS * 2.5;
+  /* Figures are republished every few minutes at most. */
+  var POLL_MS = 600000;
 
   var rowsNode = document.getElementById('rows');
   var totalsNode = document.getElementById('totals');
-  var liveNode = document.getElementById('live');
-  var liveText = document.getElementById('live-text');
   var countNode = document.getElementById('board-count');
   var noteNode = document.getElementById('note');
 
   var sort = 'followers';
   var lastGeneratedAt = null;
-  var lastOkAt = 0;
   var rowIndex = {};      /* username -> row element */
   var previousValues = {}; /* username -> last rendered numbers, for flashing */
 
@@ -201,9 +196,18 @@
 
   /* ------------------------------------------------------------- the head */
 
+  /* Rounded down with a plus, for the same reason as the home page: these are
+     counted periodically, not streamed. */
+  function short(value) {
+    if (value >= 1e6) return group(Math.floor(value / 1e6)) + 'M+';
+    if (value >= 1e5) return group(Math.floor(value / 1e4) * 10) + 'K+';
+    if (value >= 1e3) return group(Math.floor(value / 1e3)) + 'K+';
+    return group(value);
+  }
+
   function totalBlock(value, label, hour, day, note) {
     var block = el('div', 'total');
-    block.append(el('p', 'total__value', group(value)), el('p', 'total__label', label));
+    block.append(el('p', 'total__value', short(value)), el('p', 'total__label', label));
 
     var moves = [];
     if (present(hour) && hour !== 0) moves.push(signed(hour) + '/h');
@@ -234,42 +238,28 @@
 
   /* --------------------------------------------------------------- status */
 
-  function setLive(state, text) {
-    liveNode.dataset.state = state;
-    liveText.textContent = text;
-  }
 
-  function describeAge(stats) {
-    var published = new Date(stats.generatedAt);
-    var mins = Math.round((Date.now() - published.getTime()) / 60000);
-    if (mins < 2) return 'published just now';
-    if (mins < 60) return 'published ' + mins + ' minutes ago';
-    var hours = Math.round(mins / 60);
-    return 'published ' + hours + (hours === 1 ? ' hour' : ' hours') + ' ago';
-  }
 
   function renderNote(stats) {
-    var parts = [describeAge(stats)];
-    if (stats.coverageHours < 1) {
-      parts.push('hourly and daily movement appears once the tracker has been ' +
-        'running that long — ' + Math.round(stats.coverageHours * 60) +
-        ' minutes of readings so far');
-    } else if (stats.coverageHours < 24) {
-      parts.push('daily movement appears after 24 hours of readings — ' +
-        Math.round(stats.coverageHours) + ' hours so far');
-    }
-    parts.push('YouTube rounds its subscriber counts; every other figure is exact');
+    var published = new Date(stats.generatedAt);
+    var parts = ['Last counted ' + published.toLocaleDateString('en-GB', {
+      day: 'numeric', month: 'long'
+    }) + ' at ' + published.toLocaleTimeString('en-GB', {
+      hour: '2-digit', minute: '2-digit'
+    })];
+
+    parts.push('YouTube subscriber counts are rounded by YouTube itself; ' +
+      'every other figure is exact as at that time');
+
     noteNode.textContent = parts.join('. ') + '.';
   }
 
   /* ----------------------------------------------------------------- poll */
 
   function apply(stats) {
-    lastOkAt = Date.now();
 
     /* Nothing new published: keep the table exactly as it is. */
     if (stats.generatedAt === lastGeneratedAt) {
-      setLive('live', 'live');
       return;
     }
     lastGeneratedAt = stats.generatedAt;
@@ -277,10 +267,6 @@
     renderTotals(stats);
     renderRows(stats.list);
     renderNote(stats);
-    setLive('live', 'updated');
-    window.setTimeout(function () {
-      if (Date.now() - lastOkAt < STALE_AFTER) setLive('live', 'live');
-    }, 1500);
   }
 
   function poll() {
@@ -290,11 +276,7 @@
         return response.json();
       })
       .then(apply)
-      .catch(function () {
-        if (Date.now() - lastOkAt > STALE_AFTER) {
-          setLive('stale', lastGeneratedAt ? 'reconnecting' : 'no figures published yet');
-        }
-      });
+      .catch(function () { /* the last figures simply stand */ });
   }
 
   /* ----------------------------------------------------------------- init */

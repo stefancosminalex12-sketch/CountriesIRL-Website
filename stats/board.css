@@ -1,5 +1,5 @@
 /* ==========================================================================
-   CountriesIRL — live figures page
+   CountriesIRL — network figures page
    Builds on css/style.css: same palette, same type, same hairlines. Only the
    parts specific to the table live here.
    ========================================================================== */
@@ -14,33 +14,6 @@
   margin-bottom: 1rem;
 }
 .board-head .lead { color: #c9cbcf; max-width: 54ch; }
-
-/* The badge only claims to be live while the figures are actually arriving. */
-.board-live {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-  font-size: var(--size-label);
-  letter-spacing: 0.06em;
-  text-transform: lowercase;
-  color: #9aa0aa;
-}
-.board-live__dot {
-  width: 0.4375rem;
-  height: 0.4375rem;
-  border-radius: 50%;
-  background: #6f7681;
-}
-.board-live[data-state="live"] .board-live__dot {
-  background: #4ea172;
-  animation: pulse 2.4s ease-in-out infinite;
-}
-.board-live[data-state="stale"] .board-live__dot { background: var(--accent-light); }
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
-}
 
 .totals {
   display: grid;
@@ -200,7 +173,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .board-live[data-state="live"] .board-live__dot { animation: none; }
   .row { transition: none !important; }
   .col-num[data-flash] { animation: none; }
 }

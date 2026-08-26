@@ -629,10 +629,22 @@
     return li;
   }
 
+  /* Rounded down, with a plus. The figures are counted periodically rather
+     than continuously, so a precise number would imply a precision the page
+     does not have — and rounding down means the claim is always true. */
+  function rounded(value) {
+    if (value >= 1e6) return { n: Math.floor(value / 1e6), suffix: 'M+' };
+    if (value >= 1e5) return { n: Math.floor(value / 1e4) * 10, suffix: 'K+' };
+    if (value >= 1e3) return { n: Math.floor(value / 1e3), suffix: 'K+' };
+    return { n: value, suffix: '' };
+  }
+
   function figure(value, label, hour, day) {
     var item = el('div', 'figure');
-    var number = el('p', 'figure__value', group(value));
-    number.dataset.count = String(value);
+    var short = rounded(value);
+    var number = el('p', 'figure__value', group(short.n) + short.suffix);
+    number.dataset.count = String(short.n);
+    number.dataset.suffix = short.suffix;
     item.append(number, el('p', 'figure__label', label));
 
     var moves = [];
@@ -669,12 +681,8 @@
     }
 
     var stamp = el('p', 'network__stamp');
-    var when = new Date(stats.generatedAt);
-    stamp.append(
-      document.createTextNode(plural(stats.accounts, 'account') + ' \u00b7 counted ' +
-        when.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) + ' \u00b7 ')
-    );
-    var more = el('a', null, 'every account, live');
+    stamp.append(document.createTextNode(plural(stats.accounts, 'account') + ' \u00b7 '));
+    var more = el('a', null, 'every account, counted');
     more.href = 'stats/';
     stamp.append(more);
 
@@ -716,10 +724,9 @@
     });
   }
 
-  /* How often an open page re-reads the figures. The file only changes when
-     the tracker publishes, so this is cheap: a few hundred bytes, and the
-     browser gets a 304 whenever nothing has moved. */
-  var STATS_POLL_MS = 60000;
+  /* The figures are republished every few minutes at most, so an open page
+     checks occasionally rather than constantly. */
+  var STATS_POLL_MS = 600000;
 
   function initLiveFigures() {
     if (typeof fetch !== 'function') return;
