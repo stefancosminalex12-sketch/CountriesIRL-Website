@@ -175,8 +175,6 @@
   }
 
   function sortValue(account) {
-    if (sort === 'views') return account.views || 0;
-    if (sort === 'likes') return account.likes || 0;
     if (sort === 'day') return account.day === null ? -Infinity : account.day;
     if (sort === 'hour') return account.hour === null ? -Infinity : account.hour;
     return account.followers;
@@ -223,23 +221,15 @@
 
   function renderTotals(stats) {
     var t = stats.totals;
-    var blocks = [
-      totalBlock(t.followers, 'followers', t.hour, t.day,
-        [t.instagram && group(t.instagram) + ' Instagram',
-         t.youtube && group(t.youtube) + ' YouTube',
-         t.tiktok && group(t.tiktok) + ' TikTok'].filter(Boolean).join(' · '))
-    ];
 
-    if (t.views) {
-      blocks.push(totalBlock(t.views, 'views', t.viewsHour, t.viewsDay,
-        'lifetime, across ' + stats.platforms.youtube + ' YouTube channels'));
-    }
-    if (t.likes) {
-      blocks.push(totalBlock(t.likes, 'likes', t.likesHour, t.likesDay,
-        'across ' + stats.platforms.tiktok + ' TikTok accounts'));
-    }
+    /* Followers only. Views and likes exist for some platforms and not others,
+       and mixing them into one figure here would say less than it seems to. */
+    var block = totalBlock(t.followers, 'followers', t.hour, t.day,
+      [t.instagram && group(t.instagram) + ' Instagram',
+       t.youtube && group(t.youtube) + ' YouTube',
+       t.tiktok && group(t.tiktok) + ' TikTok'].filter(Boolean).join(' \u00b7 '));
 
-    totalsNode.replaceChildren.apply(totalsNode, blocks);
+    totalsNode.replaceChildren(block);
   }
 
   /* --------------------------------------------------------------- status */

@@ -150,6 +150,65 @@
   var renderers = {
     /* Hero figures. Anything written as 'auto:…' in config is counted from the
        member list, so the numbers cannot drift away from the truth. */
+    flagMarquee: function (node) {
+      var sources = [];
+      members.forEach(function (member) {
+        var source = flagSource(member);
+        if (source && sources.indexOf(source) === -1) sources.push(source);
+      });
+      if (!sources.length) return;
+
+      function row() {
+        var div = el('div', 'marquee__row');
+        sources.forEach(function (source) {
+          var img = el('img', 'marquee__flag');
+          img.src = source;
+          img.alt = '';
+          img.width = 39;
+          img.height = 26;
+          /* Every copy crosses the screen during the loop, and they all reuse
+             the first row's cached files, so there is nothing worth deferring
+             — while a lazy flag could scroll into view still blank. */
+          img.decoding = 'async';
+          div.append(img);
+        });
+        return div;
+      }
+
+      var track = el('div', 'marquee__track');
+      track.append(row());
+      node.replaceChildren(track);
+
+      /* Flag size is fixed in CSS, so a row measures the same whether or not
+         the images have arrived. This width is the tile the loop repeats on. */
+      var period = track.firstElementChild.getBoundingClientRect().width;
+      if (!period) return;
+
+      track.style.setProperty('--marquee-shift', period + 'px');
+
+      /* The slide consumes one row, so the rows behind it have to cover the
+         strip by themselves — otherwise the end of the track drifts into view
+         and leaves a blank stretch before the loop restarts.
+
+         Grows only. Appending leaves the running animation alone, whereas
+         rebuilding the track would snap it back to the start of the loop. */
+      function fill() {
+        var visible = node.getBoundingClientRect().width || window.innerWidth;
+        var needed = Math.ceil(visible / period) + 1;
+        while (track.children.length < needed) track.append(row());
+      }
+
+      fill();
+
+      /* Both, deliberately. The observer catches every reason the strip can
+         change width, not just a window drag; the resize event covers the
+         case where observer callbacks are not being delivered because the
+         page is not painting. fill() is idempotent, so running twice costs
+         a comparison. */
+      window.addEventListener('resize', fill);
+      if (window.ResizeObserver) new ResizeObserver(fill).observe(node);
+    },
+
     social: function (node) {
       var items = (get('social') || []).filter(function (s) { return s && s.label && s.url; });
       node.replaceChildren.apply(node, items.map(function (item) {
