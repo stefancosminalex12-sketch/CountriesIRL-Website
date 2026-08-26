@@ -42,7 +42,6 @@ window.SITE_CONFIG = {
      ------------------------------------------------------------------ */
   hero: {
     // The small line above the headline. Set it to '' to hide it entirely.
-    eyebrow: 'EST. 2026',
     title: 'A global network of creators connecting the world.',
     // One entry per paragraph.
     description: [
@@ -448,6 +447,8 @@ window.SITE_CONFIG = {
        practical part instead of repeating it two lines later. */
     /* The line beside the form. Keep it to one sentence. */
     quote: 'Built by the community, run by the community.',
+    /* Sits under the quote, quietly. */
+    founded: 'Created in March 2026',
 
     /* Second button, for anyone not ready to apply yet. */
     discordCta: { label: 'Join our Discord', href: 'https://discord.gg/w9qV9nzG2Y' },

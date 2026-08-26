@@ -404,7 +404,9 @@ a:hover { color: var(--accent-dark); }
   align-items: center;
   min-height: calc(100vh - var(--header-h));
   min-height: calc(100svh - var(--header-h));
-  padding-block: clamp(3rem, 7vw, 6rem) clamp(7rem, 12vw, 9rem);
+  /* Bottom padding clears the flag strip, which is pinned to the foot of the
+     section — the strip is part of the first screen, not something below it. */
+  padding-block: clamp(2rem, 5vw, 4rem) clamp(6.5rem, 10vw, 8rem);
   position: relative;
   overflow: hidden;
   background: var(--ink);
@@ -449,13 +451,6 @@ a:hover { color: var(--accent-dark); }
    viewport, a single row is the tile that repeats. */
 @keyframes marquee {
   to { transform: translateX(calc(-1 * var(--marquee-shift, 0px))); }
-}
-
-.hero__eyebrow {
-  margin-bottom: 1.5rem;
-  font-size: var(--size-small);
-  letter-spacing: 0.08em;
-  color: #8d939d;
 }
 
 .hero h1 { max-width: 19ch; margin-bottom: 1.75rem; }
@@ -522,6 +517,25 @@ a:hover { color: var(--accent-dark); }
 }
 .stats-band[data-reveal] .network__stamp { transition-delay: 0.15s; }
 .stats-band[data-revealed] .network > * { opacity: 1; transform: none; }
+
+@media (max-width: 46em) {
+  .marquee__flag { width: 2.125rem; height: 1.4375rem; }
+}
+
+/* On a short screen the headline, the two paragraphs and the buttons together
+   push the flag strip off the bottom. Tighten the type rather than let the
+   strip fall below the fold — it belongs to the first screen. */
+@media (min-width: 48em) and (max-height: 900px) {
+  .hero { padding-block: 2rem 6rem; }
+  .marquee { padding-block: 1.125rem; }
+  .hero h1 {
+    font-size: clamp(2rem, 1rem + 2.4vw, 2.9rem);
+    margin-bottom: 1.25rem;
+  }
+  .hero__description { font-size: 1rem; line-height: 1.55; }
+  .hero__description p + p { margin-top: 0.75em; }
+  .btn-row { margin-top: 1.75rem; }
+}
 
 /* --------------------------------------------------------------------------
    8. About
@@ -712,6 +726,13 @@ a:hover { color: var(--accent-dark); }
 }
 .join__quote p::before { content: "\201C"; }
 .join__quote p::after  { content: "\201D"; }
+
+.join__founded {
+  margin-top: 1rem;
+  font-size: var(--size-small);
+  letter-spacing: 0.08em;
+  color: #8d939d;
+}
 
 @media (max-width: 52em) {
   .join__grid { grid-template-columns: 1fr; }
