@@ -582,132 +582,54 @@
   }
 
   /* ----------------------------------------------------------------------
-     Live figures
+     The network in numbers
      --------------------------------------------------------------------
-     data/stats.json is written by the follower tracker (see the README). It
-     carries the current follower count per account plus the 1h and 24h
-     movement, already worked out. Anything the tracker could not measure
-     arrives as null and is simply not drawn, so the page never invents a
-     number or shows a dash where a figure should be.
+     The three figures in the band under the hero, taken from `stats` in
+     js/config.js. 'auto:members' is counted from the member list so that
+     figure can never drift out of date; every other value is printed
+     exactly as it is written.
      ---------------------------------------------------------------------- */
 
-  var STATS_URL = 'data/stats.json';
-
-  function group(n) {
-    return Math.abs(n).toLocaleString('en-GB');
-  }
-
-  function signed(n) {
-    return (n < 0 ? '\u2212' : '+') + group(n);
-  }
-
-
-  function trendItem(label, value) {
-    var li = el('li', 'trend');
-    li.append(
-      el('span', 'trend__value', signed(value)),
-      el('span', 'trend__label', label)
-    );
-    if (value < 0) li.dataset.direction = 'down';
-    return li;
-  }
-
-  /* Rounded down, with a plus. The figures are counted periodically rather
-     than continuously, so a precise number would imply a precision the page
-     does not have — and rounding down means the claim is always true. */
-  function rounded(value) {
-    if (value >= 1e6) return { n: Math.floor(value / 1e6), suffix: 'm+' };
-    if (value >= 1e5) return { n: Math.floor(value / 1e4) * 10, suffix: 'k+' };
-    if (value >= 1e3) return { n: Math.floor(value / 1e3), suffix: 'k+' };
-    return { n: value, suffix: '' };
-  }
-
-  function figure(value, label, hour, day) {
+  function figure(value, label) {
     var item = el('div', 'figure');
-    var short = rounded(value);
-    var number = el('p', 'figure__value', group(short.n) + short.suffix);
-    number.dataset.count = String(short.n);
-    number.dataset.suffix = short.suffix;
-    item.append(number, el('p', 'figure__label', label));
+    var number = el('p', 'figure__value', value);
 
-    var moves = [];
-    if (hour !== null && hour !== undefined && hour !== 0) moves.push(signed(hour) + ' in an hour');
-    if (day !== null && day !== undefined && day !== 0) moves.push(signed(day) + ' today');
-    if (moves.length) {
-      var trend = el('p', 'figure__trend', moves.join(' \u00b7 '));
-      if ((day !== null && day < 0) || (day === null && hour < 0)) {
-        trend.dataset.direction = 'down';
-      }
-      item.append(trend);
+    /* A value that opens with a digit counts up on reveal and keeps whatever
+       follows it, so '300K+' climbs to 300K+. 'Est. March 2026' does not
+       open with one, so it simply appears. */
+    var parts = /^(\d[\d,]*)(.*)$/.exec(value);
+    if (parts) {
+      number.dataset.count = parts[1].replace(/,/g, '');
+      number.dataset.suffix = parts[2];
     }
+
+    item.append(number, el('p', 'figure__label', label));
     return item;
   }
 
-  function renderNetwork(stats) {
+  function renderStats() {
     var band = document.querySelector('.stats-band');
     var node = document.getElementById('network');
-    if (!band || !node || !stats || !stats.totals) return;
+    if (!band || !node) return;
 
-    var totals = stats.totals;
+    var items = (get('stats') || []).filter(function (stat) {
+      return stat && stat.value && stat.label;
+    });
+    /* No figures, no band — better an absent section than an empty one. */
+    if (!items.length) return;
+
     var figures = el('div', 'network__figures');
+    items.forEach(function (stat) {
+      var value = stat.value === 'auto:members' ? String(members.length) : stat.value;
+      figures.append(figure(value, stat.label));
+    });
 
-    figures.append(figure(totals.followers, 'followers across the network',
-      totals.hour, totals.day));
-
-    if (totals.views) {
-      figures.append(figure(totals.views, 'views on YouTube',
-        totals.viewsHour, totals.viewsDay));
-    }
-    if (totals.likes) {
-      figures.append(figure(totals.likes, 'likes on TikTok',
-        totals.likesHour, totals.likesDay));
-    }
-
-    var stamp = el('p', 'network__stamp',
-      'Across ' + plural(stats.accounts, 'account') + ' on Instagram, YouTube and TikTok.');
-
-    node.replaceChildren(figures, stamp);
+    node.replaceChildren(figures);
 
     band.hidden = false;
     band.setAttribute('data-reveal', '');
     revealOn(band);
   }
-
-  function initLiveFigures() {
-    if (typeof fetch !== 'function') return;
-
-    /* Same cache-buster the assets use, so a fresh page never reads figures
-       the browser cached an hour ago. */
-    var version = (document.currentScript && document.currentScript.src || '').split('?v=')[1];
-    var url = STATS_URL + (version ? '?v=' + version : '?t=' + Date.now());
-
-    fetch(url, { cache: 'no-cache' })
-      .then(function (response) {
-        if (!response.ok) throw new Error('stats.json ' + response.status);
-        return response.json();
-      })
-      .then(renderNetwork)
-      .catch(function (error) {
-        /* No figures is a fine outcome: the band stays hidden and the roster
-           reads as it did before. Nothing on the page depends on this. */
-        console.warn('CountriesIRL: live figures unavailable —', error.message);
-      });
-  }
-
-  function pollLiveFigures() {
-    fetch(STATS_URL + '?t=' + Date.now(), { cache: 'no-store' })
-      .then(function (response) { return response.ok ? response.json() : null; })
-      .then(function (stats) {
-        if (!stats) return;
-        renderNetwork(stats);
-        /* The band has already been revealed by now, so show it outright
-           rather than animating the new figures in from nothing. */
-        var band = document.querySelector('.stats-band');
-        if (band) band.setAttribute('data-revealed', 'true');
-      })
-      .catch(function () { /* a failed poll just means the last figures stand */ });
-  }
-
   /* ----------------------------------------------------------------------
      Scroll reveal
      --------------------------------------------------------------------
@@ -798,6 +720,5 @@
   applyMeta();
   initNav();
   initReveal();
-  initLiveFigures();
-  if (typeof fetch === 'function') window.setInterval(pollLiveFigures, STATS_POLL_MS);
+  renderStats();
 })();

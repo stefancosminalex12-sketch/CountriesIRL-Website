@@ -60,6 +60,17 @@ window.SITE_CONFIG = {
   },
 
   /* ------------------------------------------------------------------
+     3b. THE NETWORK IN NUMBERS
+     The three figures in the band under the hero. 'auto:members' counts
+     the member list below; any other value is printed as written, and one
+     that starts with a digit counts up as you scroll onto it.
+     ------------------------------------------------------------------ */
+  stats: [
+    { value: '300K+',           label: 'Followers across the network' },
+    { value: 'auto:members',    label: 'Creators in the network' },
+    { value: 'Est. March 2026', label: 'CountriesIRL founded' }
+  ],
+  /* ------------------------------------------------------------------
      4. ABOUT
      `body` is a list of paragraphs — add or remove lines freely.
      ------------------------------------------------------------------ */

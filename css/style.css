@@ -464,7 +464,7 @@ a:hover { color: var(--accent-dark); }
    the block above, this only opens the gap between them. */
 .hero__description > p + p { margin-top: 1em; }
 
-/* The network in numbers — read from the accounts themselves, not typed in. */
+/* The network in numbers — three figures from `stats` in js/config.js. */
 .stats-band {
   padding-block: clamp(2.75rem, 5vw, 4.5rem);
   border-bottom: 1px solid var(--line);
