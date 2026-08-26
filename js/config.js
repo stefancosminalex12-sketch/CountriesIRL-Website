@@ -133,6 +133,7 @@ window.SITE_CONFIG = {
         flag: 'assets/flags/ro.png',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/romaniairl/' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@romaniairl' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@romaniairl' }
         ]
       },
