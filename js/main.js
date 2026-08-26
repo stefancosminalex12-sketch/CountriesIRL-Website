@@ -633,9 +633,9 @@
      than continuously, so a precise number would imply a precision the page
      does not have — and rounding down means the claim is always true. */
   function rounded(value) {
-    if (value >= 1e6) return { n: Math.floor(value / 1e6), suffix: 'M+' };
-    if (value >= 1e5) return { n: Math.floor(value / 1e4) * 10, suffix: 'K+' };
-    if (value >= 1e3) return { n: Math.floor(value / 1e3), suffix: 'K+' };
+    if (value >= 1e6) return { n: Math.floor(value / 1e6), suffix: 'm+' };
+    if (value >= 1e5) return { n: Math.floor(value / 1e4) * 10, suffix: 'k+' };
+    if (value >= 1e3) return { n: Math.floor(value / 1e3), suffix: 'k+' };
     return { n: value, suffix: '' };
   }
 
@@ -680,11 +680,8 @@
         totals.likesHour, totals.likesDay));
     }
 
-    var stamp = el('p', 'network__stamp');
-    stamp.append(document.createTextNode(plural(stats.accounts, 'account') + ' \u00b7 '));
-    var more = el('a', null, 'every account, counted');
-    more.href = 'stats/';
-    stamp.append(more);
+    var stamp = el('p', 'network__stamp',
+      'Across ' + plural(stats.accounts, 'account') + ' on Instagram, YouTube and TikTok.');
 
     node.replaceChildren(figures, stamp);
 
