@@ -616,28 +616,6 @@ a:hover { color: var(--accent-dark); }
   color: var(--muted);
 }
 
-/* Pushed to the right of the row, aligned on the digits so the column reads
-   down cleanly whatever the name beside it is doing. */
-.member__stat {
-  margin-left: auto;
-  padding-left: 0.75rem;
-  text-align: right;
-}
-.member__count {
-  display: block;
-  font-size: var(--size-small);
-  font-variant-numeric: tabular-nums;
-  color: var(--ink-soft);
-}
-.member__delta {
-  display: block;
-  margin-top: 0.0625rem;
-  font-size: var(--size-label);
-  font-variant-numeric: tabular-nums;
-  color: var(--muted);
-}
-.member__delta[data-direction="down"] { color: var(--accent); }
-
 .member__name { margin-bottom: 0.0625rem; }
 .member__country { font-size: var(--size-small); color: var(--muted); }
 

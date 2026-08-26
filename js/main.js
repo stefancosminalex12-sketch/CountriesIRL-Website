@@ -375,10 +375,6 @@
     var card = el('article', 'member');
     if (member.country) card.dataset.country = member.country;
 
-    /* The handle is how a row is matched to its figures in data/stats.json. */
-    var handle = memberHandle(member);
-    if (handle) card.dataset.handle = handle;
-
     var head = el('div', 'member__head');
     var meta = el('div');
     meta.append(el('h3', 'member__name', member.name));
@@ -605,19 +601,6 @@
     return (n < 0 ? '\u2212' : '+') + group(n);
   }
 
-  /* 'brituishirl' out of 'https://www.instagram.com/brituishirl/'. */
-  function handleFrom(url) {
-    var match = /instagram\.com\/([^\/?#]+)/i.exec(String(url || ''));
-    return match ? match[1].toLowerCase() : null;
-  }
-
-  function memberHandle(member) {
-    var found = null;
-    (member.links || []).forEach(function (link) {
-      if (!found) found = handleFrom(link && link.url);
-    });
-    return found;
-  }
 
   function trendItem(label, value) {
     var li = el('li', 'trend');
@@ -690,41 +673,6 @@
     revealOn(band);
   }
 
-  /* Follower count and 24h movement on each row of the roster. */
-  function renderMemberStats(stats) {
-    var byHandle = {};
-    (stats.list || []).forEach(function (account) {
-      byHandle[account.username.toLowerCase()] = account;
-    });
-
-    each('.member', function (card) {
-      var handle = card.dataset.handle;
-      var account = handle && byHandle[handle];
-      if (!account) return;
-
-      var existing = card.querySelector('.member__stat');
-      if (existing) existing.remove();
-
-      var wrap = el('div', 'member__stat');
-      var count = el('span', 'member__count', group(account.followers));
-      if (account.approximate) count.title = 'Instagram rounds this one';
-      wrap.append(count);
-
-      if (account.day !== null && account.day !== undefined && account.day !== 0) {
-        var delta = el('span', 'member__delta', signed(account.day));
-        if (account.day < 0) delta.dataset.direction = 'down';
-        wrap.append(delta);
-      }
-
-      var head = card.querySelector('.member__head');
-      if (head) head.append(wrap);
-    });
-  }
-
-  /* The figures are republished every few minutes at most, so an open page
-     checks occasionally rather than constantly. */
-  var STATS_POLL_MS = 600000;
-
   function initLiveFigures() {
     if (typeof fetch !== 'function') return;
 
@@ -738,10 +686,7 @@
         if (!response.ok) throw new Error('stats.json ' + response.status);
         return response.json();
       })
-      .then(function (stats) {
-        renderNetwork(stats);
-        renderMemberStats(stats);
-      })
+      .then(renderNetwork)
       .catch(function (error) {
         /* No figures is a fine outcome: the band stays hidden and the roster
            reads as it did before. Nothing on the page depends on this. */
@@ -755,7 +700,6 @@
       .then(function (stats) {
         if (!stats) return;
         renderNetwork(stats);
-        renderMemberStats(stats);
         /* The band has already been revealed by now, so show it outright
            rather than animating the new figures in from nothing. */
         var band = document.querySelector('.stats-band');
