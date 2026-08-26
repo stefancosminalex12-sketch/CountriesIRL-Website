@@ -570,39 +570,56 @@
     return li;
   }
 
+  function figure(value, label, hour, day) {
+    var item = el('div', 'figure');
+    var number = el('p', 'figure__value', group(value));
+    number.dataset.count = String(value);
+    item.append(number, el('p', 'figure__label', label));
+
+    var moves = [];
+    if (hour !== null && hour !== undefined && hour !== 0) moves.push(signed(hour) + ' in an hour');
+    if (day !== null && day !== undefined && day !== 0) moves.push(signed(day) + ' today');
+    if (moves.length) {
+      var trend = el('p', 'figure__trend', moves.join(' \u00b7 '));
+      if ((day !== null && day < 0) || (day === null && hour < 0)) {
+        trend.dataset.direction = 'down';
+      }
+      item.append(trend);
+    }
+    return item;
+  }
+
   function renderNetwork(stats) {
     var band = document.querySelector('.stats-band');
     var node = document.getElementById('network');
     if (!band || !node || !stats || !stats.totals) return;
 
     var totals = stats.totals;
-    var figure = el('div', 'network__figure');
-    var value = el('p', 'network__value', group(totals.followers));
-    value.dataset.count = String(totals.followers);
-    figure.append(value, el('p', 'network__label',
-      'followers across ' + plural(stats.accounts, 'account')));
+    var figures = el('div', 'network__figures');
 
-    node.replaceChildren(figure);
+    figures.append(figure(totals.followers, 'followers across the network',
+      totals.hour, totals.day));
 
-    /* The tracker needs an hour of readings before it can say what changed in
-       an hour, and a day before it can say what changed in a day. */
-    var trends = el('ul', 'network__trends');
-    if (totals.hour !== null && totals.hour !== undefined) {
-      trends.append(trendItem('past hour', totals.hour));
+    if (totals.views) {
+      figures.append(figure(totals.views, 'views on YouTube',
+        totals.viewsHour, totals.viewsDay));
     }
-    if (totals.day !== null && totals.day !== undefined) {
-      trends.append(trendItem('past 24 hours', totals.day));
+    if (totals.likes) {
+      figures.append(figure(totals.likes, 'likes on TikTok',
+        totals.likesHour, totals.likesDay));
     }
-    if (trends.children.length) node.append(trends);
 
     var stamp = el('p', 'network__stamp');
     var when = new Date(stats.generatedAt);
-    stamp.textContent = 'Counted ' + when.toLocaleDateString('en-GB', {
-      day: 'numeric', month: 'long'
-    }) + ' at ' + when.toLocaleTimeString('en-GB', {
-      hour: '2-digit', minute: '2-digit'
-    });
-    node.append(stamp);
+    stamp.append(
+      document.createTextNode(plural(stats.accounts, 'account') + ' \u00b7 counted ' +
+        when.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) + ' \u00b7 ')
+    );
+    var more = el('a', null, 'every account, live');
+    more.href = 'stats/';
+    stamp.append(more);
+
+    node.replaceChildren(figures, stamp);
 
     band.hidden = false;
     band.setAttribute('data-reveal', '');

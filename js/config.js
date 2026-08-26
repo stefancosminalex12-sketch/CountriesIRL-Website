@@ -132,49 +132,61 @@ window.SITE_CONFIG = {
         name: 'Romania (Owner)',
         flag: 'assets/flags/ro.png',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/romaniairl/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/romaniairl/' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@romaniairl' }
         ]
       },
       {
         name: 'United Kingdom',
         flag: 'assets/flags/gb.png',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/brituishirl/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/brituishirl/' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@brituishirl' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@unitedkingdomirl' }
         ]
       },
       {
         name: 'United States',
         flag: 'assets/flags/us.png',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/unitedstatesirl/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/unitedstatesirl/' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@unitedstatesirl' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@unitedstatesirl' }
         ]
       },
       {
         name: 'Lithuania',
         flag: 'assets/flags/lt.png',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/lithuaniairl/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/lithuaniairl/' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@Lithuaniairl' }
         ]
       },
       {
         name: 'Fiji',
         flag: 'assets/flags/fj.png',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/fijiirlmain/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/fijiirlmain/' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@Fijiirl' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@fijiirl' }
         ]
       },
       {
         name: 'China',
         flag: 'assets/flags/cn.png',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/chinairlmain/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/chinairlmain/' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@chinairlmain' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@chinairlmain' }
         ]
       },
       {
         name: 'Finland',
         flag: 'assets/flags/fi.png',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/finlandirl_/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/finlandirl_/' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@FinlandIRL' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@finlandirl' }
         ]
       },
       {
@@ -188,7 +200,8 @@ window.SITE_CONFIG = {
         name: 'Czech Republic',
         flag: 'assets/flags/cz.png',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/czechrepublicirl/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/czechrepublicirl/' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@czechrepublicirl' }
         ]
       },
       {
@@ -209,14 +222,16 @@ window.SITE_CONFIG = {
         name: 'Alabama',
         flag: 'assets/flags/us.png',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/alabama.irl/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/alabama.irl/' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@alabama_irl' }
         ]
       },
       {
         name: 'Bahrain',
         flag: 'assets/flags/bh.png',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/bahrainirl_/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/bahrainirl_/' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@bahrainirl' }
         ]
       },
       {
@@ -251,7 +266,8 @@ window.SITE_CONFIG = {
         name: 'Gibraltar',
         flag: 'assets/flags/gi.png',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/gibraltar_irl/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/gibraltar_irl/' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@gibraltar_irl' }
         ]
       },
       {
@@ -307,7 +323,8 @@ window.SITE_CONFIG = {
         name: 'Ohio',
         flag: 'assets/flags/us.png',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/ohio_irl/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/ohio_irl/' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@ohio.irl1' }
         ]
       },
       {
@@ -384,7 +401,8 @@ window.SITE_CONFIG = {
         name: 'USSR',
         flag: 'assets/flags/ru.png',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/sovietunionirl/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/sovietunionirl/' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@sovietunionirl' }
         ]
       }
     ]

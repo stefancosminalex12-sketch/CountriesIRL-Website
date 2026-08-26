@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>CountriesIRL — live figures</title>
+  <meta name="description" content="Live follower, view and like counts for every account in the CountriesIRL network, ranked, with hourly and daily movement.">
+  <link rel="canonical" href="https://countriesirl.com/stats/">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#16181c">
+
+  <link rel="icon" href="../assets/logo/favicon.png" type="image/png" sizes="64x64">
+  <link rel="apple-touch-icon" href="../assets/logo/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="../css/style.css?v=202608261234">
+  <link rel="stylesheet" href="board.css?v=202608261234">
+</head>
+
+<body>
+  <a class="skip-link" href="#board">Skip to the table</a>
+
+  <header class="site-header">
+    <div class="container header__inner">
+      <a class="brand" href="../">
+        <img class="brand__mark" src="../assets/logo/IRLLOGO-web.png" alt="" width="26" height="26">
+        <span class="brand__name">CountriesIRL</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="../">Home</a></li>
+          <li><a class="nav__link" href="../#members">Members</a></li>
+          <li><a class="nav__cta" href="../#join">Join</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+
+    <section class="board-head">
+      <div class="container">
+        <p class="board-live" id="live" data-state="waiting">
+          <span class="board-live__dot" aria-hidden="true"></span>
+          <span id="live-text">connecting</span>
+        </p>
+
+        <h1>Live figures</h1>
+        <p class="lead">Every account in the network, counted where it stands.
+          Instagram is re-read continuously; YouTube and TikTok are read each
+          time the figures are published.</p>
+
+        <div class="totals" id="totals"></div>
+      </div>
+    </section>
+
+    <section class="board-wrap" id="board">
+      <div class="container">
+        <div class="board-controls">
+          <div class="sorts" role="group" aria-label="Sort the table">
+            <button type="button" class="sort" data-sort="followers" aria-pressed="true">Followers</button>
+            <button type="button" class="sort" data-sort="day" aria-pressed="false">Today's growth</button>
+            <button type="button" class="sort" data-sort="hour" aria-pressed="false">This hour</button>
+            <button type="button" class="sort" data-sort="views" aria-pressed="false">Views</button>
+            <button type="button" class="sort" data-sort="likes" aria-pressed="false">Likes</button>
+          </div>
+          <p class="board-count" id="board-count"></p>
+        </div>
+
+        <div class="board" role="table" aria-label="Accounts by follower count">
+          <div class="board__head" role="row">
+            <span role="columnheader" class="col-rank">#</span>
+            <span role="columnheader" class="col-name">Account</span>
+            <span role="columnheader" class="col-num">Instagram</span>
+            <span role="columnheader" class="col-num">YouTube</span>
+            <span role="columnheader" class="col-num">TikTok</span>
+            <span role="columnheader" class="col-num">Total</span>
+            <span role="columnheader" class="col-num">1h</span>
+            <span role="columnheader" class="col-num">24h</span>
+          </div>
+          <div id="rows"></div>
+        </div>
+
+        <p class="board-note" id="note"></p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p><span id="year"></span> CountriesIRL</p>
+        <p><a href="../">Back to the site</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="board.js?v=202608261234"></script>
+</body>
+</html>

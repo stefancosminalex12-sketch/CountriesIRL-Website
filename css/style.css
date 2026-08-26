@@ -469,79 +469,59 @@ a:hover { color: var(--accent-dark); }
    the block above, this only opens the gap between them. */
 .hero__description > p + p { margin-top: 1em; }
 
-/* The network in numbers — real counts from the follower tracker. */
+/* The network in numbers — read from the accounts themselves, not typed in. */
 .stats-band {
   padding-block: clamp(2.75rem, 5vw, 4.5rem);
   border-bottom: 1px solid var(--line);
 }
 
-.network {
+.network__figures {
   display: grid;
-  gap: 1.25rem clamp(2rem, 5vw, 4rem);
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
 }
 
-.network__value {
+.figure__value {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 1.4rem + 3.2vw, 4rem);
+  font-size: clamp(2.1rem, 1.2rem + 2.6vw, 3.25rem);
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
 }
-.network__label {
-  margin-top: 0.625rem;
+.figure__label {
+  margin-top: 0.5rem;
   font-size: var(--size-small);
   color: var(--muted);
 }
-
-/* Movement sits beside the total, quieter than it and in the same serif, so
-   the two read as one figure rather than a dashboard of tiles. */
-.network__trends {
-  display: flex;
-  gap: clamp(1.5rem, 4vw, 3rem);
-}
-.trend__value {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 1.375rem;
-  font-weight: 700;
-  line-height: 1.1;
+/* Movement sits under the figure in the same quiet grey as the label; only a
+   fall is coloured, because growth is the expected direction. */
+.figure__trend {
+  margin-top: 0.375rem;
+  font-size: var(--size-label);
   font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
 }
-.trend__label {
-  display: block;
-  margin-top: 0.25rem;
-  font-size: var(--size-small);
-  color: var(--muted);
-}
-/* Only a fall is coloured. Growth is the expected direction and does not need
-   announcing in red and green. */
-.trend[data-direction="down"] .trend__value { color: var(--accent); }
+.figure__trend[data-direction="down"] { color: var(--accent); }
 
 .network__stamp {
-  grid-column: 1 / -1;
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
   padding-top: 1rem;
   border-top: 1px solid var(--line);
   font-size: var(--size-label);
   color: var(--muted);
 }
+.network__stamp a { color: var(--muted); text-underline-offset: 0.2em; }
+.network__stamp a:hover { color: var(--accent); }
 
-/* Arrives on scroll, and the total counts itself up as it does. */
+/* Arrives on scroll, and each figure counts itself up as it does. */
 .stats-band[data-reveal] .network > * {
   opacity: 0;
   transform: translateY(1rem);
   transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
-.stats-band[data-reveal] .network__trends { transition-delay: 0.1s; }
-.stats-band[data-reveal] .network__stamp { transition-delay: 0.18s; }
+.stats-band[data-reveal] .network__stamp { transition-delay: 0.15s; }
 .stats-band[data-revealed] .network > * { opacity: 1; transform: none; }
-
-@media (max-width: 40em) {
-  .network { grid-template-columns: 1fr; align-items: start; }
-  .network__trends { gap: 2rem; }
-}
 
 /* --------------------------------------------------------------------------
    8. About
