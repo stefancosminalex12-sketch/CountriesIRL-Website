@@ -608,7 +608,11 @@ a:hover { color: var(--accent-dark); }
   flex: none;
   width: 2.375rem;
   height: 1.5625rem;
-  object-fit: cover;
+  /* Not every flag is 3:2 — the Byzantine one is square, some are svg banners.
+     `contain` letterboxes those rather than cropping the emblem out of them;
+     for a 3:2 flag it behaves exactly like `cover`. */
+  object-fit: contain;
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 6px;
 }
