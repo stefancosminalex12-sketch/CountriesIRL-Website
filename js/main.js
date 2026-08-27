@@ -334,11 +334,15 @@
       var flag = el('img', 'member__flag');
       flag.src = source;
       flag.alt = '';
-      flag.width = 46;
-      flag.height = 31;
       flag.loading = 'lazy';
-      flag.addEventListener('error', function () { flag.replaceWith(fallback); });
-      return flag;
+
+      /* The flags are not all the same shape — Byzantium's is square, a couple
+         are banners. Each keeps its own proportions at a shared height, inside
+         a fixed-width slot so the names still line up down the column. */
+      var slot = el('span', 'member__flagbox');
+      slot.append(flag);
+      flag.addEventListener('error', function () { slot.replaceWith(fallback); });
+      return slot;
     }
 
     var img = el('img', 'member__avatar');
