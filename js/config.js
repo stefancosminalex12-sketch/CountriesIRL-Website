@@ -254,7 +254,7 @@ window.SITE_CONFIG = {
       },
       {
         name: 'Byzantine Empire',
-        flag: 'assets/flags/Byzantine.png',
+        flag: 'assets/flags/By.PNG',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/byzantineempire.irl/' }
         ]
@@ -340,7 +340,7 @@ window.SITE_CONFIG = {
       },
       {
         name: 'Ottoman Empire',
-        flag: 'assets/flags/tr.png',
+        flag: 'assets/flags/Ot.jpg',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/ottoman_irl/' }
         ]
@@ -368,7 +368,7 @@ window.SITE_CONFIG = {
       },
       {
         name: 'Roman Empire',
-        flag: 'assets/flags/Roman.svg',
+        flag: 'assets/flags/Ro.PNG‎',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/romanempireirl/' }
         ]
@@ -410,7 +410,7 @@ window.SITE_CONFIG = {
       },
       {
         name: 'USSR',
-        flag: 'assets/flags/USSR.png',
+        flag: 'assets/flags/su.svg',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/sovietunionirl/' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@sovietunionirl' }
