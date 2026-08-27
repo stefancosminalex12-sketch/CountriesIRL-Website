@@ -453,7 +453,7 @@ window.SITE_CONFIG = {
   join: {
     title: 'Join the network',
     lead: 'Applications are checked every few days.',
-    cta: { label: 'Start an application', href: 'mailto:join@countriesirl.com?subject=CountriesIRL%20application' },
+    cta: { label: 'Start an application', href: 'https://www.youtube.com/watch?v=QDia3e12czc' },
     /* The lead above already promises a review, so this line carries the
        practical part instead of repeating it two lines later. */
     /* The line beside the form. Keep it to one sentence. */
@@ -471,7 +471,7 @@ window.SITE_CONFIG = {
      Social links appear in the footer. Add or remove entries freely.
      ------------------------------------------------------------------ */
   contact: {
-    email: 'hello@countriesirl.com'
+    email: 'countriesirlhub@gmail.com'
   },
 
   social: [
