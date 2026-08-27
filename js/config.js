@@ -254,7 +254,7 @@ window.SITE_CONFIG = {
       },
       {
         name: 'Byzantine Empire',
-        flag: 'assets/flags/byzantine.png',
+        flag: 'assets/flags/byzantine.svg',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/byzantineempire.irl/' }
         ]
