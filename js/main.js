@@ -296,8 +296,15 @@
 
   /* Flag artwork lives in assets/flags/, one PNG per ISO code. Historical and
      fictional entries have no flag file, so their cards fall back to initials. */
+  /* Paths copied out of a browser or a file manager sometimes carry an
+     invisible formatting character on the end. It looks like nothing, and it
+     turns a working path into a 404, so strip them before use. */
+  function cleanPath(value) {
+    return String(value).replace(/[\u200B-\u200F\u2060\uFEFF]/g, '').trim();
+  }
+
   function flagSource(member) {
-    if (member.flag) return member.flag;
+    if (member.flag) return cleanPath(member.flag);
     var code = COUNTRY_CODES[baseCountry(member.country)];
     return code ? 'assets/flags/' + code.toLowerCase() + '.png' : '';
   }
@@ -335,7 +342,7 @@
     }
 
     var img = el('img', 'member__avatar');
-    img.src = member.image;
+    img.src = cleanPath(member.image);
     /* The name sits next to the image, so repeating it here would only make
        screen readers say it twice. Decorative by intent. */
     img.alt = '';
