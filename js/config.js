@@ -368,7 +368,7 @@ window.SITE_CONFIG = {
       },
       {
         name: 'Roman Empire',
-        flag: 'assets/flags/Ro.png‎',
+        flag: 'assets/flags/Rom.png‎',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/romanempireirl/' }
         ]
