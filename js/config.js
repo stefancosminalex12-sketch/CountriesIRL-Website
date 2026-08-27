@@ -231,7 +231,7 @@ window.SITE_CONFIG = {
       },
       {
         name: 'Alabama',
-        flag: 'assets/flags/us.png',
+        flag: 'assets/flags/Alabama.png',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/alabama.irl/' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@alabama_irl' }
@@ -254,7 +254,7 @@ window.SITE_CONFIG = {
       },
       {
         name: 'Byzantine Empire',
-        flag: 'assets/flags/gr.png',
+        flag: 'assets/flags/Byzantine.png',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/byzantineempire.irl/' }
         ]
@@ -318,7 +318,7 @@ window.SITE_CONFIG = {
       },
       {
         name: 'Nebraska',
-        flag: 'assets/flags/us.png',
+        flag: 'assets/flags/Nebraska.svg',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/nebraskairl/' }
         ]
@@ -332,7 +332,7 @@ window.SITE_CONFIG = {
       },
       {
         name: 'Ohio',
-        flag: 'assets/flags/us.png',
+        flag: 'assets/flags/Ohio.svg',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/ohio_irl/' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@ohio.irl1' }
@@ -368,7 +368,7 @@ window.SITE_CONFIG = {
       },
       {
         name: 'Roman Empire',
-        flag: 'assets/flags/it.png',
+        flag: 'assets/flags/Roman.svg',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/romanempireirl/' }
         ]
@@ -410,7 +410,7 @@ window.SITE_CONFIG = {
       },
       {
         name: 'USSR',
-        flag: 'assets/flags/ru.png',
+        flag: 'assets/flags/USSR.png',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/sovietunionirl/' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@sovietunionirl' }
