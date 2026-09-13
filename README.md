@@ -16,6 +16,9 @@ onto GitHub Pages as-is.
 ```
 .
 ├── index.html          The whole site — one page, five sections
+├── robots.txt          Lets search engines crawl everything; points at the sitemap
+├── sitemap.xml         The one page search engines should index
+├── _config.yml         Keeps these notes (README, CONFIG) off the published site
 ├── css/
 │   └── style.css       Design tokens and every style on the site
 ├── js/
@@ -150,8 +153,9 @@ have Node installed, `npx serve` works as well.
 5. Wait a minute or two. The site appears at
    `https://<your-username>.github.io/<repository-name>/`.
 
-Then set `brand.url` in `js/config.js` to that address, and update the `<link rel="canonical">`
-and `og:` tags in the `<head>` of `index.html` to match. Those tags decide what search
+Then set `brand.url` in `js/config.js` to that address, and update the `<link rel="canonical">`,
+`og:` and `twitter:` tags and the structured data in the `<head>` of `index.html` to match,
+along with the addresses in `robots.txt` and `sitemap.xml`. Those decide what search
 engines record and what appears when someone shares the link.
 
 > If you publish to `https://<username>.github.io/<repo>/` rather than a domain root,

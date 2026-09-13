@@ -4,32 +4,82 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- SEO defaults. These mirror `meta` and `brand` in js/config.js, which
-       also updates them at runtime — edit both if you change the wording. -->
-  <title>CountriesIRL — the creators behind the world's countries</title>
-  <meta name="description" content="CountriesIRL is a global network of creators representing the countries they know — through entertainment, culture, history and current events.">
+  <!-- SEO. These mirror `meta` and `brand` in js/config.js, which also
+       applies them at runtime — edit both if you change the wording. They are
+       written out here so crawlers and link previews see them without running
+       JavaScript. The site is one page, so this is its one title and URL. -->
+  <title>CountriesIRL — a global network of country-focused creators</title>
+  <meta name="description" content="Creators from around the world covering countries, culture, history and geography, through educational and entertaining content and documentaries.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://countriesirl.com/">
   <meta name="theme-color" content="#16181c">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="CountriesIRL">
-  <meta property="og:title" content="CountriesIRL — the creators behind the world's countries">
-  <meta property="og:description" content="CountriesIRL is a global network of creators representing the countries they know — through entertainment, culture, history and current events.">
+  <meta property="og:title" content="CountriesIRL — a global network of country-focused creators">
+  <meta property="og:description" content="Creators from around the world covering countries, culture, history and geography, through educational and entertaining content and documentaries.">
   <meta property="og:url" content="https://countriesirl.com/">
   <meta property="og:image" content="https://countriesirl.com/assets/og-image.png">
+  <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="CountriesIRL — the creators behind the world’s countries.">
+  <meta property="og:image:alt" content="The CountriesIRL logo above the words “The biggest countries network in the world.”">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CountriesIRL — a global network of country-focused creators">
+  <meta name="twitter:description" content="Creators from around the world covering countries, culture, history and geography, through educational and entertaining content and documentaries.">
+  <meta name="twitter:image" content="https://countriesirl.com/assets/og-image.png">
+  <meta name="twitter:image:alt" content="The CountriesIRL logo above the words “The biggest countries network in the world.”">
 
   <link rel="icon" href="assets/logo/favicon.png" type="image/png" sizes="64x64">
   <link rel="apple-touch-icon" href="assets/logo/apple-touch-icon.png">
+
+  <!-- Structured data: who CountriesIRL is, for search engines. `sameAs` is
+       the network's own official profiles, mirroring `social` in
+       js/config.js — all but the Discord invite, which is an invitation
+       rather than a profile. Update both if an account changes. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://countriesirl.com/#organization",
+        "name": "CountriesIRL",
+        "url": "https://countriesirl.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://countriesirl.com/assets/logo/IRLLOGO.png",
+          "width": 1532,
+          "height": 1532
+        },
+        "image": "https://countriesirl.com/assets/og-image.png",
+        "description": "A global network of creators focused on the world's countries, cultures, people and history, combining education and entertainment through content, documentaries and other projects.",
+        "foundingDate": "2026-03-03",
+        "email": "countriesirlhub@gmail.com",
+        "sameAs": [
+          "https://www.youtube.com/@countriesirl",
+          "https://www.instagram.com/countriesirl",
+          "https://www.tiktok.com/@countriesirl"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://countriesirl.com/#website",
+        "name": "CountriesIRL",
+        "url": "https://countriesirl.com/",
+        "description": "Creators from around the world covering countries, culture, history and geography, through educational and entertaining content and documentaries.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://countriesirl.com/#organization" }
+      }
+    ]
+  }
+  </script>
 
   <!-- ?v= is a cache buster. GitHub Pages serves assets with a ten minute
        max-age, so without it a fresh index.html can pair with a stale
        stylesheet or config and render a half-broken page. Bump it on any
        change to css/style.css, js/config.js or js/main.js. -->
-  <link rel="stylesheet" href="css/style.css?v=202609132300">
+  <link rel="stylesheet" href="css/style.css?v=202609140900">
 </head>
 
 <body>
@@ -79,7 +129,9 @@
     <!-- ================= HOME ================= -->
     <section class="hero" id="home" tabindex="-1">
       <div class="container hero__inner">
-        <h1 data-text="hero.title"></h1>
+        <!-- Written here as well as in hero.title, so crawlers that do not
+             run JavaScript still find the page's headline. -->
+        <h1 data-text="hero.title">A global network of creators connecting the world.</h1>
         <div class="hero__description" data-paragraphs="hero.description"></div>
         <div class="btn-row">
           <a class="btn btn--invert" data-cta="hero.primaryCta" href="#join"></a>
@@ -215,8 +267,8 @@
     </div>
   </footer>
 
-  <script src="js/config.js?v=202609132300"></script>
-  <script src="js/main.js?v=202609132300"></script>
-  <script src="js/globe.js?v=202609132300" defer></script>
+  <script src="js/config.js?v=202609140900"></script>
+  <script src="js/main.js?v=202609140900"></script>
+  <script src="js/globe.js?v=202609140900" defer></script>
 </body>
 </html>

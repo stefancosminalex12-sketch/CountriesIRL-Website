@@ -458,7 +458,11 @@
   }
 
   /* ----------------------------------------------------------------------
-     Head: title, description, Open Graph, structured data
+     Head: title, description, link previews
+     --------------------------------------------------------------------
+     index.html carries the same values as static tags, for crawlers that do
+     not run JavaScript; this keeps them in step with config. The structured
+     data lives only in index.html, so there is never a second copy of it.
      ---------------------------------------------------------------------- */
 
   function setMeta(selector, value) {
@@ -479,25 +483,12 @@
     setMeta('meta[property="og:site_name"]', get('brand.name'));
     setMeta('meta[property="og:url"]', url);
     setMeta('meta[property="og:image"]', image);
+    setMeta('meta[name="twitter:title"]', title);
+    setMeta('meta[name="twitter:description"]', description);
+    setMeta('meta[name="twitter:image"]', image);
 
     var canonical = document.head.querySelector('link[rel="canonical"]');
     if (canonical && url) canonical.setAttribute('href', url);
-
-    var schema = {
-      '@context': 'https://schema.org',
-      '@type': 'Organization',
-      name: get('brand.name'),
-      description: description,
-      url: url,
-      logo: absolute(get('brand.logo')),
-      email: get('contact.email'),
-      sameAs: (get('social') || []).map(function (s) { return s.url; }).filter(Boolean)
-    };
-
-    var script = el('script');
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify(schema);
-    document.head.append(script);
   }
 
   /* ----------------------------------------------------------------------

@@ -28,12 +28,15 @@ window.SITE_CONFIG = {
 
   /* ------------------------------------------------------------------
      2. SEO / SOCIAL PREVIEW
+     The same wording is written into the <head> of index.html, so search
+     engines and link previews see it without running JavaScript — change
+     it there too.
      ------------------------------------------------------------------ */
   meta: {
-    title: 'CountriesIRL — the creators behind the world’s countries',
+    title: 'CountriesIRL — a global network of country-focused creators',
     description:
-      'CountriesIRL is a global network of creators representing the countries ' +
-      'they know — through entertainment, culture, history and current events.',
+      'Creators from around the world covering countries, culture, history and ' +
+      'geography, through educational and entertaining content and documentaries.',
     ogImage: 'assets/og-image.png'
   },
 

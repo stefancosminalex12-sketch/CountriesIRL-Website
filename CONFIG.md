@@ -168,8 +168,9 @@ these too:
 These are applied to the page when it loads. The same values are also written into
 `index.html` as static tags so that crawlers and link-preview bots see them without
 running JavaScript — **if you change the wording here, change it in the `<head>` of
-`index.html` too.** It is the only place the site repeats itself, and there is a comment
-above the tags saying so.
+`index.html` too.** Two more things are repeated there for the same reason, each with a
+comment beside it: the hero headline inside the `<h1>`, and the structured data block,
+which lists the network's official profiles from `social` (all but the Discord invite).
 
 ### `hero` — the Home section
 
@@ -238,7 +239,7 @@ Mixing the two forms in one list is fine.
 | Key | What it does |
 | --- | --- |
 | `contact.email` | Shown in the footer and included in the site's structured data. |
-| `social` | The "Elsewhere" column in the footer. Each entry is `{ label, url }`. |
+| `social` | The "Elsewhere" column in the footer. Each entry is `{ label, url }`. When an official profile is added or changes, update `sameAs` in the structured data in `index.html` as well. |
 | `footer.note` | The line under the logo in the footer. |
 
 ---

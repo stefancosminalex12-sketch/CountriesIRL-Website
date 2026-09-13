@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The whole site is one page. About, Members, Community and Join are
+     sections of it (#about, #members, …), and search engines index pages,
+     not #fragments, so the page is the only entry. The map editor lives on
+     its own subdomain, maps.countriesirl.com, which needs its own sitemap. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://countriesirl.com/</loc>
+  </url>
+</urlset>
