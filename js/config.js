@@ -491,7 +491,7 @@ window.SITE_CONFIG = {
   social: [
     { label: 'YouTube', url: 'https://www.youtube.com/@countriesirl' },
     { label: 'Instagram', url: 'https://www.instagram.com/countriesirl' },
-    { label: 'X', url: 'https://x.com/countriesirl' },
+    { label: 'TikTok', url: 'https://www.tiktok.com/@countriesirl' },
     { label: 'Discord', url: 'https://discord.gg/w9qV9nzG2Y' }
   ],
 
