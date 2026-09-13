@@ -76,22 +76,15 @@ window.SITE_CONFIG = {
      ------------------------------------------------------------------ */
   about: {
     title: 'What is CountriesIRL?',
-    lead:
-      'CountriesIRL is a project built around the countries, cultures, people, ' +
-      'and history that make up our world. We combine education and ' +
-      'entertainment to create content that makes learning about the world ' +
-      'more accessible, engaging, and relevant.',
+    lead: '',                            // empty hides it; the paragraph below says it all
     body: [
-      'Our goal is to help people understand more about the places and events ' +
-      'shaping the world around them, from history and geopolitics to culture, ' +
-      'geography, tourism, and current events. As the world continues to ' +
-      'change faster than ever, staying informed and understanding different ' +
-      'perspectives has become increasingly important.',
-      'What began with country-focused social media accounts is growing into ' +
-      'something larger. Through our network of creators, we aim to develop ' +
-      'educational content, documentaries, and other projects that bring ' +
-      'together knowledge from different parts of the world and make it ' +
-      'available to a wider audience.'
+      'CountriesIRL is a project built around the countries, cultures, people, ' +
+      'and history that make up our world. By combining education and ' +
+      'entertainment through our network of creators, we aim to make learning ' +
+      'about history, geopolitics, culture, geography, tourism, and current ' +
+      'events more accessible while developing educational content, ' +
+      'documentaries, and projects that bring perspectives from different ' +
+      'parts of the world to a wider audience.'
     ],
 
     /* The short version of where the network came from. Sits between the
@@ -145,9 +138,11 @@ window.SITE_CONFIG = {
      >>>              'US-OH' for a U.S. state, or { at: [lon, lat] } for a
      >>>              place with no modern border, like a historical capital.
      >>>   origin     true on the account the network started from.
-     >>>   followers  A number for the globe card. Without it the card uses
-     >>>              the follower tracker's figure (data/stats.json) for
-     >>>              the member's Instagram handle, when there is one.
+     >>>   followers  A real follower count for the globe card, e.g. 12345.
+     >>>              Leave it out when unknown: the card just leaves that
+     >>>              line off. Without it the card uses the follower
+     >>>              tracker's exact figure (data/stats.json) for the
+     >>>              member's current Instagram handle, if it has one.
      ------------------------------------------------------------------ */
 
      members: {

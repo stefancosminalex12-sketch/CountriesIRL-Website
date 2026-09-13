@@ -5,7 +5,8 @@
    Members are read from window.SITE_CONFIG.members.list — the same list the
    cards and the flag strip use — so the globe can never disagree with them.
    Geography comes from data/globe.json (Natural Earth, public domain).
-   It turns on its own; drag it (or swipe across it) to turn it by hand.
+   It turns on its own; drag it (or swipe across it) to turn it by hand,
+   and scroll or pinch to zoom in on it.
 
    How it draws: the world is painted once, flat, onto two canvases — one in
    colour, one where each member's area is filled with its own id — and both
@@ -43,6 +44,8 @@
   var FRICTION = 2.6;        // how quickly a flick slows down, per second
   var MAX_FLICK = 420;       // fastest a flick can set it turning, degrees per second
   var RESUME_AFTER = 1600;   // ms after a drag before it turns on its own again
+  var ZOOM_MIN = 0.8;        // smallest the globe can be made…
+  var ZOOM_MAX = 6;          // …and closest in: microstates and U.S. states stand clear
 
   var STILL = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -193,26 +196,30 @@
     return list;
   }
 
-  /* Follower counts: a `followers` number on the member wins; otherwise the
-     tracker's Instagram figure for the member's handle, if it has one. */
+  /* Follower counts are optional, and only ever real. A `followers` number
+     on the member wins; otherwise the tracker's Instagram figure for the
+     member's current handle, when it has one and it is exact. No figure, an
+     estimate, or a figure filed under an old handle all show nothing — the
+     card leaves the line off. Counts added later, in either place, appear
+     without any change here. */
+  function isCount(n) {
+    return typeof n === 'number' && isFinite(n) && n > 0;
+  }
+
   function indexStats(stats) {
     var byHandle = {};
     ((stats && stats.list) || []).forEach(function (row) {
       var ig = row && row.instagram;
-      if (!ig || typeof ig.followers !== 'number') return;
-      [ig.handle, row.username].forEach(function (h) {
-        if (h) byHandle[String(h).toLowerCase()] = ig.followers;
-      });
+      if (!ig || !ig.handle || ig.approximate || !isCount(ig.followers)) return;
+      byHandle[String(ig.handle).toLowerCase()] = ig.followers;
     });
     return byHandle;
   }
 
   function followersOf(member, handle) {
-    if (typeof member.followers === 'number') return member.followers;
-    if (handle && followerIndex[handle.toLowerCase()] !== undefined) {
-      return followerIndex[handle.toLowerCase()];
-    }
-    return null;
+    if (isCount(member.followers)) return member.followers;
+    var key = handle ? handle.toLowerCase() : '';
+    return isCount(followerIndex[key]) ? followerIndex[key] : null;
   }
 
   /* ----------------------------------------------------------------------
@@ -339,6 +346,9 @@
     'uniform vec2 uTexel;',
     'uniform float uHover;',
     'uniform float uHoverAmt;',
+    'uniform vec2 uMid;',
+    'uniform float uWin;',
+    'uniform float uLens;',
     'const float PI = 3.141592653589793;',
 
     'vec2 uvOf(vec3 g) {',
@@ -354,7 +364,8 @@
     '  float d = max(r - 1.0, 0.0);',
     '  float haze = (exp(-d * 26.0) * 0.13 + exp(-d * 8.0) * 0.035) * smoothstep(1.0 - aa, 1.0 + aa, r);',
     '  vec4 outside = vec4(vec3(0.74, 0.80, 0.88) * haze, haze);',
-    '  if (r >= 1.0 + aa) { gl_FragColor = outside; return; }',
+    '  vec4 result = outside;',
+    '  if (r < 1.0 + aa) {',
 
     '  float z = sqrt(max(1.0 - r * r, 0.0));',
     '  vec3 n = vec3(p, z);',
@@ -391,7 +402,20 @@
     '  col.a = min(1.0, col.a + glow * 0.6);',
 
     '  float edge = 1.0 - smoothstep(1.0 - aa, 1.0, r);',
-    '  gl_FragColor = col * edge + outside * (1.0 - edge);',
+    '  result = col * edge + outside * (1.0 - edge);',
+    '  }',
+
+    // Everything is seen through a round window as wide as the canvas.
+    // Zoomed in past it, the globe is seen as through a lens: a touch darker
+    // toward the edge, with the same hairline of light as the globe's rim.
+    '  float w = length(gl_FragCoord.xy - uMid);',
+    '  float q = min(w / uWin, 1.0);',
+    '  float zq = sqrt(1.0 - q * q);',
+    '  result.rgb *= 1.0 - 0.3 * uLens * pow(1.0 - zq, 1.5);',
+    '  float ring = uLens * pow(1.0 - zq, 6.0) * 0.42;',
+    '  result.rgb += vec3(0.92, 0.95, 1.0) * ring;',
+    '  result.a = min(1.0, result.a + ring * 0.6);',
+    '  gl_FragColor = result * (1.0 - smoothstep(uWin - 1.5, uWin, w));',
     '}'
   ].join('\n');
 
@@ -429,7 +453,8 @@
     gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 
     var u = {};
-    ['uCenter', 'uRadius', 'uRot', 'uColor', 'uIds', 'uTexel', 'uHover', 'uHoverAmt'].forEach(function (name) {
+    ['uCenter', 'uRadius', 'uRot', 'uColor', 'uIds', 'uTexel', 'uHover', 'uHoverAmt',
+     'uMid', 'uWin', 'uLens'].forEach(function (name) {
       u[name] = gl.getUniformLocation(program, name);
     });
     gl.uniform1i(u.uColor, 0);
@@ -440,8 +465,9 @@
 
   /* REPEAT across the date line needs power-of-two sizes, which both are. */
   function upload(gl, unit, source, exact) {
+    var texture = gl.createTexture();
     gl.activeTexture(gl.TEXTURE0 + unit);
-    gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());
+    gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, !exact);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, source);
     var filter = exact ? gl.NEAREST : gl.LINEAR;
@@ -449,6 +475,7 @@
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, filter);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    return texture;
   }
 
   /* ----------------------------------------------------------------------
@@ -465,6 +492,18 @@
 
   function clampTilt(lat) {
     return Math.max(TILT_MIN, Math.min(TILT_MAX, lat));
+  }
+
+  /* Turn the globe so the place `ll` sits at screen point `at`, or as near
+     as the tilt limits allow. A few small corrections converge on it. */
+  function hold(ll, at) {
+    for (var i = 0; i < 3; i++) {
+      var g = geometry(), s = project(ll, rotation(state.lon, state.lat), g);
+      if (!s.front) return;
+      var c = Math.max(0.25, Math.cos(ll[1] * DEG));
+      state.lon += (s.x - at.x) / (g.r * c) / DEG;
+      state.lat = clampTilt(state.lat - (s.y - at.y) / g.r / DEG);
+    }
   }
 
   function project(at, M, g) {
@@ -508,7 +547,12 @@
     vLat: 0,
     drag: null,         // the mouse, pen or finger holding the globe
     resumeAt: 0,        // when it may start turning on its own again
-    zoom: 1,
+    scale: 1,           // the zoom on screen…
+    userZoom: 1,        // …and the zoom asked for, which it eases toward
+    zoomAt: null,       // screen point a zoom holds still
+    touches: {},        // fingers down on the globe, by pointer id
+    pinch: null,
+    zoom: 1,            // the lean toward a hovered member
     hoverAmt: 0,
     hover: null,        // the target under the pointer, or tapped
     lit: null,          // the target the shader is (or was last) brightening
@@ -520,14 +564,25 @@
   };
 
   function geometry() {
-    var size = view.css, c0 = size / 2, r0 = size * FILL;
+    var size = view.css, c0 = size / 2, r0 = size * FILL * state.scale;
     var f = state.focus || { x: c0, y: c0 };
-    return { cx: f.x + (c0 - f.x) * state.zoom, cy: f.y + (c0 - f.y) * state.zoom, r: r0 * state.zoom };
+    return {
+      cx: f.x + (c0 - f.x) * state.zoom, cy: f.y + (c0 - f.y) * state.zoom,
+      r: r0 * state.zoom, win: c0 - 1
+    };
   }
 
+  /* The same without the lean toward a hovered member. */
   function baseGeometry() {
     var size = view.css;
-    return { cx: size / 2, cy: size / 2, r: size * FILL };
+    return { cx: size / 2, cy: size / 2, r: size * FILL * state.scale, win: size / 2 - 1 };
+  }
+
+  /* The globe is seen through a round window as wide as the canvas: however
+     far it is zoomed, nothing outside that circle shows or can be picked. */
+  function inWindow(p) {
+    var c = view.css / 2;
+    return Math.hypot(p.x - c, p.y - c) <= c - 1;
   }
 
   function measure() {
@@ -566,7 +621,7 @@
     targets.forEach(function (t) {
       if (kind === 'point' ? t.kind !== 'point' : !t.poly) return;
       var s = project(t.anchor, M, g);
-      if (!s.front) return;
+      if (!s.front || !inWindow(s)) return;
       var dist = Math.hypot(s.x - px, s.y - py);
       if (dist < bestD) { bestD = dist; best = t; }
     });
@@ -574,7 +629,9 @@
   }
 
   function pick(px, py, M, g) {
-    var reach = state.touch ? REACH_TOUCH : REACH;
+    if (!inWindow({ x: px, y: py })) return null;
+    /* Zoomed in, markers are drawn bigger, and are that much easier to hit. */
+    var reach = Math.max(state.touch ? REACH_TOUCH : REACH, g.r * 0.9 * DEG);
     var ll = unproject(px, py, M, g);
     var area = ll ? areaAt(ll) : null;
 
@@ -595,16 +652,20 @@
      The card
      ---------------------------------------------------------------------- */
 
-  var cardSize = { w: 0, h: 0 }, hideTimer = 0, tapTimer = 0;
+  var cardSize = { w: 0, h: 0 }, hideTimer = 0, tapTimer = 0, lastTap = null;
 
   function fillCard(t) {
     card.replaceChildren.apply(card, t.members.map(function (m) {
       var row = el('div', 'globe-card__row');
-      var flag = el('img', 'globe-card__flag');
-      flag.src = m.flag;
-      flag.alt = '';
-      flag.width = 28;
-      flag.height = 19;
+      if (m.flag) {
+        var flag = el('img', 'globe-card__flag');
+        flag.src = m.flag;
+        flag.alt = '';
+        flag.width = 28;
+        flag.height = 19;
+        flag.onerror = function () { flag.remove(); };
+        row.append(flag);
+      }
 
       var text = el('div');
       text.append(el('p', 'globe-card__name', m.name));
@@ -615,7 +676,7 @@
         text.append(el('p', 'globe-card__meta', followers.toLocaleString('en-GB') + ' followers'));
       }
 
-      row.append(flag, text);
+      row.append(text);
       return row;
     }));
     cardSize.w = card.offsetWidth;
@@ -637,9 +698,12 @@
   function placeCard(M, g) {
     var t = state.shown;
     if (!t) return;
-    var s = project(t.anchor, M, g);
-    var x = s.front ? s.x : (state.pointer ? state.pointer.x : g.cx);
-    var y = s.front ? s.y : (state.pointer ? state.pointer.y : g.cy);
+    /* By the member's own spot — or, when that is round the back or zoomed
+       out of the window, by the pointer or the tap. */
+    var s = project(t.anchor, M, g), seen = s.front && inWindow(s);
+    var at = state.pointer || lastTap;
+    var x = seen ? s.x : (at ? at.x : g.cx);
+    var y = seen ? s.y : (at ? at.y : g.cy);
     var size = view.css, w = cardSize.w, h = cardSize.h;
 
     var left = x + 14, top = y - h - 10;
@@ -666,17 +730,31 @@
     function ease(rate) { return still ? 1 : 1 - Math.exp(-dt * rate); }
 
     var dragging = !!(state.drag && state.drag.active);
+    var pinching = !!state.pinch;
     var coasting = Math.abs(state.vLon) + Math.abs(state.vLat) > 6;
     var resting = now < state.resumeAt;
+
+    /* Zoom: eased toward what the wheel asked for, direct under the fingers,
+       and always about the pointer — the place under it stays under it, so
+       zooming in goes to whatever the pointer is on. */
+    if (state.scale !== state.userZoom) {
+      var at = state.zoomAt;
+      var ll = at && unproject(at.x, at.y, rotation(state.lon, state.lat), geometry());
+      state.scale += (state.userZoom - state.scale) * (pinching ? 1 : ease(14));
+      if (Math.abs(state.userZoom - state.scale) < 0.0005) state.scale = state.userZoom;
+      if (ll) hold(ll, at);
+      if (state.scale === state.userZoom) state.zoomAt = null;
+    }
     var M = rotation(state.lon, state.lat);
 
     /* Who is under the pointer — or under the last tap on a touch screen.
        Nobody while the globe is in someone's hand or still coasting from a
        flick: cards flashing past would only get in the way. */
-    if (dragging || coasting) {
+    if (dragging || pinching || coasting) {
       state.hover = null;
     } else if (state.tap) {
       state.hover = pick(state.tap.x, state.tap.y, M, geometry());
+      lastTap = state.tap;
       state.tap = null;
       clearTimeout(tapTimer);
       if (state.hover) tapTimer = setTimeout(function () { state.hover = null; kick(); }, 4500);
@@ -690,9 +768,11 @@
        stays there, and while the globe is held — then, a moment after it is
        let go, it picks up again gently. West to east, the way the Earth
        turns: the land drifts left to right, so the view moves on west. */
-    var wantSpeed = state.hover || still || dragging || resting ? 0 : SPIN;
+    var wantSpeed = state.hover || still || dragging || pinching || resting ? 0 : SPIN;
     state.speed += (wantSpeed - state.speed) * ease(wantSpeed > state.speed ? 1.2 : 3);
-    state.lon -= state.speed * dt;
+    /* Zoomed in, it turns that much slower, so the land drifts past at the
+       same unhurried pace. */
+    state.lon -= state.speed * dt / Math.max(1, state.scale);
 
     /* A flick carries on by itself and slows to a stop. */
     if (!dragging && (state.vLon || state.vLat)) {
@@ -712,14 +792,17 @@
       state.lat += (TILT - state.lat) * ease(0.6);
     }
 
-    var wantZoom = state.hover && !state.touch ? HOVER_ZOOM : 1;
+    /* The lean in is for the whole globe; zoomed in, it would only nudge the
+       map about under the pointer, so it fades away. */
+    var lean = (HOVER_ZOOM - 1) / Math.max(1, state.scale * state.scale);
+    var wantZoom = state.hover && !state.touch ? 1 + lean : 1;
     state.zoom += (wantZoom - state.zoom) * ease(5);
     state.hoverAmt += ((state.hover ? 1 : 0) - state.hoverAmt) * ease(10);
 
     /* Lean in about the member's own spot, so it stays under the pointer. */
     if (state.hover) {
       var a = project(state.hover.anchor, rotation(state.lon, state.lat), baseGeometry());
-      var goal = a.front ? a : state.pointer;
+      var goal = a.front && inWindow(a) ? a : state.pointer;
       if (goal) {
         if (!state.focus) state.focus = { x: goal.x, y: goal.y };
         state.focus.x += (goal.x - state.focus.x) * ease(8);
@@ -733,10 +816,12 @@
     var g = geometry();
     render(M, g);
     placeCard(M, g);
+    if (state.userZoom > 1.5 && !gfx.detail) sharpen();
 
     if (!host.classList.contains('is-ready')) host.classList.add('is-ready');
 
-    var busy = state.speed > 0.001 || dragging || resting || state.vLon || state.vLat ||
+    var busy = state.speed > 0.001 || dragging || pinching || resting || state.vLon || state.vLat ||
+      state.scale !== state.userZoom ||
       Math.abs(state.zoom - wantZoom) > 0.0005 ||
       Math.abs(state.hoverAmt - (state.hover ? 1 : 0)) > 0.002 || state.pointer;
     if (busy) kick();
@@ -750,6 +835,9 @@
     gl.uniformMatrix3fv(u.uRot, false, [M[0], M[3], M[6], M[1], M[4], M[7], M[2], M[5], M[8]]);
     gl.uniform1f(u.uHover, state.lit ? state.lit.id : 0);
     gl.uniform1f(u.uHoverAmt, state.hoverAmt);
+    gl.uniform2f(u.uMid, px / 2, px / 2);
+    gl.uniform1f(u.uWin, g.win * k);
+    gl.uniform1f(u.uLens, Math.max(0, Math.min(1, (g.r / g.win - 0.95) / 0.3)));
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   }
 
@@ -760,19 +848,33 @@
   function build() {
     gfx = setup(canvas);
     if (!gfx) throw new Error('WebGL is not available');
-    var gl = gfx.gl;
+    gfx.textures = [];
+    paintTextures(false);
+  }
 
-    /* Sharp enough for the globe's size on this screen, and no larger. */
-    var radius = canvas.width * FILL * HOVER_ZOOM;
+  /* Sharp enough for the globe's size on this screen, and no larger — until
+     someone zooms in, when the world is painted again in full detail. */
+  function paintTextures(detail) {
+    var gl = gfx.gl;
+    var radius = canvas.width * FILL * HOVER_ZOOM * (detail ? ZOOM_MAX : 1);
     var max = gl.getParameter(gl.MAX_TEXTURE_SIZE);
     var W = 2 * Math.PI * radius > 2300 && max >= 4096 ? 4096 : 2048;
 
     var colour = paint(data, targets, W, false);
-    var ids = paint(data, targets, 2048, true);
-    upload(gl, 0, colour, false);
-    upload(gl, 1, ids, true);
+    var ids = paint(data, targets, detail ? W : 2048, true);
+    gfx.textures.forEach(function (t) { gl.deleteTexture(t); });
+    gfx.textures = [upload(gl, 0, colour, false), upload(gl, 1, ids, true)];
     colour.width = ids.width = 0;           // the pixels live on the GPU now
     gl.uniform2f(gfx.u.uTexel, 1.5 / W, 1.5 / (W / 2));
+    gfx.detail = detail;
+  }
+
+  function sharpen() {
+    gfx.detail = true;                      // once only, even while it paints
+    setTimeout(function () {
+      try { paintTextures(true); } catch (error) { console.warn('CountriesIRL: globe detail —', error.message); }
+      kick();
+    }, 50);
   }
 
   function fail(error) {
@@ -822,7 +924,7 @@
 
   function onGlobe(p) {
     var g = baseGeometry();
-    return Math.hypot(p.x - g.cx, p.y - g.cy) <= g.r * 1.1;
+    return Math.hypot(p.x - g.cx, p.y - g.cy) <= Math.min(g.r * 1.1, g.win);
   }
 
   function clampFlick(v) {
@@ -841,16 +943,24 @@
       }
       d.active = true;
       d.trail = [{ t: d.t0, lon: state.lon, lat: state.lat }];
+      d.grab = unproject(d.x, d.y, rotation(state.lon, state.lat), geometry());
       state.speed = 0;
       state.hover = null;
       clearTimeout(tapTimer);
       host.classList.add('is-dragging');
     }
-    /* A globe radius of travel turns it a radian, so the spot that was
-       grabbed stays under the pointer. */
-    var r = baseGeometry().r;
-    state.lon -= (p.x - d.x) / r / DEG;
-    state.lat = clampTilt(state.lat + (p.y - d.y) / r / DEG);
+    /* The spot that was grabbed stays under the pointer, worked out exactly
+       so it holds at any zoom and latitude. Off the edge of the globe there
+       is no spot to hold, and a globe radius of travel turns it a radian. */
+    var g = geometry(), inside = Math.hypot(p.x - g.cx, p.y - g.cy) < g.r * 0.95;
+    if (d.grab && inside) {
+      hold(d.grab, p);
+    } else {
+      var r = baseGeometry().r;
+      state.lon -= (p.x - d.x) / r / DEG;
+      state.lat = clampTilt(state.lat + (p.y - d.y) / r / DEG);
+    }
+    d.grab = inside ? unproject(p.x, p.y, rotation(state.lon, state.lat), geometry()) : null;
     d.x = p.x;
     d.y = p.y;
     var t = performance.now();
@@ -877,9 +987,63 @@
     return true;
   }
 
+  function zoomTo(z, at) {
+    state.userZoom = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, z));
+    state.zoomAt = at;
+    state.speed = 0;
+    state.vLon = state.vLat = 0;
+    state.resumeAt = performance.now() + RESUME_AFTER;
+    kick();
+  }
+
+  /* Two fingers on a touch screen: spreading them zooms about the point
+     between them, and moving them together turns the globe. */
+  function fingers() {
+    return Object.keys(state.touches).map(function (id) { return state.touches[id]; });
+  }
+  function spread(pts) { return Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y); }
+  function middle(pts) { return { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 }; }
+
+  function startPinch() {
+    var pts = fingers();
+    state.drag = null;                    // the first finger's drag or tap is off
+    host.classList.remove('is-dragging');
+    state.touch = true;
+    state.hover = null;
+    clearTimeout(tapTimer);
+    state.pinch = { spread: Math.max(spread(pts), 20), zoom: state.userZoom, mid: middle(pts) };
+    kick();
+  }
+
+  function pinchMove() {
+    var pts = fingers(), P = state.pinch, mid = middle(pts), r = baseGeometry().r;
+    state.lon -= (mid.x - P.mid.x) / r / DEG;
+    state.lat = clampTilt(state.lat + (mid.y - P.mid.y) / r / DEG);
+    P.mid = mid;
+    zoomTo(P.zoom * spread(pts) / P.spread, mid);
+  }
+
+  /* A finger lifting ends a pinch; the one left behind neither turns the
+     globe nor counts as a tap. */
+  function lift(event) {
+    if (!state.touches[event.pointerId]) return;
+    delete state.touches[event.pointerId];
+    if (state.pinch) {
+      state.pinch = null;
+      state.resumeAt = performance.now() + RESUME_AFTER;
+      kick();
+    }
+  }
+
   canvas.addEventListener('pointerdown', function (event) {
     if (!ready || (event.pointerType === 'mouse' && event.button !== 0)) return;
     var p = local(event), touch = event.pointerType === 'touch';
+    if (touch) {
+      state.touches[event.pointerId] = p;
+      var count = fingers().length;
+      if (count === 2) startPinch();
+      if (count > 1) return;
+    }
     if (!onGlobe(p)) {
       if (touch && state.hover) { state.hover = null; kick(); }
       return;
@@ -892,6 +1056,10 @@
     if (!touch) canvas.setPointerCapture(event.pointerId);
   });
   canvas.addEventListener('pointermove', function (event) {
+    if (state.touches[event.pointerId]) {
+      state.touches[event.pointerId] = local(event);
+      if (state.pinch) pinchMove();
+    }
     if (state.drag && state.drag.id === event.pointerId) dragMove(event);
     if (event.pointerType === 'touch') return;
     state.touch = false;
@@ -906,6 +1074,7 @@
     kick();
   });
   canvas.addEventListener('pointerup', function (event) {
+    lift(event);
     var d = state.drag;
     if (!d || d.id !== event.pointerId) return;
     if (letGo(false) || !d.touch) return;
@@ -917,8 +1086,53 @@
   });
   ['pointercancel', 'lostpointercapture'].forEach(function (type) {
     canvas.addEventListener(type, function (event) {
+      if (type === 'pointercancel') lift(event);
       if (state.drag && state.drag.id === event.pointerId) letGo(true);
     });
+  });
+
+  /* Keep a two-finger pinch on the globe from scrolling the page. */
+  canvas.addEventListener('touchmove', function (event) {
+    if (state.pinch && event.cancelable) event.preventDefault();
+  }, { passive: false });
+
+  /* The wheel. A trackpad pinch arrives as a wheel with Ctrl held, as does
+     Ctrl + wheel, and always zooms. A plain wheel is also how people scroll
+     the page, so it zooms only when that is clearly what it is for: not
+     while the page is still moving, not with the globe half off screen, and
+     never below the usual size — so scrolling down past the globe just
+     scrolls. At either limit the page gets the wheel back. */
+  var scrolledAt = 0;
+  window.addEventListener('scroll', function () { scrolledAt = performance.now(); }, { passive: true });
+
+  canvas.addEventListener('wheel', function (event) {
+    if (!ready) return;
+    var p = local(event);
+    if (!onGlobe(p)) return;
+    var pinch = event.ctrlKey;
+    var dy = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? 400 : 1);
+    var goal = state.userZoom * Math.exp(-dy * (pinch ? 0.01 : 0.002));
+    if (!pinch) {
+      var box = canvas.getBoundingClientRect();
+      var seen = Math.min(box.bottom, window.innerHeight) - Math.max(box.top, 0);
+      if (performance.now() - scrolledAt < 300 || seen < box.height * 0.8) return;
+      goal = Math.min(ZOOM_MAX, Math.max(goal, Math.min(state.userZoom, 1)));
+      if (Math.abs(goal - state.userZoom) < 0.001) return;
+    }
+    event.preventDefault();
+    zoomTo(goal, p);
+  }, { passive: false });
+
+  /* Safari on a Mac reports a trackpad pinch as gesture events instead. On
+     iPhone and iPad the fingers are already handled above. */
+  var gestureFrom = 0;
+  canvas.addEventListener('gesturestart', function (event) {
+    event.preventDefault();
+    gestureFrom = fingers().length ? 0 : state.userZoom;
+  });
+  canvas.addEventListener('gesturechange', function (event) {
+    event.preventDefault();
+    if (gestureFrom) zoomTo(gestureFrom * event.scale, local(event));
   });
   document.addEventListener('pointerdown', function (event) {
     if (state.touch && state.hover && !host.contains(event.target)) {
