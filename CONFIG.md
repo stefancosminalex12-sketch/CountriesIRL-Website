@@ -74,6 +74,7 @@ the hero figures update themselves, and the card picks up its country's flag.
 | `flag` | no | Path to a flag image, when the country is not one of the 120 in `assets/flags/`. Falls back to initials if there is nothing to show. |
 | `website` | no | Added to the card as a **Website** link. |
 | `links` | no | Any number of platforms. Each is a `label` and a `url`. |
+| `id` | no | Hidden internal identifier, never shown on the page. It is written to the card as `data-member-id`. Use it when two members share a visible name — the country Georgia is `georgia-country`, so a future U.S. state entry could be `georgia-state`. |
 
 ### Notes on `links`
 

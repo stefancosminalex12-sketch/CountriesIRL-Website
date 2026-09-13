@@ -274,7 +274,10 @@ window.SITE_CONFIG = {
         ]
       },
       {
-        name: 'Georgia (Sakartvelo)',
+        // Internal key, never shown: keeps the country apart from a future
+        // entry for the U.S. state of Georgia.
+        id: 'georgia-country',
+        name: 'Georgia',
         flag: 'assets/flags/ge.png',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/sakartveloirl/' }

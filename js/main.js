@@ -385,6 +385,9 @@
   function memberCard(member) {
     var card = el('article', 'member');
     if (member.country) card.dataset.country = member.country;
+    /* Internal key, never displayed — lets two members share a visible name
+       (Georgia the country, Georgia the state) and still be told apart. */
+    if (member.id) card.dataset.memberId = member.id;
 
     var head = el('div', 'member__head');
     var meta = el('div');
