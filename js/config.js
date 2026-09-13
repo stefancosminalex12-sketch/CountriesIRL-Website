@@ -75,20 +75,23 @@ window.SITE_CONFIG = {
      `body` is a list of paragraphs — add or remove lines freely.
      ------------------------------------------------------------------ */
   about: {
-    title: 'What CountriesIRL is',
+    title: 'What is CountriesIRL?',
     lead:
-      'A creator and media network built around countries, cultures and the ' +
-      'people who represent them.',
+      'CountriesIRL is a project built around the countries, cultures, people, ' +
+      'and history that make up our world. We combine education and ' +
+      'entertainment to create content that makes learning about the world ' +
+      'more accessible, engaging, and relevant.',
     body: [
-      'Members are creators and teams who cover a country from the inside — ' +
-      'their own knowledge, language and point of view, turned into content ' +
-      'about the people, history, traditions and current events behind a part ' +
-      'of the world. Some of it is funny, some of it is serious, and most of ' +
-      'it would not read the same coming from anyone else.',
-      'It began as a handful of country-focused social accounts and is growing ' +
-      'past that. Short-form and memes are where most members work today. ' +
-      'Satire, explainers, history, geography and longer documentary work are ' +
-      'the direction it is heading in.'
+      'Our goal is to help people understand more about the places and events ' +
+      'shaping the world around them, from history and geopolitics to culture, ' +
+      'geography, tourism, and current events. As the world continues to ' +
+      'change faster than ever, staying informed and understanding different ' +
+      'perspectives has become increasingly important.',
+      'What began with country-focused social media accounts is growing into ' +
+      'something larger. Through our network of creators, we aim to develop ' +
+      'educational content, documentaries, and other projects that bring ' +
+      'together knowledge from different parts of the world and make it ' +
+      'available to a wider audience.'
     ],
 
     /* The short version of where the network came from. Sits between the
