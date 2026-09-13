@@ -200,9 +200,19 @@ window.SITE_CONFIG = {
         ]
       },
       {
+        name: 'China',
+        flag: 'assets/flags/cn.png',
+        priority: 5,
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/chinairl_/' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@chinairlmain' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@chinairlmain' }
+        ]
+      },
+      {
         name: 'Fiji',
         flag: 'assets/flags/fj.png',
-        priority: 5,
+        priority: 6,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/fijiirlmain/' },
           { label: 'YouTube', url: 'https://www.youtube.com/@Fijiirl' },
@@ -248,27 +258,10 @@ window.SITE_CONFIG = {
         ]
       },
       {
-        name: 'China',
-        flag: 'assets/flags/cn.png',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/chinairl_/' },
-          { label: 'YouTube', url: 'https://www.youtube.com/@chinairlmain' },
-          { label: 'TikTok', url: 'https://www.tiktok.com/@chinairlmain' }
-        ]
-      },
-      {
         name: 'Croatia',
         flag: 'assets/flags/hr.png',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/croatiairl_/' }
-        ]
-      },
-      {
-        name: 'Czech Republic',
-        flag: 'assets/flags/cz.png',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/czechrepublicirl/' },
-          { label: 'TikTok', url: 'https://www.tiktok.com/@czechrepublicirl' }
         ]
       },
       {
@@ -277,6 +270,14 @@ window.SITE_CONFIG = {
         geo: { at: [14.42, 50.09] },     // Prague
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/czechoslovakiairlmain/' }
+        ]
+      },
+      {
+        name: 'Czech Republic',
+        flag: 'assets/flags/cz.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/czechrepublicirl/' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@czechrepublicirl' }
         ]
       },
       {

@@ -126,13 +126,15 @@
      ---------------------------------------------------------------------- */
 
   /* Members with a `priority` come first, 1 before 2; everyone else follows
-     alphabetically by name. The cards and the flag strip both read this
-     list, so they always agree, and a new member never needs placing. */
+     alphabetically by name, letter by letter — spaces are ignored, so
+     Czechoslovakia comes before Czech Republic. The cards and the flag strip
+     both read this list, so they always agree, and a new member never needs
+     placing. */
   function memberOrder(a, b) {
     var pa = typeof a.priority === 'number' ? a.priority : Infinity;
     var pb = typeof b.priority === 'number' ? b.priority : Infinity;
     if (pa !== pb) return pa < pb ? -1 : 1;
-    return a.name.localeCompare(b.name, 'en', { sensitivity: 'base' });
+    return a.name.localeCompare(b.name, 'en', { sensitivity: 'base', ignorePunctuation: true });
   }
 
   var members = (get('members.list') || []).filter(function (m) {

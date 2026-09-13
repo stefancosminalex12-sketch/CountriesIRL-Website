@@ -81,7 +81,7 @@ new card — and its flag in the strip under the hero — lands in the right pla
 | `id` | no | Hidden internal identifier, never shown on the page. It is written to the card as `data-member-id`. Use it when two members share a visible name — the country Georgia is `georgia-country`, so a future U.S. state entry could be `georgia-state`. |
 | `geo` | no | Where the member sits on the hero globe. Leave it out for a country — it is read from the flag file name, so `ro.png` is Romania. Use `'US-OH'` for a U.S. state, or `{ at: [lon, lat] }` for a place with no modern border, such as a historical capital. |
 | `origin` | no | `true` on the account the network started from. The globe lights it slightly warmer. |
-| `priority` | no | A number that pins the member to the front of the list — `1` first, then `2`, and so on. Members without one follow in alphabetical order. Romania, the United Kingdom, the United States, Russia and Fiji are `1` to `5`. |
+| `priority` | no | A number that pins the member to the front of the list — `1` first, then `2`, and so on. Members without one follow in alphabetical order, letter by letter (spaces are ignored, so Czechoslovakia comes before Czech Republic). Romania, the United Kingdom, the United States, Russia, China and Fiji are `1` to `6`. |
 | `followers` | no | A real follower count to show on the globe card, such as `followers: 12345`. Leave it out when you don't know it — the card simply leaves that line off, and never shows an estimate. Without it, the card uses the follower tracker's exact Instagram figure (`data/stats.json`) for the member's current handle, when the tracker has one. |
 
 ### Notes on the globe
