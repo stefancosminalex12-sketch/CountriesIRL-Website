@@ -29,7 +29,7 @@
        max-age, so without it a fresh index.html can pair with a stale
        stylesheet or config and render a half-broken page. Bump it on any
        change to css/style.css, js/config.js or js/main.js. -->
-  <link rel="stylesheet" href="css/style.css?v=202609131852">
+  <link rel="stylesheet" href="css/style.css?v=202609132005">
 </head>
 
 <body>
@@ -85,6 +85,11 @@
           <a class="btn btn--invert" data-cta="hero.primaryCta" href="#join"></a>
           <a class="btn btn--ghost" data-cta="hero.secondaryCta" href="#about"></a>
         </div>
+
+        <!-- The member globe. js/globe.js draws it from the same member list
+             as the cards, once the rest of the page has loaded. -->
+        <div class="hero__globe" data-globe role="img"
+             aria-label="Globe highlighting where CountriesIRL members are"></div>
       </div>
 
       <!-- Every flag in the network, drifting across the foot of the hero.
@@ -210,7 +215,8 @@
     </div>
   </footer>
 
-  <script src="js/config.js?v=202609131852"></script>
-  <script src="js/main.js?v=202609131852"></script>
+  <script src="js/config.js?v=202609132005"></script>
+  <script src="js/main.js?v=202609132005"></script>
+  <script src="js/globe.js?v=202609132005" defer></script>
 </body>
 </html>

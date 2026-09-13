@@ -75,6 +75,24 @@ the hero figures update themselves, and the card picks up its country's flag.
 | `website` | no | Added to the card as a **Website** link. |
 | `links` | no | Any number of platforms. Each is a `label` and a `url`. |
 | `id` | no | Hidden internal identifier, never shown on the page. It is written to the card as `data-member-id`. Use it when two members share a visible name — the country Georgia is `georgia-country`, so a future U.S. state entry could be `georgia-state`. |
+| `geo` | no | Where the member sits on the hero globe. Leave it out for a country — it is read from the flag file name, so `ro.png` is Romania. Use `'US-OH'` for a U.S. state, or `{ at: [lon, lat] }` for a place with no modern border, such as a historical capital. |
+| `origin` | no | `true` on the account the network started from. The globe lights it slightly warmer. |
+| `followers` | no | A number to show on the globe card. Without it, the card uses the follower tracker's Instagram figure from `data/stats.json` when there is one for the member's handle. |
+
+### Notes on the globe
+
+The globe in the hero (`js/globe.js`) reads this same member list, so adding,
+removing or renaming a member updates it with everything else. Country and state
+outlines come from `data/globe.json`, derived from Natural Earth (public domain).
+
+- **Countries** need nothing extra — the flag file name says which country it is.
+- **U.S. states** set `geo: 'US-XX'` and are drawn on top of the United States.
+- **Historical entities** set `geo: { at: [lon, lat] }` and appear as a marker at
+  their historical capital rather than as a modern border. Members that share a
+  place — the Byzantine and Ottoman Empires, both at Constantinople — share a
+  marker, and its card lists both.
+- **Small countries** too small for the outlines (San Marino, Gibraltar) appear as
+  a marker automatically.
 
 ### Notes on `links`
 

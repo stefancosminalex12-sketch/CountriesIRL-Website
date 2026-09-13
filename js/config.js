@@ -131,13 +131,23 @@ window.SITE_CONFIG = {
      >>>   }
      >>>
      >>> `flag` is an explicit path, so an entry can fly a flag that is not
-     >>> its own — Ottoman Empire uses tr.png, Nebraska uses us.png. Flags
+     >>> its own — the USSR uses su.svg, Nebraska uses Nebraska.svg. Flags
      >>> live in assets/flags/, one PNG per ISO code. If the file is missing
      >>> the card falls back to the member's initials rather than breaking.
      >>>
      >>> A member may also carry `country`, `image`, `description` and
      >>> `website`; all four are optional and none are in use right now,
      >>> because the cards are meant to show the name and nothing else.
+     >>>
+     >>> For the globe in the hero (js/globe.js) a member can also carry:
+     >>>   geo        Where it sits. Leave it out for a country: it is read
+     >>>              from the flag file name, so ro.png is Romania. Use
+     >>>              'US-OH' for a U.S. state, or { at: [lon, lat] } for a
+     >>>              place with no modern border, like a historical capital.
+     >>>   origin     true on the account the network started from.
+     >>>   followers  A number for the globe card. Without it the card uses
+     >>>              the follower tracker's figure (data/stats.json) for
+     >>>              the member's Instagram handle, when there is one.
      ------------------------------------------------------------------ */
 
      members: {
@@ -150,6 +160,7 @@ window.SITE_CONFIG = {
       {
         name: 'Romania (Owner)',
         flag: 'assets/flags/ro.png',
+        origin: true,                    // where the network started
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/romaniairl/' },
           { label: 'YouTube', url: 'https://www.youtube.com/@romaniairl' },
@@ -240,6 +251,7 @@ window.SITE_CONFIG = {
       {
         name: 'Alabama',
         flag: 'assets/flags/Alabama.png',
+        geo: 'US-AL',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/alabama.irl/' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@alabama_irl' }
@@ -255,6 +267,7 @@ window.SITE_CONFIG = {
       {
         name: 'Byzantine Empire',
         flag: 'assets/flags/byzantine.svg',
+        geo: { at: [28.98, 41.01] },     // Constantinople
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/byzantineempire.irl/' }
         ]
@@ -269,6 +282,7 @@ window.SITE_CONFIG = {
       {
         name: 'Czechoslovakia',
         flag: 'assets/flags/cz.png',
+        geo: { at: [14.42, 50.09] },     // Prague
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/czechoslovakiairlmain/' }
         ]
@@ -337,6 +351,7 @@ window.SITE_CONFIG = {
       {
         name: 'Nebraska',
         flag: 'assets/flags/Nebraska.svg',
+        geo: 'US-NE',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/nebraskairl/' }
         ]
@@ -351,6 +366,7 @@ window.SITE_CONFIG = {
       {
         name: 'Ohio',
         flag: 'assets/flags/Ohio.svg',
+        geo: 'US-OH',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/ohio_irl/' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@ohio.irl1' }
@@ -359,6 +375,7 @@ window.SITE_CONFIG = {
       {
         name: 'Ottoman Empire',
         flag: 'assets/flags/Ot.jpg',
+        geo: { at: [28.98, 41.01] },     // Constantinople
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/ottoman_irl/' }
         ]
@@ -394,6 +411,7 @@ window.SITE_CONFIG = {
       {
         name: 'Roman Empire',
         flag: 'assets/flags/roman.png',
+        geo: { at: [12.48, 41.89] },     // Rome
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/romanempireirl/' }
         ]
@@ -401,6 +419,7 @@ window.SITE_CONFIG = {
       {
         name: 'Russian Empire',
         flag: 'assets/flags/russian-empire.svg',
+        geo: { at: [30.31, 59.94] },     // Saint Petersburg
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/russian.empire_irl/' }
         ]
@@ -429,6 +448,7 @@ window.SITE_CONFIG = {
       {
         name: 'USSR',
         flag: 'assets/flags/su.svg',
+        geo: { at: [37.62, 55.75] },     // Moscow
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/sovietunionirl/' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@sovietunionirl' }

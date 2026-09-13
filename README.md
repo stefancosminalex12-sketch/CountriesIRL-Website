@@ -20,7 +20,11 @@ onto GitHub Pages as-is.
 │   └── style.css       Design tokens and every style on the site
 ├── js/
 │   ├── config.js       ← all editable content lives here
-│   └── main.js         Builds the page from config.js; navigation behaviour
+│   ├── main.js         Builds the page from config.js; navigation behaviour
+│   └── globe.js        The member globe in the hero (plain WebGL, no library)
+├── data/
+│   └── globe.json      Country and U.S. state outlines for the globe
+│                       (derived from Natural Earth, public domain)
 ├── assets/
 │   ├── logo/           Logo and icon files
 │   ├── members/        Member profile images
