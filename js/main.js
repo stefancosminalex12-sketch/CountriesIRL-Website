@@ -125,10 +125,20 @@
      Section renderers
      ---------------------------------------------------------------------- */
 
+  /* Members with a `priority` come first, 1 before 2; everyone else follows
+     alphabetically by name. The cards and the flag strip both read this
+     list, so they always agree, and a new member never needs placing. */
+  function memberOrder(a, b) {
+    var pa = typeof a.priority === 'number' ? a.priority : Infinity;
+    var pb = typeof b.priority === 'number' ? b.priority : Infinity;
+    if (pa !== pb) return pa < pb ? -1 : 1;
+    return a.name.localeCompare(b.name, 'en', { sensitivity: 'base' });
+  }
+
   var members = (get('members.list') || []).filter(function (m) {
     /* `country` is optional: entries that name their own flag do not need it. */
     return m && m.name;
-  });
+  }).sort(memberOrder);
 
   function countriesByCount() {
     var counts = {};

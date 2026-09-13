@@ -115,10 +115,15 @@ window.SITE_CONFIG = {
 /* ------------------------------------------------------------------
      5. MEMBERS
      --------------------------------------------------------------------
-     >>> TO ADD A MEMBER: copy one of the blocks below, paste it at the end
-     >>> of the list, and edit the values. Mind the comma between entries.
+     >>> TO ADD A MEMBER: copy one of the blocks below, paste it into the
+     >>> list, and edit the values. Mind the comma between entries.
      >>> The cards are built from this list, and the count above them is
      >>> simply how many entries are here.
+     >>>
+     >>> ORDER: members with a `priority` number come first, 1 before 2 and
+     >>> so on; everyone else follows in alphabetical order of their name.
+     >>> The page sorts them itself, so a new member never needs placing —
+     >>> the list below is kept in that same order only to make it easy to read.
      >>>
      >>>   {
      >>>     name: 'Country',                      // required, the only text on the card
@@ -127,7 +132,7 @@ window.SITE_CONFIG = {
      >>>   }
      >>>
      >>> `flag` is an explicit path, so an entry can fly a flag that is not
-     >>> its own — the USSR uses su.svg, Nebraska uses Nebraska.svg. Flags
+     >>> its own — the Soviet Union uses su.svg, Nebraska uses Nebraska.svg. Flags
      >>> live in assets/flags/, one PNG per ISO code. If the file is missing
      >>> the card falls back to the member's initials rather than breaking.
      >>>
@@ -158,6 +163,7 @@ window.SITE_CONFIG = {
       {
         name: 'Romania (Owner)',
         flag: 'assets/flags/ro.png',
+        priority: 1,
         origin: true,                    // where the network started
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/romaniairl/' },
@@ -168,6 +174,7 @@ window.SITE_CONFIG = {
       {
         name: 'United Kingdom',
         flag: 'assets/flags/gb.png',
+        priority: 2,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/brituishirl/' },
           { label: 'YouTube', url: 'https://www.youtube.com/@brituishirl' },
@@ -177,6 +184,7 @@ window.SITE_CONFIG = {
       {
         name: 'United States',
         flag: 'assets/flags/us.png',
+        priority: 3,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/unitedstatesirl/' },
           { label: 'YouTube', url: 'https://www.youtube.com/@unitedstatesirl' },
@@ -186,6 +194,7 @@ window.SITE_CONFIG = {
       {
         name: 'Russia',
         flag: 'assets/flags/ru.png',
+        priority: 4,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/russiairl/' }
         ]
@@ -193,50 +202,11 @@ window.SITE_CONFIG = {
       {
         name: 'Fiji',
         flag: 'assets/flags/fj.png',
+        priority: 5,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/fijiirlmain/' },
           { label: 'YouTube', url: 'https://www.youtube.com/@Fijiirl' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@fijiirl' }
-        ]
-      },
-      {
-        name: 'China',
-        flag: 'assets/flags/cn.png',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/chinairl_/' },
-          { label: 'YouTube', url: 'https://www.youtube.com/@chinairlmain' },
-          { label: 'TikTok', url: 'https://www.tiktok.com/@chinairlmain' }
-        ]
-      },
-      {
-        name: 'Finland',
-        flag: 'assets/flags/fi.png',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/finlandirl_/' },
-          { label: 'YouTube', url: 'https://www.youtube.com/@FinlandIRL' },
-          { label: 'TikTok', url: 'https://www.tiktok.com/@finlandirl' }
-        ]
-      },
-      {
-        name: 'France',
-        flag: 'assets/flags/fr.png',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/franceirlmain/' }
-        ]
-      },
-      {
-        name: 'Czech Republic',
-        flag: 'assets/flags/cz.png',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/czechrepublicirl/' },
-          { label: 'TikTok', url: 'https://www.tiktok.com/@czechrepublicirl' }
-        ]
-      },
-      {
-        name: 'Belgium',
-        flag: 'assets/flags/be.png',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/belgiumirl/' }
         ]
       },
       {
@@ -263,11 +233,27 @@ window.SITE_CONFIG = {
         ]
       },
       {
+        name: 'Belgium',
+        flag: 'assets/flags/be.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/belgiumirl/' }
+        ]
+      },
+      {
         name: 'Byzantine Empire',
         flag: 'assets/flags/byzantine.svg',
         geo: { at: [28.98, 41.01] },     // Constantinople
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/byzantineempire.irl/' }
+        ]
+      },
+      {
+        name: 'China',
+        flag: 'assets/flags/cn.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/chinairl_/' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@chinairlmain' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@chinairlmain' }
         ]
       },
       {
@@ -278,11 +264,35 @@ window.SITE_CONFIG = {
         ]
       },
       {
+        name: 'Czech Republic',
+        flag: 'assets/flags/cz.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/czechrepublicirl/' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@czechrepublicirl' }
+        ]
+      },
+      {
         name: 'Czechoslovakia',
         flag: 'assets/flags/cz.png',
         geo: { at: [14.42, 50.09] },     // Prague
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/czechoslovakiairlmain/' }
+        ]
+      },
+      {
+        name: 'Finland',
+        flag: 'assets/flags/fi.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/finlandirl_/' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@FinlandIRL' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@finlandirl' }
+        ]
+      },
+      {
+        name: 'France',
+        flag: 'assets/flags/fr.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/franceirlmain/' }
         ]
       },
       {
@@ -430,10 +440,12 @@ window.SITE_CONFIG = {
         ]
       },
       {
-        name: 'Turkmenistan',
-        flag: 'assets/flags/tm.png',
+        name: 'Soviet Union',
+        flag: 'assets/flags/su.svg',
+        geo: { at: [37.62, 55.75] },     // Moscow
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/turkmenistanirl/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/sovietunionirl/' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@sovietunionirl' }
         ]
       },
       {
@@ -444,12 +456,10 @@ window.SITE_CONFIG = {
         ]
       },
       {
-        name: 'USSR',
-        flag: 'assets/flags/su.svg',
-        geo: { at: [37.62, 55.75] },     // Moscow
+        name: 'Turkmenistan',
+        flag: 'assets/flags/tm.png',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/sovietunionirl/' },
-          { label: 'TikTok', url: 'https://www.tiktok.com/@sovietunionirl' }
+          { label: 'Instagram', url: 'https://www.instagram.com/turkmenistanirl/' }
         ]
       }
     ]
