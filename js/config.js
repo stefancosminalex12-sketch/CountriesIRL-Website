@@ -439,18 +439,14 @@ window.SITE_CONFIG = {
   community: {
     title: 'The community',
     lead:
-      'CountriesIRL brings creators together from around the world, giving ' +
-      'them the opportunity to grow their platforms, represent their ' +
-      'countries, and collaborate with other creators as part of a larger ' +
-      'network.',
+      'CountriesIRL is built around the connections between its members. ' +
+      'Creators can exchange ideas, collaborate on projects, and learn from ' +
+      'people representing different countries and backgrounds.',
     body: [
-      'Through the network, we aim to produce content that makes learning ' +
-      'about the world more accessible and engaging. This includes history, ' +
-      'culture, geography, tourism, current events, geopolitics, and the ' +
-      'stories and facts that are often overlooked.',
-      'As CountriesIRL expands, creators can work together on larger projects ' +
-      'and reach audiences around the world, with each member contributing ' +
-      'their own knowledge, perspective, and experience.'
+      'As the network grows, so does the community around it. The goal is to ' +
+      'create a space where people can discover new perspectives, take part ' +
+      'in discussions, and connect with others who share an interest in the ' +
+      'world and its many stories.'
     ],
     // The quiet line above the Discord link. Set it to '' to hide it.
     ctaPrompt: 'Want to learn more about us?',
