@@ -99,13 +99,19 @@ window.SITE_CONFIG = {
     origin: {
       title: 'How it started',
       body: [
-        'CountriesIRL started in March 2026 with Romania IRL and a simple ' +
-        'idea: get the people behind country pages talking to each other. ' +
-        'There was no organisation behind it and no plan longer than a ' +
-        'paragraph.',
-        'Other creators saw where it was going and joined. One account became ' +
-        'a handful, the handful became a network, and it is still getting ' +
-        'bigger.'
+        'CountriesIRL started on March 3, 2026, as a single country-focused ' +
+        'Instagram page created by RomaniaIRL. After finding success during ' +
+        'its first week and gaining its initial few members, we realized the ' +
+        'same concept could work across multiple country-focused pages, each ' +
+        'representing a different part of the world.',
+        'As the network grew, the project expanded beyond Instagram to YouTube ' +
+        'and TikTok, while we began developing our own website, tools, and ' +
+        'infrastructure. We also shifted our focus toward producing ' +
+        'higher-quality content. The concept of country-focused pages was not ' +
+        'entirely new, but bringing multiple creators together under one ' +
+        'shared IRL identity was. CountriesIRL grew into a network and a hub ' +
+        'for creators who want to represent their countries, collaborate, and ' +
+        'develop their own identity as creators.'
       ]
     }
   },
