@@ -471,9 +471,12 @@ a:hover { color: var(--accent-dark); }
   width: min(100%, 19rem);
   aspect-ratio: 1;
   margin: clamp(2.25rem, 8vw, 3rem) auto 0;
-  /* A vertical swipe that starts on the globe still scrolls the page. */
+  /* A vertical swipe that starts on the globe still scrolls the page;
+     a sideways one turns the globe. */
   touch-action: pan-y;
   -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .hero__globe canvas {
   display: block;
@@ -483,6 +486,8 @@ a:hover { color: var(--accent-dark); }
   transition: opacity 1.4s ease;
 }
 .hero__globe.is-ready canvas { opacity: 1; }
+.hero__globe.is-grabbable canvas { cursor: grab; }
+.hero__globe.is-dragging canvas { cursor: grabbing; }
 
 @media (min-width: 40em) {
   .hero__globe { width: min(100%, 23rem); }

@@ -5,6 +5,7 @@
    Members are read from window.SITE_CONFIG.members.list — the same list the
    cards and the flag strip use — so the globe can never disagree with them.
    Geography comes from data/globe.json (Natural Earth, public domain).
+   It turns on its own; drag it (or swipe across it) to turn it by hand.
 
    How it draws: the world is painted once, flat, onto two canvases — one in
    colour, one where each member's area is filled with its own id — and both
@@ -37,6 +38,11 @@
   var FILL = 0.42;           // globe radius as a share of the canvas, leaving room to lean in
   var REACH = 10;            // px a pointer may be from a point member and still hover it
   var REACH_TOUCH = 18;
+  var TILT_MIN = -60;        // how far a drag may tip the globe to show the south…
+  var TILT_MAX = 75;         // …and the north, short of turning it over
+  var FRICTION = 2.6;        // how quickly a flick slows down, per second
+  var MAX_FLICK = 420;       // fastest a flick can set it turning, degrees per second
+  var RESUME_AFTER = 1600;   // ms after a drag before it turns on its own again
 
   var STILL = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -449,11 +455,16 @@
      Sphere maths — view space is x right, y up, the viewer on +z
      ---------------------------------------------------------------------- */
 
-  /* View → globe, row-major: turn to the current longitude, tilt by TILT. */
-  function rotation(lon) {
-    var l = lon * DEG, f = TILT * DEG;
+  /* View → globe, row-major: turn to the longitude facing the viewer, then
+     tip to the latitude facing them. */
+  function rotation(lon, lat) {
+    var l = lon * DEG, f = lat * DEG;
     var cl = Math.cos(l), sl = Math.sin(l), cf = Math.cos(f), sf = Math.sin(f);
     return [cl, -sl * sf, sl * cf, 0, cf, sf, -sl, -cl * sf, cl * cf];
+  }
+
+  function clampTilt(lat) {
+    return Math.max(TILT_MIN, Math.min(TILT_MAX, lat));
   }
 
   function project(at, M, g) {
@@ -491,7 +502,12 @@
 
   var state = {
     lon: START_LON,
+    lat: TILT,
     speed: STILL.matches ? 0 : SPIN,
+    vLon: 0,            // what a flick left behind, degrees per second
+    vLat: 0,
+    drag: null,         // the mouse, pen or finger holding the globe
+    resumeAt: 0,        // when it may start turning on its own again
     zoom: 1,
     hoverAmt: 0,
     hover: null,        // the target under the pointer, or tapped
@@ -649,10 +665,17 @@
     var still = STILL.matches;
     function ease(rate) { return still ? 1 : 1 - Math.exp(-dt * rate); }
 
-    var M = rotation(state.lon);
+    var dragging = !!(state.drag && state.drag.active);
+    var coasting = Math.abs(state.vLon) + Math.abs(state.vLat) > 6;
+    var resting = now < state.resumeAt;
+    var M = rotation(state.lon, state.lat);
 
-    /* Who is under the pointer — or under the last tap on a touch screen. */
-    if (state.tap) {
+    /* Who is under the pointer — or under the last tap on a touch screen.
+       Nobody while the globe is in someone's hand or still coasting from a
+       flick: cards flashing past would only get in the way. */
+    if (dragging || coasting) {
+      state.hover = null;
+    } else if (state.tap) {
       state.hover = pick(state.tap.x, state.tap.y, M, geometry());
       state.tap = null;
       clearTimeout(tapTimer);
@@ -663,12 +686,31 @@
     if (state.hover) state.lit = state.hover;
     showCard(state.hover);
 
-    /* Stop turning while a member is under the pointer, so it stays there. */
-    var wantSpeed = state.hover || still ? 0 : SPIN;
-    state.speed += (wantSpeed - state.speed) * ease(3);
-    /* West to east, the way the Earth turns: the land drifts left to right,
-       so the view moves on to the next longitude west. */
+    /* Turning on its own pauses while a member is under the pointer, so it
+       stays there, and while the globe is held — then, a moment after it is
+       let go, it picks up again gently. West to east, the way the Earth
+       turns: the land drifts left to right, so the view moves on west. */
+    var wantSpeed = state.hover || still || dragging || resting ? 0 : SPIN;
+    state.speed += (wantSpeed - state.speed) * ease(wantSpeed > state.speed ? 1.2 : 3);
     state.lon -= state.speed * dt;
+
+    /* A flick carries on by itself and slows to a stop. */
+    if (!dragging && (state.vLon || state.vLat)) {
+      var decay = Math.exp(-dt * FRICTION);
+      var tipped = state.lat + state.vLat * dt;
+      state.lon += state.vLon * dt;
+      state.lat = clampTilt(tipped);
+      if (state.lat !== tipped) state.vLat = 0;
+      state.vLon *= decay;
+      state.vLat *= decay;
+      if (Math.abs(state.vLon) < 0.3) state.vLon = 0;
+      if (Math.abs(state.vLat) < 0.3) state.vLat = 0;
+    }
+
+    /* Once it turns on its own again, it settles back to its usual tilt. */
+    if (!dragging && !resting && !state.hover && !still) {
+      state.lat += (TILT - state.lat) * ease(0.6);
+    }
 
     var wantZoom = state.hover && !state.touch ? HOVER_ZOOM : 1;
     state.zoom += (wantZoom - state.zoom) * ease(5);
@@ -676,7 +718,7 @@
 
     /* Lean in about the member's own spot, so it stays under the pointer. */
     if (state.hover) {
-      var a = project(state.hover.anchor, rotation(state.lon), baseGeometry());
+      var a = project(state.hover.anchor, rotation(state.lon, state.lat), baseGeometry());
       var goal = a.front ? a : state.pointer;
       if (goal) {
         if (!state.focus) state.focus = { x: goal.x, y: goal.y };
@@ -687,14 +729,15 @@
       state.focus = null;
     }
 
-    M = rotation(state.lon);
+    M = rotation(state.lon, state.lat);
     var g = geometry();
     render(M, g);
     placeCard(M, g);
 
     if (!host.classList.contains('is-ready')) host.classList.add('is-ready');
 
-    var busy = state.speed > 0.001 || Math.abs(state.zoom - wantZoom) > 0.0005 ||
+    var busy = state.speed > 0.001 || dragging || resting || state.vLon || state.vLat ||
+      Math.abs(state.zoom - wantZoom) > 0.0005 ||
       Math.abs(state.hoverAmt - (state.hover ? 1 : 0)) > 0.002 || state.pointer;
     if (busy) kick();
   }
@@ -768,38 +811,114 @@
     try { build(); ready = true; kick(); } catch (error) { fail(error); }
   });
 
-  /* Mouse and pen hover; touch taps. A vertical swipe that starts on the
-     globe still scrolls the page (touch-action: pan-y in the stylesheet). */
+  /* Mouse and pen: hover to see a member, drag to turn the globe. Touch: tap
+     to see a member, swipe across to turn it. A swipe that starts upright
+     still scrolls the page (touch-action: pan-y in the stylesheet) — the
+     browser takes that one over and says so with pointercancel. */
   function local(event) {
     var r = canvas.getBoundingClientRect();
     return { x: event.clientX - r.left, y: event.clientY - r.top };
   }
 
-  var down = null;
+  function onGlobe(p) {
+    var g = baseGeometry();
+    return Math.hypot(p.x - g.cx, p.y - g.cy) <= g.r * 1.1;
+  }
 
+  function clampFlick(v) {
+    return Math.max(-MAX_FLICK, Math.min(MAX_FLICK, v));
+  }
+
+  function dragMove(event) {
+    var d = state.drag, p = local(event);
+    if (!d.active) {
+      var ox = p.x - d.x, oy = p.y - d.y;
+      if (Math.hypot(ox, oy) < (d.touch ? 10 : 4)) return;
+      /* On a touch screen a swipe that starts upright belongs to the page. */
+      if (d.touch && Math.abs(oy) > Math.abs(ox)) {
+        state.drag = null;
+        return;
+      }
+      d.active = true;
+      d.trail = [{ t: d.t0, lon: state.lon, lat: state.lat }];
+      state.speed = 0;
+      state.hover = null;
+      clearTimeout(tapTimer);
+      host.classList.add('is-dragging');
+    }
+    /* A globe radius of travel turns it a radian, so the spot that was
+       grabbed stays under the pointer. */
+    var r = baseGeometry().r;
+    state.lon -= (p.x - d.x) / r / DEG;
+    state.lat = clampTilt(state.lat + (p.y - d.y) / r / DEG);
+    d.x = p.x;
+    d.y = p.y;
+    var t = performance.now();
+    d.trail.push({ t: t, lon: state.lon, lat: state.lat });
+    while (d.trail.length > 2 && t - d.trail[0].t > 100) d.trail.shift();
+    kick();
+  }
+
+  /* Returns whether the press had become a drag. */
+  function letGo(cancelled) {
+    var d = state.drag;
+    state.drag = null;
+    host.classList.remove('is-dragging');
+    if (!d.active) return false;
+    var now = performance.now(), a = d.trail[0], b = d.trail[d.trail.length - 1];
+    /* Only a pointer still moving as it lets go leaves a flick behind. */
+    if (!cancelled && !STILL.matches && now - b.t < 80 && b.t > a.t) {
+      var span = (b.t - a.t) / 1000;
+      state.vLon = clampFlick((b.lon - a.lon) / span);
+      state.vLat = clampFlick((b.lat - a.lat) / span);
+    }
+    state.resumeAt = now + RESUME_AFTER;
+    kick();
+    return true;
+  }
+
+  canvas.addEventListener('pointerdown', function (event) {
+    if (!ready || (event.pointerType === 'mouse' && event.button !== 0)) return;
+    var p = local(event), touch = event.pointerType === 'touch';
+    if (!onGlobe(p)) {
+      if (touch && state.hover) { state.hover = null; kick(); }
+      return;
+    }
+    state.vLon = state.vLat = 0;          // a hand on the globe stops a flick
+    state.drag = {
+      id: event.pointerId, touch: touch, active: false,
+      x: p.x, y: p.y, t0: performance.now(), trail: null
+    };
+    if (!touch) canvas.setPointerCapture(event.pointerId);
+  });
   canvas.addEventListener('pointermove', function (event) {
+    if (state.drag && state.drag.id === event.pointerId) dragMove(event);
     if (event.pointerType === 'touch') return;
     state.touch = false;
     state.pointer = local(event);
+    host.classList.toggle('is-grabbable', onGlobe(state.pointer));
     kick();
   });
   canvas.addEventListener('pointerleave', function (event) {
     if (event.pointerType === 'touch') return;
     state.pointer = null;
+    host.classList.remove('is-grabbable');
     kick();
   });
-  canvas.addEventListener('pointerdown', function (event) {
-    if (event.pointerType === 'touch') down = { x: event.clientX, y: event.clientY };
-  });
   canvas.addEventListener('pointerup', function (event) {
-    if (event.pointerType !== 'touch' || !down) return;
-    var moved = Math.hypot(event.clientX - down.x, event.clientY - down.y);
-    down = null;
-    if (moved > 10) return;               // that was a scroll, not a tap
+    var d = state.drag;
+    if (!d || d.id !== event.pointerId) return;
+    if (letGo(false) || !d.touch) return;
+    /* A finger that barely moved was a tap. */
     state.touch = true;
     state.pointer = null;
     state.tap = local(event);
     kick();
+  });
+  ['pointercancel', 'lostpointercapture'].forEach(function (type) {
+    canvas.addEventListener(type, function (event) {
+      if (state.drag && state.drag.id === event.pointerId) letGo(true);
+    });
   });
   document.addEventListener('pointerdown', function (event) {
     if (state.touch && state.hover && !host.contains(event.target)) {
