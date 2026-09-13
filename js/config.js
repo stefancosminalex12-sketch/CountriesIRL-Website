@@ -489,9 +489,9 @@ window.SITE_CONFIG = {
     /* The lead above already promises a review, so this line carries the
        practical part instead of repeating it two lines later. */
     /* The line beside the form. Keep it to one sentence. */
-    quote: 'Built by the community, run by the community.',
+    quote: 'From one page to a global network.',
     /* Sits under the quote, quietly. */
-    founded: 'Created in March 2026',
+    founded: 'Founded in March 2026',
 
     /* Second button, for anyone not ready to apply yet. */
     discordCta: { label: 'Join our Discord', href: 'https://discord.gg/w9qV9nzG2Y' },
