@@ -175,11 +175,10 @@ window.SITE_CONFIG = {
         ]
       },
       {
-        name: 'Lithuania',
-        flag: 'assets/flags/lt.png',
+        name: 'Russia',
+        flag: 'assets/flags/ru.png',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/lithuaniairl/' },
-          { label: 'YouTube', url: 'https://www.youtube.com/@Lithuaniairl' }
+          { label: 'Instagram', url: 'https://www.instagram.com/russiairl/' }
         ]
       },
       {
@@ -195,7 +194,7 @@ window.SITE_CONFIG = {
         name: 'China',
         flag: 'assets/flags/cn.png',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/chinairlmain/' },
+          { label: 'Instagram', url: 'https://www.instagram.com/chinairl_/' },
           { label: 'YouTube', url: 'https://www.youtube.com/@chinairlmain' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@chinairlmain' }
         ]
@@ -247,14 +246,6 @@ window.SITE_CONFIG = {
         ]
       },
       {
-        name: 'Bahrain',
-        flag: 'assets/flags/bh.png',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/bahrainirl_/' },
-          { label: 'YouTube', url: 'https://www.youtube.com/@bahrainirl' }
-        ]
-      },
-      {
         name: 'Bangladesh',
         flag: 'assets/flags/bd.png',
         links: [
@@ -276,10 +267,24 @@ window.SITE_CONFIG = {
         ]
       },
       {
+        name: 'Czechoslovakia',
+        flag: 'assets/flags/cz.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/czechoslovakiairlmain/' }
+        ]
+      },
+      {
         name: 'Georgia (Sakartvelo)',
         flag: 'assets/flags/ge.png',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/sakartveloirl/' }
+        ]
+      },
+      {
+        name: 'Germany',
+        flag: 'assets/flags/de.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/germanyirl_/' }
         ]
       },
       {
@@ -295,13 +300,6 @@ window.SITE_CONFIG = {
         flag: 'assets/flags/gr.png',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/greeceirlmain/' }
-        ]
-      },
-      {
-        name: 'Hungary',
-        flag: 'assets/flags/hu.png',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/hungary.irl_/' }
         ]
       },
       {
@@ -323,6 +321,14 @@ window.SITE_CONFIG = {
         flag: 'assets/flags/lb.png',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/lebanonirlmain/' }
+        ]
+      },
+      {
+        name: 'Lithuania',
+        flag: 'assets/flags/lt.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/lithuaniairl/' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@Lithuaniairl' }
         ]
       },
       {
@@ -362,6 +368,13 @@ window.SITE_CONFIG = {
         ]
       },
       {
+        name: 'Philippines',
+        flag: 'assets/flags/ph.png',
+        links: [
+          { label: 'Instagram', url: 'https://www.instagram.com/philippinesirlmain/' }
+        ]
+      },
+      {
         name: 'Poland',
         flag: 'assets/flags/pl.png',
         links: [
@@ -383,10 +396,10 @@ window.SITE_CONFIG = {
         ]
       },
       {
-        name: 'Russia',
-        flag: 'assets/flags/ru.png',
+        name: 'Russian Empire',
+        flag: 'assets/flags/russian-empire.svg',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/russiairlmain/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/russian.empire_irl/' }
         ]
       },
       {
@@ -394,13 +407,6 @@ window.SITE_CONFIG = {
         flag: 'assets/flags/sm.png',
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/sanmarinoirl/' }
-        ]
-      },
-      {
-        name: 'Syria',
-        flag: 'assets/flags/sy.png',
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/syriairlmain/' }
         ]
       },
       {
@@ -414,7 +420,7 @@ window.SITE_CONFIG = {
         name: 'Türkiye',
         flag: 'assets/flags/tr.png',
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/ottoman_irl/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/turkiyeirlmain/' }
         ]
       },
       {
