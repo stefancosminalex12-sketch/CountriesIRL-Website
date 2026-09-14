@@ -217,7 +217,9 @@
   }
 
   function followersOf(member, handle) {
-    if (isCount(member.followers)) return member.followers;
+    /* The member list is checked first. `followers: null` there means the
+       account was checked and shows no count, so no other figure stands in. */
+    if ('followers' in member) return isCount(member.followers) ? member.followers : null;
     var key = handle ? handle.toLowerCase() : '';
     return isCount(followerIndex[key]) ? followerIndex[key] : null;
   }

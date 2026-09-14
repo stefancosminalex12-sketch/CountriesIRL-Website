@@ -146,11 +146,14 @@ window.SITE_CONFIG = {
      >>>              'US-OH' for a U.S. state, or { at: [lon, lat] } for a
      >>>              place with no modern border, like a historical capital.
      >>>   origin     true on the account the network started from.
-     >>>   followers  A real follower count for the globe card, e.g. 12345.
-     >>>              Leave it out when unknown: the card just leaves that
-     >>>              line off. Without it the card uses the follower
-     >>>              tracker's exact figure (data/stats.json) for the
-     >>>              member's current Instagram handle, if it has one.
+     >>>   followers  The account's real Instagram follower count, shown on
+     >>>              the globe card. The counts below were read from each
+     >>>              member's linked Instagram profile on 14 September 2026.
+     >>>              `followers: null` means the profile was checked and
+     >>>              has no count to show (Instagram: "Profile isn't
+     >>>              available"), so the card leaves that line off. Leave
+     >>>              the field out altogether and the card uses the follower
+     >>>              tracker's exact figure (data/stats.json), if it has one.
      ------------------------------------------------------------------ */
 
      members: {
@@ -165,6 +168,7 @@ window.SITE_CONFIG = {
         flag: 'assets/flags/ro.png',
         priority: 1,
         origin: true,                    // where the network started
+        followers: 55163,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/romaniairl/' },
           { label: 'YouTube', url: 'https://www.youtube.com/@romaniairl' },
@@ -175,6 +179,7 @@ window.SITE_CONFIG = {
         name: 'United Kingdom',
         flag: 'assets/flags/gb.png',
         priority: 2,
+        followers: 884,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/brituishirl/' },
           { label: 'YouTube', url: 'https://www.youtube.com/@brituishirl' },
@@ -185,6 +190,7 @@ window.SITE_CONFIG = {
         name: 'United States',
         flag: 'assets/flags/us.png',
         priority: 3,
+        followers: 13390,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/unitedstatesirl/' },
           { label: 'YouTube', url: 'https://www.youtube.com/@unitedstatesirl' },
@@ -195,6 +201,7 @@ window.SITE_CONFIG = {
         name: 'Russia',
         flag: 'assets/flags/ru.png',
         priority: 4,
+        followers: 3702,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/russiairl/' }
         ]
@@ -203,6 +210,7 @@ window.SITE_CONFIG = {
         name: 'China',
         flag: 'assets/flags/cn.png',
         priority: 5,
+        followers: 23767,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/chinairl_/' },
           { label: 'YouTube', url: 'https://www.youtube.com/@chinairlmain' },
@@ -213,6 +221,7 @@ window.SITE_CONFIG = {
         name: 'Fiji',
         flag: 'assets/flags/fj.png',
         priority: 6,
+        followers: null,                 // Instagram: "Profile isn't available"
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/fijiirlmain/' },
           { label: 'YouTube', url: 'https://www.youtube.com/@Fijiirl' },
@@ -222,6 +231,7 @@ window.SITE_CONFIG = {
       {
         name: 'Afghanistan',
         flag: 'assets/flags/af.png',
+        followers: 27692,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/afghanistan.irl/' }
         ]
@@ -230,6 +240,7 @@ window.SITE_CONFIG = {
         name: 'Alabama',
         flag: 'assets/flags/Alabama.png',
         geo: 'US-AL',
+        followers: 2488,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/alabama.irl/' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@alabama_irl' }
@@ -238,6 +249,7 @@ window.SITE_CONFIG = {
       {
         name: 'Bangladesh',
         flag: 'assets/flags/bd.png',
+        followers: 7067,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/bangladesh.irl_/' }
         ]
@@ -245,6 +257,7 @@ window.SITE_CONFIG = {
       {
         name: 'Belgium',
         flag: 'assets/flags/be.png',
+        followers: 21977,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/belgiumirl/' }
         ]
@@ -253,6 +266,7 @@ window.SITE_CONFIG = {
         name: 'Byzantine Empire',
         flag: 'assets/flags/byzantine.svg',
         geo: { at: [28.98, 41.01] },     // Constantinople
+        followers: 4381,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/byzantineempire.irl/' }
         ]
@@ -260,6 +274,7 @@ window.SITE_CONFIG = {
       {
         name: 'Croatia',
         flag: 'assets/flags/hr.png',
+        followers: 1818,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/croatiairl_/' }
         ]
@@ -268,6 +283,7 @@ window.SITE_CONFIG = {
         name: 'Czechoslovakia',
         flag: 'assets/flags/cz.png',
         geo: { at: [14.42, 50.09] },     // Prague
+        followers: 2210,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/czechoslovakiairlmain/' }
         ]
@@ -275,6 +291,7 @@ window.SITE_CONFIG = {
       {
         name: 'Czech Republic',
         flag: 'assets/flags/cz.png',
+        followers: 9547,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/czechrepublicirl/' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@czechrepublicirl' }
@@ -283,6 +300,7 @@ window.SITE_CONFIG = {
       {
         name: 'Finland',
         flag: 'assets/flags/fi.png',
+        followers: null,                 // Instagram: "Profile isn't available"
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/finlandirl_/' },
           { label: 'YouTube', url: 'https://www.youtube.com/@FinlandIRL' },
@@ -292,6 +310,7 @@ window.SITE_CONFIG = {
       {
         name: 'France',
         flag: 'assets/flags/fr.png',
+        followers: 2954,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/franceirlmain/' }
         ]
@@ -302,6 +321,7 @@ window.SITE_CONFIG = {
         id: 'georgia-country',
         name: 'Georgia',
         flag: 'assets/flags/ge.png',
+        followers: 2008,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/sakartveloirl/' }
         ]
@@ -309,6 +329,7 @@ window.SITE_CONFIG = {
       {
         name: 'Germany',
         flag: 'assets/flags/de.png',
+        followers: 122,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/germanyirl_/' }
         ]
@@ -316,6 +337,7 @@ window.SITE_CONFIG = {
       {
         name: 'Gibraltar',
         flag: 'assets/flags/gi.png',
+        followers: 2396,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/gibraltar_irl/' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@gibraltar_irl' }
@@ -324,6 +346,7 @@ window.SITE_CONFIG = {
       {
         name: 'Greece',
         flag: 'assets/flags/gr.png',
+        followers: 1882,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/greeceirlmain/' }
         ]
@@ -331,6 +354,7 @@ window.SITE_CONFIG = {
       {
         name: 'Iraq',
         flag: 'assets/flags/iq.png',
+        followers: 14369,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/iraqirl_/' }
         ]
@@ -338,6 +362,7 @@ window.SITE_CONFIG = {
       {
         name: 'Italy',
         flag: 'assets/flags/it.png',
+        followers: 6653,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/italyirl/' }
         ]
@@ -345,6 +370,7 @@ window.SITE_CONFIG = {
       {
         name: 'Lebanon',
         flag: 'assets/flags/lb.png',
+        followers: 8181,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/lebanonirlmain/' }
         ]
@@ -352,6 +378,7 @@ window.SITE_CONFIG = {
       {
         name: 'Lithuania',
         flag: 'assets/flags/lt.png',
+        followers: 7388,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/lithuaniairl/' },
           { label: 'YouTube', url: 'https://www.youtube.com/@Lithuaniairl' }
@@ -361,6 +388,7 @@ window.SITE_CONFIG = {
         name: 'Nebraska',
         flag: 'assets/flags/Nebraska.svg',
         geo: 'US-NE',
+        followers: 2572,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/nebraskairl/' }
         ]
@@ -368,6 +396,7 @@ window.SITE_CONFIG = {
       {
         name: 'North Macedonia',
         flag: 'assets/flags/mk.png',
+        followers: 3703,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/macedonia.irl/' }
         ]
@@ -376,6 +405,7 @@ window.SITE_CONFIG = {
         name: 'Ohio',
         flag: 'assets/flags/Ohio.svg',
         geo: 'US-OH',
+        followers: 1176,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/ohio_irl/' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@ohio.irl1' }
@@ -385,6 +415,7 @@ window.SITE_CONFIG = {
         name: 'Ottoman Empire',
         flag: 'assets/flags/Ot.jpg',
         geo: { at: [28.98, 41.01] },     // Constantinople
+        followers: null,                 // Instagram: "Profile isn't available"
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/ottoman_irl/' }
         ]
@@ -392,6 +423,7 @@ window.SITE_CONFIG = {
       {
         name: 'Pakistan',
         flag: 'assets/flags/pk.png',
+        followers: 1949,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/pakistaniirl/' }
         ]
@@ -399,6 +431,7 @@ window.SITE_CONFIG = {
       {
         name: 'Philippines',
         flag: 'assets/flags/ph.png',
+        followers: 297,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/philippinesirlmain/' }
         ]
@@ -406,6 +439,7 @@ window.SITE_CONFIG = {
       {
         name: 'Poland',
         flag: 'assets/flags/pl.png',
+        followers: 24802,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/poland.irl/' }
         ]
@@ -413,6 +447,7 @@ window.SITE_CONFIG = {
       {
         name: 'Portugal',
         flag: 'assets/flags/pt.png',
+        followers: 1583,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/portugalirlmain/' }
         ]
@@ -421,6 +456,7 @@ window.SITE_CONFIG = {
         name: 'Roman Empire',
         flag: 'assets/flags/roman.png',
         geo: { at: [12.48, 41.89] },     // Rome
+        followers: 633,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/romanempireirl/' }
         ]
@@ -429,6 +465,7 @@ window.SITE_CONFIG = {
         name: 'Russian Empire',
         flag: 'assets/flags/russian-empire.svg',
         geo: { at: [30.31, 59.94] },     // Saint Petersburg
+        followers: 4882,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/russian.empire_irl/' }
         ]
@@ -436,6 +473,7 @@ window.SITE_CONFIG = {
       {
         name: 'San Marino',
         flag: 'assets/flags/sm.png',
+        followers: 7192,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/sanmarinoirl/' }
         ]
@@ -444,6 +482,7 @@ window.SITE_CONFIG = {
         name: 'Soviet Union',
         flag: 'assets/flags/su.svg',
         geo: { at: [37.62, 55.75] },     // Moscow
+        followers: 5447,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/sovietunionirl/' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@sovietunionirl' }
@@ -452,6 +491,7 @@ window.SITE_CONFIG = {
       {
         name: 'Türkiye',
         flag: 'assets/flags/tr.png',
+        followers: 418,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/turkiyeirlmain/' }
         ]
@@ -459,6 +499,7 @@ window.SITE_CONFIG = {
       {
         name: 'Turkmenistan',
         flag: 'assets/flags/tm.png',
+        followers: 2529,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/turkmenistanirl/' }
         ]
