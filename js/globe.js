@@ -552,6 +552,7 @@
     zoomAt: null,       // screen point a zoom holds still
     touches: {},        // fingers down on the globe, by pointer id
     pinch: null,
+    pinchHeld: false,   // a pinch's fingers keep the page still until the last lifts
     zoom: 1,            // the lean toward a hovered member
     hoverAmt: 0,
     hover: null,        // the target under the pointer, or tapped
@@ -1012,6 +1013,7 @@
     state.hover = null;
     clearTimeout(tapTimer);
     state.pinch = { spread: Math.max(spread(pts), 20), zoom: state.userZoom, mid: middle(pts) };
+    state.pinchHeld = true;
     kick();
   }
 
@@ -1028,6 +1030,7 @@
   function lift(event) {
     if (!state.touches[event.pointerId]) return;
     delete state.touches[event.pointerId];
+    if (!fingers().length) state.pinchHeld = false;
     if (state.pinch) {
       state.pinch = null;
       state.resumeAt = performance.now() + RESUME_AFTER;
@@ -1091,17 +1094,25 @@
     });
   });
 
-  /* Keep a two-finger pinch on the globe from scrolling the page. */
-  canvas.addEventListener('touchmove', function (event) {
-    if (state.pinch && event.cancelable) event.preventDefault();
-  }, { passive: false });
+  /* Two fingers on the globe are the globe's, from the moment the second
+     one lands until the last one lifts: the page neither scrolls nor zooms
+     underneath — not once the globe reaches its smallest or largest size,
+     and not for a finger left behind when the other lifts first. A single
+     finger keeps the page's vertical scroll (touch-action: pan-y). */
+  function holdTouches(event) {
+    if ((event.targetTouches.length > 1 || state.pinch || state.pinchHeld) && event.cancelable) {
+      event.preventDefault();
+    }
+  }
+  canvas.addEventListener('touchstart', holdTouches, { passive: false });
+  canvas.addEventListener('touchmove', holdTouches, { passive: false });
 
-  /* The wheel. A trackpad pinch arrives as a wheel with Ctrl held, as does
-     Ctrl + wheel, and always zooms. A plain wheel is also how people scroll
-     the page, so it zooms only when that is clearly what it is for: not
-     while the page is still moving, not with the globe half off screen, and
-     never below the usual size — so scrolling down past the globe just
-     scrolls. At either limit the page gets the wheel back. */
+  /* The wheel. Over the globe it belongs to the globe: it zooms, and at
+     either limit it simply stops — the page never scrolls, zooms or swipes
+     sideways underneath. A trackpad pinch arrives as a wheel with Ctrl held,
+     as does Ctrl + wheel. Off the globe (the empty corners of its box too)
+     the page scrolls as usual, and so does a page scroll that was already
+     under way when the pointer drifted onto the globe. */
   var scrolledAt = 0;
   window.addEventListener('scroll', function () { scrolledAt = performance.now(); }, { passive: true });
 
@@ -1109,18 +1120,10 @@
     if (!ready) return;
     var p = local(event);
     if (!onGlobe(p)) return;
-    var pinch = event.ctrlKey;
-    var dy = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? 400 : 1);
-    var goal = state.userZoom * Math.exp(-dy * (pinch ? 0.01 : 0.002));
-    if (!pinch) {
-      var box = canvas.getBoundingClientRect();
-      var seen = Math.min(box.bottom, window.innerHeight) - Math.max(box.top, 0);
-      if (performance.now() - scrolledAt < 300 || seen < box.height * 0.8) return;
-      goal = Math.min(ZOOM_MAX, Math.max(goal, Math.min(state.userZoom, 1)));
-      if (Math.abs(goal - state.userZoom) < 0.001) return;
-    }
+    if (!event.ctrlKey && performance.now() - scrolledAt < 300) return;
     event.preventDefault();
-    zoomTo(goal, p);
+    var dy = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? 400 : 1);
+    if (dy) zoomTo(state.userZoom * Math.exp(-dy * (event.ctrlKey ? 0.01 : 0.002)), p);
   }, { passive: false });
 
   /* Safari on a Mac reports a trackpad pinch as gesture events instead. On
