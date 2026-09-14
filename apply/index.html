@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" data-page="apply">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- This page carries its own title, description and preview tags, so
+       main.js leaves the head alone here (see data-page on <html>). -->
+  <title>Apply to join CountriesIRL</title>
+  <meta name="description" content="Apply to join CountriesIRL, the global network of country-focused creators. Tell us which country you represent, where you post and what you would bring.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://countriesirl.com/apply/">
+  <meta name="theme-color" content="#16181c">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="CountriesIRL">
+  <meta property="og:title" content="Apply to join CountriesIRL">
+  <meta property="og:description" content="Apply to join CountriesIRL, the global network of country-focused creators. Tell us which country you represent, where you post and what you would bring.">
+  <meta property="og:url" content="https://countriesirl.com/apply/">
+  <meta property="og:image" content="https://countriesirl.com/assets/og-image.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The CountriesIRL logo above the words “The biggest countries network in the world.”">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Apply to join CountriesIRL">
+  <meta name="twitter:description" content="Apply to join CountriesIRL, the global network of country-focused creators. Tell us which country you represent, where you post and what you would bring.">
+  <meta name="twitter:image" content="https://countriesirl.com/assets/og-image.png">
+  <meta name="twitter:image:alt" content="The CountriesIRL logo above the words “The biggest countries network in the world.”">
+
+  <link rel="icon" href="../assets/logo/favicon.png" type="image/png" sizes="64x64">
+  <link rel="apple-touch-icon" href="../assets/logo/apple-touch-icon.png">
+
+  <!-- Same cache buster as index.html — bump both together. -->
+  <link rel="stylesheet" href="../css/style.css?v=202609141900">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header__inner">
+      <a class="brand" href="../">
+        <img class="brand__mark" src="../assets/logo/IRLLOGO-web.png" alt="" width="26" height="26">
+        <span class="brand__name" data-text="brand.name">CountriesIRL</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="nav-toggle__box" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="visually-hidden">Menu</span>
+      </button>
+
+      <nav class="nav" id="primary-nav" aria-label="Primary">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="../">Home</a></li>
+          <li><a class="nav__link" href="../#about">About</a></li>
+          <li><a class="nav__link" href="../#members">Members</a></li>
+          <li><a class="nav__link" href="../#community">Community</a></li>
+          <li><a class="nav__link" href="https://maps.countriesirl.com">Map Editor</a></li>
+          <li><a class="nav__cta" href="../#join">Join</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="apply" aria-labelledby="apply-title">
+      <div class="container">
+        <div class="apply__head">
+          <h1 id="apply-title">Apply to join CountriesIRL</h1>
+          <p class="lead">Tell us who you are, which country you represent and where you post. It takes about five minutes, and applications are checked every few days.</p>
+        </div>
+
+        <noscript>
+          <p class="apply-alert">This application form needs JavaScript. Turn it on and reload the page, or write to the team at <a href="mailto:countriesirlhub@gmail.com">countriesirlhub@gmail.com</a>.</p>
+        </noscript>
+
+        <!-- Shown by js/apply.js once it is ready, so the form never appears
+             half-working without it. -->
+        <div class="apply__layout" id="apply-top" hidden>
+          <nav class="apply-progress" aria-label="Application steps">
+            <ol class="apply-progress__list">
+              <li class="apply-progress__item"><button class="apply-progress__step" type="button" data-go="0"><span class="apply-progress__num" aria-hidden="true">1</span><span class="apply-progress__label">Personal information</span><span class="visually-hidden apply-progress__state"></span></button></li>
+              <li class="apply-progress__item"><button class="apply-progress__step" type="button" data-go="1"><span class="apply-progress__num" aria-hidden="true">2</span><span class="apply-progress__label">Social media accounts</span><span class="visually-hidden apply-progress__state"></span></button></li>
+              <li class="apply-progress__item"><button class="apply-progress__step" type="button" data-go="2"><span class="apply-progress__num" aria-hidden="true">3</span><span class="apply-progress__label">Creator experience</span><span class="visually-hidden apply-progress__state"></span></button></li>
+              <li class="apply-progress__item"><button class="apply-progress__step" type="button" data-go="3"><span class="apply-progress__num" aria-hidden="true">4</span><span class="apply-progress__label">Motivation</span><span class="visually-hidden apply-progress__state"></span></button></li>
+              <li class="apply-progress__item"><button class="apply-progress__step" type="button" data-go="4"><span class="apply-progress__num" aria-hidden="true">5</span><span class="apply-progress__label">Review and submit</span><span class="visually-hidden apply-progress__state"></span></button></li>
+            </ol>
+            <p class="apply-progress__status" id="apply-status" aria-live="polite"></p>
+          </nav>
+
+          <div class="apply__main">
+            <form class="apply-form" id="apply-form" novalidate>
+              <p class="apply-form__note">Fields marked <span class="field__req" aria-hidden="true">*</span><span class="visually-hidden">required</span> are required.</p>
+
+              <!-- 1. Personal information -->
+              <fieldset class="apply-step" aria-labelledby="step-1-title">
+                <h2 class="apply-step__title" id="step-1-title" tabindex="-1">Personal information</h2>
+                <p class="apply-step__intro">Who you are, and the place your account covers.</p>
+                <div class="apply-fields">
+                  <div class="field">
+                    <label class="field__label" for="fullName">Full name <span class="field__req" aria-hidden="true">*</span></label>
+                    <input class="field__input" id="fullName" name="fullName" type="text" autocomplete="name" maxlength="80" required aria-describedby="fullName-error">
+                    <p class="field__error" id="fullName-error" hidden></p>
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="country">Country represented <span class="field__req" aria-hidden="true">*</span></label>
+                    <p class="field__hint" id="country-hint">The country, region or historical state your account covers.</p>
+                    <input class="field__input" id="country" name="country" type="text" autocomplete="off" maxlength="60" required aria-describedby="country-hint country-error">
+                    <p class="field__error" id="country-error" hidden></p>
+                  </div>
+                  <div class="field field--short">
+                    <label class="field__label" for="age">Age <span class="field__req" aria-hidden="true">*</span></label>
+                    <p class="field__hint" id="age-hint">You need to be <span data-min-age>13</span> or older to apply.</p>
+                    <input class="field__input" id="age" name="age" type="text" inputmode="numeric" autocomplete="off" maxlength="3" required aria-describedby="age-hint age-error">
+                    <p class="field__error" id="age-error" hidden></p>
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="email">Email address <span class="field__req" aria-hidden="true">*</span></label>
+                    <p class="field__hint" id="email-hint">Where the team can reply about your application.</p>
+                    <input class="field__input" id="email" name="email" type="email" autocomplete="email" autocapitalize="none" spellcheck="false" maxlength="254" required aria-describedby="email-hint email-error">
+                    <p class="field__error" id="email-error" hidden></p>
+                  </div>
+                </div>
+              </fieldset>
+
+              <!-- 2. Social media accounts -->
+              <fieldset class="apply-step" aria-labelledby="step-2-title" hidden>
+                <h2 class="apply-step__title" id="step-2-title" tabindex="-1">Social media accounts</h2>
+                <p class="apply-step__intro">Add at least one account. A username like @yourname and a link to the profile both work.</p>
+                <p class="field__error field__error--group" id="accounts-error" role="status" hidden></p>
+                <div class="apply-fields">
+                  <fieldset class="field-group platform">
+                    <legend class="platform__name">Instagram</legend>
+                    <div class="field-pair">
+                      <div class="field">
+                        <label class="field__label" for="instagram">Username or link</label>
+                        <input class="field__input" id="instagram" name="instagram" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="100" aria-describedby="instagram-error">
+                        <p class="field__error" id="instagram-error" hidden></p>
+                      </div>
+                      <div class="field">
+                        <label class="field__label" for="instagramFollowers">Followers</label>
+                        <input class="field__input" id="instagramFollowers" name="instagramFollowers" type="text" inputmode="numeric" autocomplete="off" maxlength="14" aria-describedby="instagramFollowers-error">
+                        <p class="field__error" id="instagramFollowers-error" hidden></p>
+                      </div>
+                    </div>
+                  </fieldset>
+                  <fieldset class="field-group platform">
+                    <legend class="platform__name">TikTok</legend>
+                    <div class="field-pair">
+                      <div class="field">
+                        <label class="field__label" for="tiktok">Username or link</label>
+                        <input class="field__input" id="tiktok" name="tiktok" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="100" aria-describedby="tiktok-error">
+                        <p class="field__error" id="tiktok-error" hidden></p>
+                      </div>
+                      <div class="field">
+                        <label class="field__label" for="tiktokFollowers">Followers</label>
+                        <input class="field__input" id="tiktokFollowers" name="tiktokFollowers" type="text" inputmode="numeric" autocomplete="off" maxlength="14" aria-describedby="tiktokFollowers-error">
+                        <p class="field__error" id="tiktokFollowers-error" hidden></p>
+                      </div>
+                    </div>
+                  </fieldset>
+                  <fieldset class="field-group platform">
+                    <legend class="platform__name">YouTube</legend>
+                    <div class="field-pair">
+                      <div class="field">
+                        <label class="field__label" for="youtube">Username or link</label>
+                        <input class="field__input" id="youtube" name="youtube" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="100" aria-describedby="youtube-error">
+                        <p class="field__error" id="youtube-error" hidden></p>
+                      </div>
+                      <div class="field">
+                        <label class="field__label" for="youtubeFollowers">Subscribers</label>
+                        <input class="field__input" id="youtubeFollowers" name="youtubeFollowers" type="text" inputmode="numeric" autocomplete="off" maxlength="14" aria-describedby="youtubeFollowers-error">
+                        <p class="field__error" id="youtubeFollowers-error" hidden></p>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </fieldset>
+
+              <!-- 3. Creator experience -->
+              <fieldset class="apply-step" aria-labelledby="step-3-title" hidden>
+                <h2 class="apply-step__title" id="step-3-title" tabindex="-1">Creator experience</h2>
+                <p class="apply-step__intro">What you make, and what you have made so far.</p>
+                <div class="apply-fields">
+                  <fieldset class="field-group" aria-describedby="contentTypes-error">
+                    <legend class="field__label">What kind of content do you make? <span class="field__req" aria-hidden="true">*</span></legend>
+                    <div class="choices">
+                      <label class="choice"><input type="checkbox" name="contentTypes" value="Short-form video"> Short-form video</label>
+                      <label class="choice"><input type="checkbox" name="contentTypes" value="Long-form video"> Long-form video</label>
+                      <label class="choice"><input type="checkbox" name="contentTypes" value="Documentaries"> Documentaries</label>
+                      <label class="choice"><input type="checkbox" name="contentTypes" value="Edits and animation"> Edits and animation</label>
+                      <label class="choice"><input type="checkbox" name="contentTypes" value="Maps and geography"> Maps and geography</label>
+                      <label class="choice"><input type="checkbox" name="contentTypes" value="History"> History</label>
+                      <label class="choice"><input type="checkbox" name="contentTypes" value="Memes and humour"> Memes and humour</label>
+                      <label class="choice"><input type="checkbox" name="contentTypes" value="Photography"> Photography</label>
+                      <label class="choice"><input type="checkbox" name="contentTypes" value="Writing and research"> Writing and research</label>
+                    </div>
+                    <p class="field__error" id="contentTypes-error" hidden></p>
+                  </fieldset>
+                  <div class="field">
+                    <label class="field__label" for="contentOther">Something else <span class="field__optional">(optional)</span></label>
+                    <input class="field__input" id="contentOther" name="contentOther" type="text" autocomplete="off" maxlength="80" aria-describedby="contentOther-error">
+                    <p class="field__error" id="contentOther-error" hidden></p>
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="experience">Your content creation experience <span class="field__req" aria-hidden="true">*</span></label>
+                    <p class="field__hint" id="experience-hint">How long you have been creating, what you have made, and anything that went well.</p>
+                    <textarea class="field__input" id="experience" name="experience" rows="5" maxlength="1000" required data-counter aria-describedby="experience-hint experience-count experience-error"></textarea>
+                    <p class="field__count" id="experience-count"></p>
+                    <p class="field__error" id="experience-error" hidden></p>
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="workLinks">Links to your work <span class="field__optional">(optional)</span></label>
+                    <p class="field__hint" id="workLinks-hint">Up to 5 links, one per line: videos, posts or anything else you are proud of.</p>
+                    <textarea class="field__input" id="workLinks" name="workLinks" rows="3" maxlength="1000" autocapitalize="none" spellcheck="false" aria-describedby="workLinks-hint workLinks-error"></textarea>
+                    <p class="field__error" id="workLinks-error" hidden></p>
+                  </div>
+                </div>
+              </fieldset>
+
+              <!-- 4. Motivation -->
+              <fieldset class="apply-step" aria-labelledby="step-4-title" hidden>
+                <h2 class="apply-step__title" id="step-4-title" tabindex="-1">Motivation</h2>
+                <p class="apply-step__intro">Why CountriesIRL, and what you would bring to it.</p>
+                <div class="apply-fields">
+                  <div class="field">
+                    <label class="field__label" for="motivation">Why do you want to join CountriesIRL? <span class="field__req" aria-hidden="true">*</span></label>
+                    <textarea class="field__input" id="motivation" name="motivation" rows="5" maxlength="1000" required data-counter aria-describedby="motivation-count motivation-error"></textarea>
+                    <p class="field__count" id="motivation-count"></p>
+                    <p class="field__error" id="motivation-error" hidden></p>
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="contribution">What could you contribute to the network? <span class="field__req" aria-hidden="true">*</span></label>
+                    <p class="field__hint" id="contribution-hint">Skills, ideas, a language, an audience — whatever you would bring.</p>
+                    <textarea class="field__input" id="contribution" name="contribution" rows="5" maxlength="1000" required data-counter aria-describedby="contribution-hint contribution-count contribution-error"></textarea>
+                    <p class="field__count" id="contribution-count"></p>
+                    <p class="field__error" id="contribution-error" hidden></p>
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="discord">Discord username <span class="field__optional">(optional)</span></label>
+                    <p class="field__hint" id="discord-hint">So the team can find you in the CountriesIRL Discord.</p>
+                    <input class="field__input" id="discord" name="discord" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="40" aria-describedby="discord-hint discord-error">
+                    <p class="field__error" id="discord-error" hidden></p>
+                  </div>
+                </div>
+              </fieldset>
+
+              <!-- 5. Review and submit -->
+              <fieldset class="apply-step" aria-labelledby="step-5-title" hidden>
+                <h2 class="apply-step__title" id="step-5-title" tabindex="-1">Review and submit</h2>
+                <p class="apply-step__intro">Check your answers before you send them. Use Edit to change anything.</p>
+                <div class="apply-review" id="apply-review"></div>
+                <div class="apply-agree">
+                  <label class="choice choice--strong" for="rulesAccepted">
+                    <input id="rulesAccepted" name="rulesAccepted" type="checkbox" required aria-describedby="rulesAccepted-error">
+                    <span>I agree to follow the CountriesIRL community rules. <span class="field__req" aria-hidden="true">*</span></span>
+                  </label>
+                  <p class="field__error" id="rulesAccepted-error" hidden></p>
+                </div>
+              </fieldset>
+
+              <!-- Spam trap: people never see this field; bots that fill in every
+                   input do, and their applications are marked by it. -->
+              <div class="apply-trap" aria-hidden="true">
+                <label for="apply-website">Leave this field empty</label>
+                <input id="apply-website" name="website" type="text" tabindex="-1" autocomplete="off">
+              </div>
+
+              <div class="apply-alert" id="apply-alert" role="alert" hidden>
+                <p class="apply-alert__title">Your application was not sent</p>
+                <p id="apply-alert-text"></p>
+              </div>
+
+              <div class="apply__actions">
+                <button class="btn btn--secondary" id="apply-back" type="button" hidden>Back</button>
+                <button class="btn btn--primary" id="apply-next" type="submit">Next</button>
+                <button class="btn btn--primary" id="apply-submit" type="submit" hidden><span class="apply-submit__label">Submit application</span></button>
+              </div>
+              <p class="apply-form__privacy">Your answers are sent to the CountriesIRL team for review.</p>
+
+              <p class="visually-hidden" id="apply-announce" aria-live="assertive"></p>
+            </form>
+          </div>
+        </div>
+
+        <div class="apply-done" id="apply-done" hidden>
+          <h2 tabindex="-1">Application sent</h2>
+          <p>Thank you — your application is with the CountriesIRL team. Applications are checked every few days.</p>
+          <div class="btn-row">
+            <a class="btn btn--primary" href="../">Back to the home page</a>
+            <a class="btn btn--secondary" data-cta="join.discordCta" href="#">Join our Discord</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a class="brand" href="../">
+            <img class="brand__mark" src="../assets/logo/IRLLOGO-web.png" alt="" width="26" height="26">
+            <span class="brand__name" data-text="brand.name">CountriesIRL</span>
+          </a>
+          <p class="footer__note" data-text="footer.note"></p>
+        </div>
+
+        <div>
+          <h2 class="footer__col-title">Sections</h2>
+          <ul class="footer__list">
+            <li><a href="../#about">About</a></li>
+            <li><a href="../#members">Members</a></li>
+            <li><a href="../#community">Community</a></li>
+            <li><a href="https://maps.countriesirl.com">Map Editor</a></li>
+            <li><a href="../#join">Join</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="footer__col-title">Elsewhere</h2>
+          <ul class="footer__list" data-render="social"></ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p><span data-render="year"></span> <span data-text="brand.name"></span></p>
+        <p data-render="contact"></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/config.js?v=202609141900"></script>
+  <script src="../js/main.js?v=202609141900"></script>
+  <script src="../js/apply.js?v=202609141900"></script>
+</body>
+</html>

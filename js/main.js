@@ -483,6 +483,9 @@
   }
 
   function applyMeta() {
+    /* Other pages (apply/) mark <html data-page> and carry their own head. */
+    if (document.documentElement.hasAttribute('data-page')) return;
+
     var title = get('meta.title');
     var description = get('meta.description');
     var url = get('brand.url');

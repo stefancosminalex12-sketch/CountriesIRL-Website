@@ -236,8 +236,63 @@ flag. Historical and fictional entries have no flag file and fall back to initia
 Both `items` lists take either a plain string or a `{ title, text }` pair. A pair puts
 the title on its own line above the description — which is how both lists read now.
 Mixing the two forms in one list is fine.
-| `join.cta` | The application button — `{ label, href }`. Use a form URL, or a `mailto:` address to take applications by email. |
+| `join.cta` | The application button — `{ label, href }`. `'apply/'` opens the application form on this site; a `mailto:` address would take applications by email instead. `hero.primaryCta` (Apply to join) points there too. |
 | `join.note` | Small line under the button. |
+
+### `apply` — the application form
+
+The form lives at `apply/index.html` (countriesirl.com/apply/) and is run by `js/apply.js`.
+It has five steps — personal information, social accounts, experience, motivation, and a
+review — and checks each one before the next opens.
+
+| Key | What it does |
+| --- | --- |
+| `apply.endpoint` | Where finished applications are sent. Empty until the Google Sheet is set up — until then the form works, but refuses to send and tells the applicant so. Never put a password, key or token here: this URL is public, because every applicant's browser calls it. |
+| `apply.minimumAge` | The youngest age the form accepts. `13`, because Instagram, TikTok and YouTube all require it. |
+
+#### Connecting it to a Google Sheet (when you are ready)
+
+1. Create a Google Sheet for applications, then open **Extensions → Apps Script**.
+2. Replace the code there with the script below and save.
+3. **Deploy → New deployment → Web app**. Execute as: *Me*. Who has access: *Anyone*.
+4. Copy the web app URL (it ends in `/exec`) into `apply.endpoint` in `js/config.js`.
+
+```js
+const FIELDS = ['timestamp', 'fullName', 'country', 'age', 'email',
+  'instagram', 'tiktok', 'youtube', 'instagramFollowers', 'tiktokFollowers',
+  'youtubeFollowers', 'contentTypes', 'experience', 'workLinks', 'motivation',
+  'contribution', 'discord', 'rulesAccepted'];
+
+function doPost(e) {
+  const data = JSON.parse(e.postData.contents);
+  // A filled-in honeypot means a bot: say yes, store nothing.
+  if (!data.honeypot) {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+    if (sheet.getLastRow() === 0) sheet.appendRow(FIELDS);
+    // A leading = + - or @ would turn an answer into a spreadsheet formula.
+    const safe = v => (typeof v === 'string' && /^[=+\-@]/.test(v) ? "'" + v : v);
+    sheet.appendRow(FIELDS.map(k => safe(data[k] === undefined ? '' : data[k])));
+  }
+  return ContentService.createTextOutput(JSON.stringify({ ok: true }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+```
+
+How the form talks to it:
+
+- It sends one `POST` with the application as JSON in the body. The request is labelled
+  `text/plain` on purpose — Apps Script web apps cannot accept the extra check a JSON label
+  makes browsers send first — so the script reads it from `e.postData.contents`.
+- The fields are `timestamp`, `fullName`, `country`, `age`, `email`, `instagram`, `tiktok`,
+  `youtube`, `instagramFollowers`, `tiktokFollowers`, `youtubeFollowers`, `contentTypes`,
+  `experience`, `workLinks`, `motivation`, `contribution`, `discord`, `rulesAccepted` and
+  `honeypot`. Follower counts are numbers, or empty when there is no account; `workLinks`
+  is one link per line.
+- The form only shows "Application sent" when the reply is JSON with `"ok": true`. Any other
+  reply, an error, or no answer within 20 seconds shows an error instead, and every answer
+  stays in the form so the applicant can try again.
+- `honeypot` is a field people never see. Bots that fill in every input fill it in, and the
+  script above quietly drops those applications.
 
 ### `contact`, `social`, `footer`
 
@@ -253,7 +308,7 @@ Mixing the two forms in one list is fine.
 
 - [ ] Replace the sample members with your real creators and their real links
 - [ ] Set `brand.url` to the address the site will actually live at
-- [ ] Point `join.cta.href` at your application form or contact address
+- [ ] Set `apply.endpoint` to your Google Apps Script web app URL, so the application form can send applications (see [`apply`](#apply--the-application-form))
 - [ ] Point `community.cta.href` at your real community invite
 - [ ] Check `contact.email` and every `social` URL is an account you own
 - [ ] Update the `<title>` and meta tags in `index.html` if you changed `meta.title` or `meta.description`

@@ -15,7 +15,9 @@ onto GitHub Pages as-is.
 
 ```
 .
-├── index.html          The whole site — one page, five sections
+├── index.html          The home page — five sections
+├── apply/
+│   └── index.html      The application form (countriesirl.com/apply/)
 ├── robots.txt          Lets search engines crawl everything; points at the sitemap
 ├── sitemap.xml         The one page search engines should index
 ├── _config.yml         Keeps these notes (README, CONFIG) off the published site
@@ -24,7 +26,8 @@ onto GitHub Pages as-is.
 ├── js/
 │   ├── config.js       ← all editable content lives here
 │   ├── main.js         Builds the page from config.js; navigation behaviour
-│   └── globe.js        The member globe in the hero (plain WebGL, no library)
+│   ├── globe.js        The member globe in the hero (plain WebGL, no library)
+│   └── apply.js        The application form's steps, checks and sending
 ├── data/
 │   └── globe.json      Country and U.S. state outlines for the globe
 │                       (derived from Natural Earth, public domain)

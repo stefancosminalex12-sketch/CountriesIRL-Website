@@ -1,7 +1,7 @@
 # robots.txt for https://countriesirl.com/
 #
-# Everything published on this site is public and may be crawled: the page
-# itself, and the styles, scripts, images and data files it is built from.
+# Everything published on this site is public and may be crawled: the pages
+# themselves, and the styles, scripts, images and data files they are built from.
 # The maintainers' notes (README, CONFIG) are kept out of the published site
 # altogether by _config.yml, so there is nothing to block here.
 

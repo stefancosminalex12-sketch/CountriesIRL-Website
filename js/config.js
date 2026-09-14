@@ -58,7 +58,7 @@ window.SITE_CONFIG = {
       'promoting the places, people, and cultures that deserve to be ' +
       'discovered.'
     ],
-    primaryCta: { label: 'Apply to join', href: '#join' },
+    primaryCta: { label: 'Apply to join', href: 'apply/' },
     secondaryCta: { label: 'About', href: '#about' }
   },
 
@@ -487,8 +487,9 @@ window.SITE_CONFIG = {
 
   /* ------------------------------------------------------------------
      7. JOIN
-     `cta.href` — point this at your application form, or leave it as
-     'mailto:' + your contact email to take applications over email.
+     `cta.href` — the application form. 'apply/' is the form on this site
+     (apply/index.html); a 'mailto:' address would take applications over
+     email instead.
 
      The two lists below accept either a plain string or a { title, text }
      pair. A pair puts the title on its own line above the description.
@@ -496,7 +497,7 @@ window.SITE_CONFIG = {
   join: {
     title: 'Join the network',
     lead: 'Applications are checked every few days.',
-    cta: { label: 'Start an application', href: 'https://www.youtube.com/watch?v=QDia3e12czc' },
+    cta: { label: 'Start an application', href: 'apply/' },
     /* The lead above already promises a review, so this line carries the
        practical part instead of repeating it two lines later. */
     /* The line beside the form. Keep it to one sentence. */
@@ -507,6 +508,20 @@ window.SITE_CONFIG = {
     /* Second button, for anyone not ready to apply yet. */
     discordCta: { label: 'Join our Discord', href: 'https://discord.gg/w9qV9nzG2Y' },
     note: 'Tell us which country you represent and link your account. Not ready to apply? Come and ask in the Discord.'
+  },
+
+  /* ------------------------------------------------------------------
+     7b. APPLICATION FORM (apply/)
+     `endpoint` is where finished applications are sent, as JSON: the URL
+     of a Google Apps Script web app (it ends in /exec). Until it is set
+     the form still works, but refuses to send and says so — it never
+     claims an application went through. CONFIG.md explains the setup.
+     The URL is public by nature (every applicant's browser calls it), so
+     never put a password, key or token here.
+     ------------------------------------------------------------------ */
+  apply: {
+    endpoint: '',
+    minimumAge: 13                     // Instagram, TikTok and YouTube all require 13+
   },
 
   /* ------------------------------------------------------------------
