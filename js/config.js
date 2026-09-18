@@ -124,7 +124,7 @@ window.SITE_CONFIG = {
      >>>   }
      >>>
      >>> `flag` is an explicit path, so an entry can fly a flag that is not
-     >>> its own — the Soviet Union uses su.svg, Nebraska uses Nebraska.svg. Flags
+     >>> its own — the Soviet Union uses su.svg, Ohio uses Ohio.svg. Flags
      >>> live in assets/flags/, one PNG per ISO code. If the file is missing
      >>> the card falls back to the member's initials rather than breaking.
      >>>
@@ -150,10 +150,7 @@ window.SITE_CONFIG = {
 
      members: {
     title: 'Members',
-    lead:
-      'The people behind the pages — individual creators now, creative teams ' +
-      'before long. Each covers a country, a region or a piece of history ' +
-      'they know from the inside, in their own language.',
+    lead: '',                            // empty hides it
     list: [
       {
         name: 'Romania (Owner)',
@@ -374,15 +371,6 @@ window.SITE_CONFIG = {
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/lithuaniairl/' },
           { label: 'YouTube', url: 'https://www.youtube.com/@Lithuaniairl' }
-        ]
-      },
-      {
-        name: 'Nebraska',
-        flag: 'assets/flags/Nebraska.svg',
-        geo: 'US-NE',
-        followers: 2572,
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/nebraskairl/' }
         ]
       },
       {
