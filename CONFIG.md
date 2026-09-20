@@ -250,49 +250,94 @@ review — and checks each one before the next opens.
 | `apply.endpoint` | Where finished applications are sent. Empty until the Google Sheet is set up — until then the form works, but refuses to send and tells the applicant so. Never put a password, key or token here: this URL is public, because every applicant's browser calls it. |
 | `apply.minimumAge` | The youngest age the form accepts. `13`, because Instagram, TikTok and YouTube all require it. |
 
-#### Connecting it to a Google Sheet (when you are ready)
+#### Connecting it to a Google Sheet
 
-1. Create a Google Sheet for applications, then open **Extensions → Apps Script**.
-2. Replace the code there with the script below and save.
-3. **Deploy → New deployment → Web app**. Execute as: *Me*. Who has access: *Anyone*.
-4. Copy the web app URL (it ends in `/exec`) into `apply.endpoint` in `js/config.js`.
+Applications go from the form to a small script in your own Google account, which files
+them in a Google Sheet. The script is in this repository, ready to paste:
+[`apps-script/applications.gs`](apps-script/applications.gs). It never runs on the website,
+and the sheet is never exposed to applicants.
+
+**1. Make the sheet.** Create a Google Sheet — any name does, say *CountriesIRL
+applications*. Leave it empty; the script writes its own header row.
+
+**2. Open the editor.** In that sheet: **Extensions → Apps Script**. A project opens with an
+empty `Code.gs`.
+
+**3. Paste the script.** Delete whatever is in `Code.gs`, paste the whole of
+`apps-script/applications.gs` in its place, and save (the disk icon).
+
+**4. Optional — write the header row now.** In the editor, pick the `setup` function and
+press **Run**. Google asks you to authorise it the first time: choose your account,
+*Advanced → Go to (project name)*, then *Allow*. The sheet gets its header row. (The first
+real application does this too, so you can skip this step.)
+
+**5. Deploy it as a web app.** **Deploy → New deployment**, then:
+
+| Setting | Choose |
+| --- | --- |
+| Type (the gear icon) | **Web app** |
+| Description | anything, e.g. `applications v1` |
+| Execute as | **Me** — the script opens the sheet as you |
+| Who has access | **Anyone** — this lets an applicant's browser send the form; it does **not** share the sheet |
+
+Press **Deploy** and authorise if asked.
+
+**6. Copy the web app URL.** It looks like
+`https://script.google.com/macros/s/AKfycb…/exec`. It is safe in the website's code: it
+accepts applications and gives nothing back.
+
+**7. Put the URL in the site's configuration.** The value is **`apply.endpoint`**, in
+**`js/config.js`**, in the `apply` block:
 
 ```js
-const FIELDS = ['timestamp', 'fullName', 'country', 'age', 'email',
-  'instagram', 'tiktok', 'youtube', 'instagramFollowers', 'tiktokFollowers',
-  'youtubeFollowers', 'contentTypes', 'experience', 'workLinks', 'motivation',
-  'contribution', 'discord', 'rulesAccepted'];
-
-function doPost(e) {
-  const data = JSON.parse(e.postData.contents);
-  // A filled-in honeypot means a bot: say yes, store nothing.
-  if (!data.honeypot) {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
-    if (sheet.getLastRow() === 0) sheet.appendRow(FIELDS);
-    // A leading = + - or @ would turn an answer into a spreadsheet formula.
-    const safe = v => (typeof v === 'string' && /^[=+\-@]/.test(v) ? "'" + v : v);
-    sheet.appendRow(FIELDS.map(k => safe(data[k] === undefined ? '' : data[k])));
-  }
-  return ContentService.createTextOutput(JSON.stringify({ ok: true }))
-    .setMimeType(ContentService.MimeType.JSON);
-}
+  apply: {
+    endpoint: 'https://script.google.com/macros/s/AKfycb…/exec',
+    minimumAge: 13
+  },
 ```
 
-How the form talks to it:
+Save, reload the site, and send yourself a test application. It should appear in the sheet
+within a second or two — delete that row afterwards.
 
-- It sends one `POST` with the application as JSON in the body. The request is labelled
-  `text/plain` on purpose — Apps Script web apps cannot accept the extra check a JSON label
-  makes browsers send first — so the script reads it from `e.postData.contents`.
-- The fields are `timestamp`, `fullName`, `country`, `age`, `email`, `instagram`, `tiktok`,
-  `youtube`, `instagramFollowers`, `tiktokFollowers`, `youtubeFollowers`, `contentTypes`,
-  `experience`, `workLinks`, `motivation`, `contribution`, `discord`, `rulesAccepted` and
-  `honeypot`. Follower counts are numbers, or empty when there is no account; `workLinks`
-  is one link per line.
-- The form only shows "Application sent" when the reply is JSON with `"ok": true`. Any other
-  reply, an error, or no answer within 20 seconds shows an error instead, and every answer
-  stays in the form so the applicant can try again.
-- `honeypot` is a field people never see. Bots that fill in every input fill it in, and the
-  script above quietly drops those applications.
+**Changing the script later.** Edit it, save, then **Deploy → Manage deployments → the
+pencil → Version: New version → Deploy**. Without a new version the site keeps calling the
+old code.
+
+#### What the sheet holds
+
+One row per application, in these columns:
+
+| Timestamp | Full name | Country | Age | Email | Instagram | Instagram followers | TikTok | TikTok followers | YouTube | YouTube subscribers | Content types | Experience | Work links | Motivation | Contribution | Discord | Rules accepted | Status | Admin notes |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+
+- **Timestamp** is the moment the application reached Google, taken there rather than from
+  the applicant's computer.
+- **Status** starts at `Pending`. Change it as you review — the script only ever adds rows,
+  and never touches one again.
+- **Admin notes** starts empty and is yours to write in.
+
+#### How the form and the script talk
+
+- The form sends one `POST` with the application as JSON. The request is labelled
+  `text/plain` on purpose — an Apps Script web app cannot answer the extra check a JSON
+  label makes browsers send first — so the script reads it from `e.postData.contents`.
+- The script checks the application again before storing it: the required answers, a valid
+  email, an age of at least `minimumAge`, at least one social account, follower counts that
+  are whole numbers, answers within the form's length limits, and the community rules
+  accepted. Anything else is refused with an error and nothing is written. Checks in the
+  browser can be bypassed by anyone posting to the URL directly; these cannot.
+- It replies `{"ok": true, "row": 7}` only once the row exists, and
+  `{"ok": false, "error": "…"}` otherwise. The form shows "Application sent" only for the
+  first kind. Any other reply, an error, or no answer within 20 seconds shows an error
+  instead, and every answer stays in the form so the applicant can try again.
+- While an application is being sent the buttons are disabled, so a second press cannot
+  send it twice.
+- `honeypot` is a field people never see. Bots fill in every field, so anything in it marks
+  the application as a bot's: the script stores nothing and answers as if all is well.
+- An answer that opens with `=`, `+`, `-` or `@` is stored as plain text, so nothing an
+  applicant types can turn into a spreadsheet formula.
+- Opening the web app URL in a browser answers `{"ok": true, "service": …}` and nothing
+  else — no applications, no spreadsheet.
 
 ### `contact`, `social`, `footer`
 

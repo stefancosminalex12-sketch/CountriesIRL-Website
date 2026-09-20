@@ -9,3 +9,5 @@ exclude:
   - CONFIG.md
   - LICENSE
   - assets/members/README.md
+  # Runs in Google, not on the website.
+  - apps-script

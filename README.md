@@ -28,6 +28,10 @@ onto GitHub Pages as-is.
 │   ├── main.js         Builds the page from config.js; navigation behaviour
 │   ├── globe.js        The member globe in the hero (plain WebGL, no library)
 │   └── apply.js        The application form's steps, checks and sending
+├── apps-script/
+│   └── applications.gs The Google Apps Script that files applications in a
+│                       Google Sheet — paste it into the sheet's Apps Script
+│                       editor; it never runs on the website (CONFIG.md)
 ├── data/
 │   └── globe.json      Country and U.S. state outlines for the globe
 │                       (derived from Natural Earth, public domain)
