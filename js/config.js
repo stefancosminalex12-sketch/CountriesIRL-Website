@@ -110,7 +110,8 @@ window.SITE_CONFIG = {
      >>> TO ADD A MEMBER: copy one of the blocks below, paste it into the
      >>> list, and edit the values. Mind the comma between entries.
      >>> The cards are built from this list, and the count above them is
-     >>> simply how many entries are here.
+     >>> simply how many active entries are here. Set `active: false` to
+     >>> retain a member's data while hiding it from all public member UI.
      >>>
      >>> ORDER: members with a `priority` number come first, 1 before 2 and
      >>> so on; everyone else follows in alphabetical order of their name.
@@ -192,7 +193,9 @@ window.SITE_CONFIG = {
         priority: 4,
         followers: 3702,
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/russiairl/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/russiairl/' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@Russia_irl' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@russia_irl' }
         ]
       },
       {
@@ -202,7 +205,7 @@ window.SITE_CONFIG = {
         followers: 23767,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/chinairl_/' },
-          { label: 'YouTube', url: 'https://www.youtube.com/@chinairlmain' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@Chinairl1' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@chinairlmain' }
         ]
       },
@@ -227,6 +230,7 @@ window.SITE_CONFIG = {
       },
       {
         name: 'Alabama',
+        active: false,
         flag: 'assets/flags/Alabama.png',
         geo: 'US-AL',
         followers: 2488,
@@ -283,6 +287,7 @@ window.SITE_CONFIG = {
         followers: 9547,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/czechrepublicirl/' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@Czechrepublicirl' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@czechrepublicirl' }
         ]
       },
@@ -320,7 +325,9 @@ window.SITE_CONFIG = {
         flag: 'assets/flags/de.png',
         followers: 122,
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/germanyirl_/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/germanyirl_/' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@GermanyIRL1' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@germanyirl_' }
         ]
       },
       {
@@ -337,7 +344,8 @@ window.SITE_CONFIG = {
         flag: 'assets/flags/gr.png',
         followers: 1882,
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/greeceirlmain/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/greeceirlmain/' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@greeceirlmain' }
         ]
       },
       {
@@ -353,7 +361,8 @@ window.SITE_CONFIG = {
         flag: 'assets/flags/it.png',
         followers: 6653,
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/italyirl/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/italyirl/' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@italyirlmain' }
         ]
       },
       {
@@ -370,7 +379,7 @@ window.SITE_CONFIG = {
         followers: 7388,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/lithuaniairl/' },
-          { label: 'YouTube', url: 'https://www.youtube.com/@Lithuaniairl' }
+          { label: 'YouTube', url: 'https://www.youtube.com/@Lithuaniairl/shorts' }
         ]
       },
       {
@@ -397,7 +406,8 @@ window.SITE_CONFIG = {
         geo: { at: [28.98, 41.01] },     // Constantinople
         followers: null,                 // Instagram: "Profile isn't available"
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/ottoman_irl/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/ottoman_irl/' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@ottomanempire.irl' }
         ]
       },
       {
@@ -413,7 +423,8 @@ window.SITE_CONFIG = {
         flag: 'assets/flags/ph.png',
         followers: 297,
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/philippinesirlmain/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/philippinesirlmain/' },
+          { label: 'TikTok', url: 'https://www.tiktok.com/@philippines.irl' }
         ]
       },
       {
@@ -443,11 +454,12 @@ window.SITE_CONFIG = {
       },
       {
         name: 'Russian Empire',
-        flag: 'assets/flags/russian-empire.svg',
+        flag: 'assets/flags/russian-empire-1914.png',
         geo: { at: [30.31, 59.94] },     // Saint Petersburg
         followers: 4882,
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/russian.empire_irl/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/russian.empire_irl/' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@Russianempireirl' }
         ]
       },
       {
@@ -473,7 +485,8 @@ window.SITE_CONFIG = {
         flag: 'assets/flags/tr.png',
         followers: 418,
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/turkiyeirlmain/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/turkiyeirlmain/' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@TurkeyIRLmain' }
         ]
       },
       {

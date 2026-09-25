@@ -79,6 +79,7 @@ new card — and its flag in the strip under the hero — lands in the right pla
 | `website` | no | Added to the card as a **Website** link. |
 | `links` | no | Any number of platforms. Each is a `label` and a `url`. |
 | `id` | no | Hidden internal identifier, never shown on the page. It is written to the card as `data-member-id`. Use it when two members share a visible name — the country Georgia is `georgia-country`, so a future U.S. state entry could be `georgia-state`. |
+| `active` | no | Defaults to active. Set `false` to retain the entry but hide it from member cards, counts, the flag marquee, and globe highlighting and detection. |
 | `geo` | no | Where the member sits on the hero globe. Leave it out for a country — it is read from the flag file name, so `ro.png` is Romania. Use `'US-OH'` for a U.S. state, or `{ at: [lon, lat] }` for a place with no modern border, such as a historical capital. |
 | `origin` | no | `true` on the account the network started from. The globe lights it slightly warmer. |
 | `priority` | no | A number that pins the member to the front of the list — `1` first, then `2`, and so on. Members without one follow in alphabetical order, letter by letter (spaces are ignored, so Czechoslovakia comes before Czech Republic). Romania, the United Kingdom, the United States, Russia, China and Fiji are `1` to `6`. |

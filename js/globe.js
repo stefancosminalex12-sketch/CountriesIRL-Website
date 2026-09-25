@@ -50,7 +50,7 @@
   var STILL = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   var members = ((config.members && config.members.list) || []).filter(function (m) {
-    return m && m.name;
+    return m && m.name && m.active !== false;
   });
 
   /* ----------------------------------------------------------------------

@@ -139,7 +139,7 @@
 
   var members = (get('members.list') || []).filter(function (m) {
     /* `country` is optional: entries that name their own flag do not need it. */
-    return m && m.name;
+    return m && m.name && m.active !== false;
   }).sort(memberOrder);
 
   function countriesByCount() {
