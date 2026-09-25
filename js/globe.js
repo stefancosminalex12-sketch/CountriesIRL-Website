@@ -231,13 +231,16 @@
   var COLOR = {
     land:       'rgba(232, 236, 242, 0.13)',
     border:     'rgba(232, 236, 242, 0.34)',
-    member:     'rgba(226, 142, 108, 0.44)',
-    memberEdge: 'rgba(244, 180, 150, 0.7)',
-    origin:     'rgba(234, 156, 120, 0.6)',
-    state:      'rgba(236, 150, 116, 0.6)',
-    stateEdge:  'rgba(252, 198, 172, 0.9)',
-    point:      'rgba(250, 190, 160, 0.95)',
-    pointGlow:  'rgba(246, 170, 135, 0.22)'
+    /* Members wear the logo's blue (#012D78, hue 218°), lifted to a lighter
+       and still saturated shade of the same hue so it carries on the dark
+       glass. Fills sit deepest, outlines and markers brighter. */
+    member:     'rgba(67, 127, 229, 0.44)',
+    memberEdge: 'rgba(104, 155, 243, 0.7)',
+    origin:     'rgba(81, 138, 236, 0.6)',
+    state:      'rgba(83, 138, 234, 0.6)',
+    stateEdge:  'rgba(130, 174, 247, 0.9)',
+    point:      'rgba(111, 161, 246, 0.95)',
+    pointGlow:  'rgba(85, 143, 241, 0.22)'
   };
 
   var KIND_ORDER = { country: 0, state: 1, point: 2 };
@@ -392,7 +395,7 @@
     '  float id = floor(texture2D(uIds, uvF).r * 255.0 + 0.5);',
     '  float hot = (uHover > 0.5 && abs(id - uHover) < 0.5) ? uHoverAmt : 0.0;',
     '  land.rgb *= 0.62 + 0.55 * diff;',
-    '  land.rgb += land.a * hot * vec3(0.34, 0.22, 0.16);',
+    '  land.rgb += land.a * hot * vec3(0.12, 0.22, 0.36);',
     '  land.a = min(1.0, land.a * (1.0 + 0.55 * hot));',
     '  col = land + col * (1.0 - land.a);',
 
