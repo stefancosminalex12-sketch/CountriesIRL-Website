@@ -296,7 +296,7 @@ window.SITE_CONFIG = {
         flag: 'assets/flags/fi.png',
         followers: null,                 // Instagram: "Profile isn't available"
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/finlandirl_/' },
+          { label: 'Instagram', url: 'https://www.instagram.com/finlandirl' },
           { label: 'YouTube', url: 'https://www.youtube.com/@FinlandIRL' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@finlandirl' }
         ]
