@@ -17,9 +17,10 @@ window.SITE_CONFIG = {
      ------------------------------------------------------------------ */
   brand: {
     name: 'CountriesIRL',
-    /* IRLLOGO.png is the full-size original (1532px, ~3MB). The header shows
-       the mark at 26px, so the site loads IRLLOGO-web.png — the same artwork
-       resized to 128px. Re-export it if you change the original. */
+    /* IRLLOGO.png is the full-size logo (1024px, on the logo's white). The
+       header shows the mark at 26px, so the site loads IRLLOGO-web.png — the
+       same artwork at 128px, on nothing, so it sits on any background.
+       Re-export both if you change the logo. */
     logo: 'assets/logo/IRLLOGO-web.png',
     logoAlt: 'CountriesIRL',
     // Used for SEO canonical + Open Graph tags. Include the trailing slash.

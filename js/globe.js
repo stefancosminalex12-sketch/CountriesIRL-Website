@@ -231,16 +231,16 @@
   var COLOR = {
     land:       'rgba(232, 236, 242, 0.13)',
     border:     'rgba(232, 236, 242, 0.34)',
-    /* Members wear the logo's blue (#012D78, hue 218°), lifted to a lighter
-       and still saturated shade of the same hue so it carries on the dark
-       glass. Fills sit deepest, outlines and markers brighter. */
-    member:     'rgba(67, 127, 229, 0.44)',
-    memberEdge: 'rgba(104, 155, 243, 0.7)',
-    origin:     'rgba(81, 138, 236, 0.6)',
-    state:      'rgba(83, 138, 234, 0.6)',
-    stateEdge:  'rgba(130, 174, 247, 0.9)',
-    point:      'rgba(111, 161, 246, 0.95)',
-    pointGlow:  'rgba(85, 143, 241, 0.22)'
+    /* Members are picked out in the logo's white (#fefefc). Land that is not
+       a member's keeps the same white at a far lower strength, so the two
+       never read alike: fills carry, outlines and markers carry further. */
+    member:     'rgba(254, 254, 252, 0.5)',
+    memberEdge: 'rgba(254, 254, 252, 0.85)',
+    origin:     'rgba(254, 254, 252, 0.68)',
+    state:      'rgba(254, 254, 252, 0.62)',
+    stateEdge:  'rgba(254, 254, 252, 0.95)',
+    point:      'rgba(254, 254, 252, 1)',
+    pointGlow:  'rgba(254, 254, 252, 0.26)'
   };
 
   var KIND_ORDER = { country: 0, state: 1, point: 2 };
@@ -395,7 +395,7 @@
     '  float id = floor(texture2D(uIds, uvF).r * 255.0 + 0.5);',
     '  float hot = (uHover > 0.5 && abs(id - uHover) < 0.5) ? uHoverAmt : 0.0;',
     '  land.rgb *= 0.62 + 0.55 * diff;',
-    '  land.rgb += land.a * hot * vec3(0.12, 0.22, 0.36);',
+    '  land.rgb += land.a * hot * vec3(0.26, 0.27, 0.29);',
     '  land.a = min(1.0, land.a * (1.0 + 0.55 * hot));',
     '  col = land + col * (1.0 - land.a);',
 

@@ -24,9 +24,11 @@
   --paper:        #fbfaf8;
   --tint:         #f3f1ec;
   --surface:      #ffffff;
-  --ink:          #16181c;
-  --ink-soft:     #33373e;
-  --muted:        #5c6169;
+  /* The dark end of the palette is the logo's navy (#0b1723) and lighter
+     steps of the same hue, so every dark surface and text belongs to it. */
+  --ink:          #0b1723;
+  --ink-soft:     #2e3843;
+  --muted:        #57626e;
   --line:         #e3e1dc;
   --line-strong:  #cfccc4;
   --accent:       #b3391f;
@@ -216,7 +218,7 @@ a:hover { color: var(--accent-dark); }
   border-color: var(--ink);
   color: var(--paper);
 }
-.btn--primary:hover { background: #000; border-color: #000; color: var(--paper); }
+.btn--primary:hover { background: #06101a; border-color: #06101a; color: var(--paper); }
 
 .btn--secondary {
   background: transparent;
@@ -235,7 +237,7 @@ a:hover { color: var(--accent-dark); }
 /* Outlined counterpart to --invert, for the dark hero. */
 .btn--ghost {
   background: transparent;
-  border-color: #4a4f58;
+  border-color: #44515e;
   color: var(--paper);
 }
 .btn--ghost:hover { border-color: var(--paper); color: var(--paper); }
@@ -421,7 +423,7 @@ a:hover { color: var(--accent-dark); }
   left: 0; right: 0; bottom: 0;
   display: flex;
   padding-block: 1.5rem;
-  border-top: 1px solid #2a2e35;
+  border-top: 1px solid #262f39;
   -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
           mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
 }
@@ -459,7 +461,7 @@ a:hover { color: var(--accent-dark); }
   max-width: 54ch;
   font-size: var(--size-lead);
   line-height: 1.6;
-  color: #c9cbcf;
+  color: #c8ccd0;
 }
 /* The copy runs to more than one paragraph; type and colour still come from
    the block above, this only opens the gap between them. */
@@ -529,7 +531,7 @@ a:hover { color: var(--accent-dark); }
   padding: 0.75rem 0.875rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 6px;
-  background: rgba(22, 24, 28, 0.58);
+  background: rgba(11, 23, 35, 0.58);
   -webkit-backdrop-filter: blur(14px) saturate(1.25);
           backdrop-filter: blur(14px) saturate(1.25);
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.06);
@@ -557,7 +559,7 @@ a:hover { color: var(--accent-dark); }
 .globe-card__meta {
   font-size: var(--size-label);
   line-height: 1.45;
-  color: #9aa0aa;
+  color: #99a2ab;
   font-variant-numeric: tabular-nums;
 }
 
@@ -803,7 +805,7 @@ a:hover { color: var(--accent-dark); }
   background: var(--ink);
   color: var(--paper);
 }
-.join .lead { color: #c9cbcf; }
+.join .lead { color: #c8ccd0; }
 
 .join__grid {
   display: grid;
@@ -815,13 +817,13 @@ a:hover { color: var(--accent-dark); }
 .join__note {
   margin-top: 1.25rem;
   font-size: var(--size-small);
-  color: #8d939d;
+  color: #8a95a0;
 }
 
 /* One line, set as a quote. Anything longer belongs on the left. */
 .join__quote {
   padding-top: 1.5rem;
-  border-top: 1px solid #33373e;
+  border-top: 1px solid #2e3843;
 }
 .join__quote blockquote { margin: 0; }
 .join__quote p {
@@ -838,7 +840,7 @@ a:hover { color: var(--accent-dark); }
   margin-top: 1rem;
   font-size: var(--size-small);
   letter-spacing: 0.08em;
-  color: #8d939d;
+  color: #8a95a0;
 }
 
 @media (max-width: 52em) {
