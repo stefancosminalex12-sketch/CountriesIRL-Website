@@ -579,5 +579,20 @@ window.SITE_CONFIG = {
      ------------------------------------------------------------------ */
   footer: {
     note: 'An independent network. Everyone owns their own account.'
+  },
+
+  /* ------------------------------------------------------------------
+     10. TOOLS
+     The nine-dot button in the top-right corner opens this menu. Add a
+     tool by adding an entry to `list`: `icon` is a square image, as a
+     path from the site root — drop it into assets/tools/. The tiles show
+     in the order listed, three to a row.
+     ------------------------------------------------------------------ */
+  tools: {
+    title: 'Tools',
+    note: 'More tools are on the way.',   // empty hides it
+    list: [
+      { name: 'Map Editor', url: 'https://maps.countriesirl.com', icon: 'assets/tools/map-editor.svg' }
+    ]
   }
 };

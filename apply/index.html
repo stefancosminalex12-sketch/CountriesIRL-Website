@@ -32,7 +32,7 @@
   <link rel="apple-touch-icon" href="../assets/logo/apple-touch-icon.png?v=2">
 
   <!-- Same cache buster as index.html — bump both together. -->
-  <link rel="stylesheet" href="../css/style.css?v=202610011500">
+  <link rel="stylesheet" href="../css/style.css?v=202610121400">
 </head>
 
 <body>
@@ -56,10 +56,26 @@
           <li><a class="nav__link" href="../#about">About</a></li>
           <li><a class="nav__link" href="../#members">Members</a></li>
           <li><a class="nav__link" href="../#community">Community</a></li>
-          <li><a class="nav__link" href="https://maps.countriesirl.com">Map Editor</a></li>
           <li><a class="nav__cta" href="../#join">Join</a></li>
         </ul>
       </nav>
+
+      <!-- The nine-dot tools menu. Its tiles come from `tools` in js/config.js. -->
+      <div class="apps">
+        <button class="apps__toggle" type="button" aria-expanded="false" aria-controls="apps-panel">
+          <svg class="apps__dots" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" focusable="false">
+            <circle cx="3" cy="3" r="2"/><circle cx="10" cy="3" r="2"/><circle cx="17" cy="3" r="2"/>
+            <circle cx="3" cy="10" r="2"/><circle cx="10" cy="10" r="2"/><circle cx="17" cy="10" r="2"/>
+            <circle cx="3" cy="17" r="2"/><circle cx="10" cy="17" r="2"/><circle cx="17" cy="17" r="2"/>
+          </svg>
+          <span class="visually-hidden">Tools</span>
+        </button>
+        <div class="apps__panel" id="apps-panel">
+          <p class="apps__title" data-text="tools.title">Tools</p>
+          <ul class="apps__list" data-render="tools"></ul>
+          <p class="apps__note" data-text="tools.note"></p>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -331,8 +347,8 @@
     </div>
   </footer>
 
-  <script src="../js/config.js?v=202610121200"></script>
-  <script src="../js/main.js?v=202609252200"></script>
+  <script src="../js/config.js?v=202610121400"></script>
+  <script src="../js/main.js?v=202610121400"></script>
   <script src="../js/apply.js?v=202610011500"></script>
 </body>
 </html>
