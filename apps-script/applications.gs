@@ -7,32 +7,56 @@
    CONFIG.md ("Connecting it to a Google Sheet") has the steps.
 
    The form at countriesirl.com/apply/ sends one POST here with the
-   application as JSON. This script checks it, adds the time it arrived, and
-   appends one row to the sheet with Status "Pending" and Admin notes empty.
-   It answers {"ok": true} only once that row exists, so the applicant is
-   never told an application was sent when it was not.
+   application as JSON. There are two kinds — `track` is "country" or
+   "contributor" — and each has its own tab in the sheet. This script checks
+   the application, adds the time it arrived, and appends one row to the
+   right tab with Status "Pending" and Admin notes empty. It answers
+   {"ok": true} only once that row exists, so the applicant is never told an
+   application was sent when it was not.
 
    The sheet itself stays private: the web app runs as you, and it is the
    only thing that opens the sheet. Applicants never touch it, and there is
    no key, password or spreadsheet address in the website's code.
    ========================================================================== */
 
-/* The sheet that receives applications. A tab with this name is used if there
-   is one; otherwise the first tab of the spreadsheet is. */
-var SHEET_NAME = 'Applications';
-
-/* The answers the form sends, in the order they become columns. */
-var FIELDS = [
-  'fullName', 'country', 'age', 'email',
-  'instagram', 'instagramFollowers', 'tiktok', 'tiktokFollowers', 'youtube', 'youtubeFollowers',
-  'contentTypes', 'experience', 'workLinks', 'motivation', 'contribution', 'discord', 'rulesAccepted'
-];
-
-/* The header row: when it arrived, the answers, then your two columns. */
-var HEADERS = ['Timestamp', 'Full name', 'Country', 'Age', 'Email',
-  'Instagram', 'Instagram followers', 'TikTok', 'TikTok followers', 'YouTube', 'YouTube subscribers',
-  'Content types', 'Experience', 'Work links', 'Motivation', 'Contribution', 'Discord',
-  'Rules accepted', 'Status', 'Admin notes'];
+/* One tab per kind of application: its name, the answers that become its
+   columns (in order), and the header row — the time it arrived, the
+   answers, then your two columns. A tab is created the first time it is
+   needed. */
+var TRACKS = {
+  country: {
+    sheet: 'Countries',
+    fields: [
+      'country', 'countryListed', 'fullName', 'age', 'email',
+      'instagram', 'instagramFollowers', 'tiktok', 'tiktokFollowers', 'youtube', 'youtubeFollowers',
+      'contentTypes', 'experience', 'workLinks', 'motivation', 'contribution', 'discord', 'rulesAccepted'
+    ],
+    headers: ['Timestamp', 'Country', 'From the list', 'Full name', 'Age', 'Email',
+      'Instagram', 'Instagram followers', 'TikTok', 'TikTok followers', 'YouTube', 'YouTube subscribers',
+      'Content types', 'Experience', 'Work links', 'Motivation', 'Contribution', 'Discord',
+      'Rules accepted', 'Status', 'Admin notes'],
+    required: {
+      country: 'a country', fullName: 'a full name', email: 'an email address',
+      contentTypes: 'at least one kind of content', experience: 'the experience answer',
+      motivation: 'the reason for joining', contribution: 'the contribution answer'
+    }
+  },
+  contributor: {
+    sheet: 'Contributors',
+    fields: [
+      'skills', 'fullName', 'age', 'email',
+      'experience', 'workLinks', 'motivation', 'contribution', 'discord', 'rulesAccepted'
+    ],
+    headers: ['Timestamp', 'Skills', 'Full name', 'Age', 'Email',
+      'Experience', 'Portfolio and links', 'Motivation', 'Contribution', 'Discord',
+      'Rules accepted', 'Status', 'Admin notes'],
+    required: {
+      skills: 'at least one skill', fullName: 'a full name', email: 'an email address',
+      experience: 'the experience answer', motivation: 'the reason for joining',
+      contribution: 'the contribution answer'
+    }
+  }
+};
 
 var DEFAULT_STATUS = 'Pending';
 var MIN_AGE = 13;                 // matches apply.minimumAge in js/config.js
@@ -42,16 +66,10 @@ var MAX_FOLLOWERS = 1e10;
 /* Longest answer accepted for each field, matching the form's own limits.
    Anything longer is a sign the request did not come from the form. */
 var LIMITS = {
-  fullName: 80, country: 60, email: 254,
+  country: 60, fullName: 80, email: 254,
   instagram: 100, tiktok: 100, youtube: 100,
-  contentTypes: 400, experience: 1000, workLinks: 1000,
+  contentTypes: 400, skills: 400, experience: 1000, workLinks: 1000,
   motivation: 1000, contribution: 1000, discord: 40
-};
-
-var REQUIRED_TEXT = {
-  fullName: 'a full name', country: 'a country', email: 'an email address',
-  contentTypes: 'at least one kind of content', experience: 'the experience answer',
-  motivation: 'the reason for joining', contribution: 'the contribution answer'
 };
 
 var EMAIL = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/;
@@ -69,10 +87,13 @@ function doPost(e) {
        anything in it means a bot: answer politely, store nothing. */
     if (text(data.honeypot) !== '') return json({ ok: true, stored: false });
 
-    var problems = check(data);
+    var track = TRACKS[text(data.track)];
+    if (!track) return json({ ok: false, error: 'The application type is missing.' });
+
+    var problems = check(data, track);
     if (problems.length) return json({ ok: false, error: problems.join(' ') });
 
-    var row = store(data);
+    var row = store(data, track);
     return json({ ok: true, row: row });
   } catch (error) {
     console.error('Application not stored: ' + (error && error.message ? error.message : error));
@@ -93,11 +114,11 @@ function doGet() {
    URL, so everything that matters is checked again here.
    -------------------------------------------------------------------------- */
 
-function check(data) {
+function check(data, track) {
   var problems = [];
 
-  Object.keys(REQUIRED_TEXT).forEach(function (key) {
-    if (text(data[key]) === '') problems.push('Missing ' + REQUIRED_TEXT[key] + '.');
+  Object.keys(track.required).forEach(function (key) {
+    if (text(data[key]) === '') problems.push('Missing ' + track.required[key] + '.');
   });
 
   Object.keys(LIMITS).forEach(function (key) {
@@ -113,18 +134,19 @@ function check(data) {
     problems.push('The age must be a whole number between ' + MIN_AGE + ' and ' + MAX_AGE + '.');
   }
 
-  if (text(data.instagram) === '' && text(data.tiktok) === '' && text(data.youtube) === '') {
-    problems.push('At least one social account is needed.');
-  }
-
-  ['instagramFollowers', 'tiktokFollowers', 'youtubeFollowers'].forEach(function (key) {
-    var value = data[key];
-    if (value === '' || value === null || value === undefined) return;
-    var count = Number(value);
-    if (!isFinite(count) || count < 0 || count > MAX_FOLLOWERS || Math.floor(count) !== count) {
-      problems.push('The ' + key + ' count is not a whole number.');
+  if (track === TRACKS.country) {
+    if (text(data.instagram) === '' && text(data.tiktok) === '' && text(data.youtube) === '') {
+      problems.push('At least one social account is needed.');
     }
-  });
+    ['instagramFollowers', 'tiktokFollowers', 'youtubeFollowers'].forEach(function (key) {
+      var value = data[key];
+      if (value === '' || value === null || value === undefined) return;
+      var count = Number(value);
+      if (!isFinite(count) || count < 0 || count > MAX_FOLLOWERS || Math.floor(count) !== count) {
+        problems.push('The ' + key + ' count is not a whole number.');
+      }
+    });
+  }
 
   if (data.rulesAccepted !== true) problems.push('The community rules were not accepted.');
 
@@ -135,14 +157,14 @@ function check(data) {
    Storing it
    -------------------------------------------------------------------------- */
 
-function store(data) {
+function store(data, track) {
   /* Two applications arriving at once would otherwise race for the same row. */
   var lock = LockService.getScriptLock();
   lock.waitLock(20000);
   try {
-    var sheet = applicationSheet();
+    var sheet = trackSheet(track);
     var row = [new Date()];
-    FIELDS.forEach(function (key) { row.push(cell(data[key])); });
+    track.fields.forEach(function (key) { row.push(cell(data[key])); });
     row.push(DEFAULT_STATUS, '');
     sheet.appendRow(row);
     return sheet.getLastRow();
@@ -151,21 +173,21 @@ function store(data) {
   }
 }
 
-function applicationSheet() {
+function trackSheet(track) {
   var book = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = book.getSheetByName(SHEET_NAME) || book.getSheets()[0];
+  var sheet = book.getSheetByName(track.sheet) || book.insertSheet(track.sheet);
   if (sheet.getLastRow() === 0) {
-    sheet.appendRow(HEADERS);
+    sheet.appendRow(track.headers);
     sheet.setFrozenRows(1);
-    sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
+    sheet.getRange(1, 1, 1, track.headers.length).setFontWeight('bold');
   }
   return sheet;
 }
 
-/* Run this once from the editor to put the header row in place. Applications
-   do it themselves as well, so it is only for tidiness. */
+/* Run this once from the editor to make both tabs with their header rows.
+   Applications do it themselves as well, so it is only for tidiness. */
 function setup() {
-  applicationSheet();
+  Object.keys(TRACKS).forEach(function (key) { trackSheet(TRACKS[key]); });
 }
 
 /* --------------------------------------------------------------------------

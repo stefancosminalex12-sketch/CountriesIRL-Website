@@ -1,11 +1,12 @@
 /* ==========================================================================
    CountriesIRL — application form (apply/index.html)
    --------------------------------------------------------------------------
-   Five steps. Each is checked before the next one opens; the last shows every
-   answer back for review, then sends the lot as JSON to `apply.endpoint` in
-   js/config.js — a Google Apps Script web app, once one is set up (CONFIG.md
-   explains how). Nothing is reported as sent unless that endpoint confirms
-   it, and a failed send never clears the form.
+   First a choice of two paths — join as a Country, or as a Contributor —
+   then the steps for that path. Each step is checked before the next one
+   opens; the last shows every answer back for review, then sends the lot
+   as JSON to `apply.endpoint` in js/config.js — a Google Apps Script web
+   app (CONFIG.md explains how to set it up). Nothing is reported as sent
+   unless that endpoint confirms it, and a failed send never clears the form.
    ========================================================================== */
 
 (function () {
@@ -13,13 +14,18 @@
 
   var form = document.getElementById('apply-form');
   var layout = document.getElementById('apply-top');
-  if (!form || !layout) return;
+  var pathBox = document.getElementById('apply-path');
+  if (!form || !layout || !pathBox) return;
 
-  var settings = (window.SITE_CONFIG && window.SITE_CONFIG.apply) || {};
+  var config = window.SITE_CONFIG || {};
+  var settings = config.apply || {};
   var MIN_AGE = typeof settings.minimumAge === 'number' ? settings.minimumAge : 13;
   var MAX_AGE = 120;
   var MAX_LINKS = 5;
   var TIMEOUT = 20000;
+  var OTHER = '__other';
+
+  var PATHS = { country: 'Country', contributor: 'Contributor' };
 
   var PLATFORMS = {
     instagram: { label: 'Instagram', hosts: ['instagram.com'], handle: /^@?[a-z0-9._]{1,30}$/i },
@@ -31,8 +37,10 @@
   var DISCORD = /^(?!.*\.\.)[a-z0-9_.]{2,32}$/i;
   var DISCORD_LEGACY = /^[^@#:`]{2,32}#\d{4}$/;
 
-  var steps = toArray(form.querySelectorAll('.apply-step'));
-  var stepButtons = toArray(document.querySelectorAll('.apply-progress__step'));
+  var allSteps = toArray(form.querySelectorAll('.apply-step'));
+  var progressList = document.getElementById('apply-progress-list');
+  var pathName = document.getElementById('apply-path-name');
+  var changePath = document.getElementById('apply-change-path');
   var statusLine = document.getElementById('apply-status');
   var announcer = document.getElementById('apply-announce');
   var backButton = document.getElementById('apply-back');
@@ -43,6 +51,9 @@
   var reviewBox = document.getElementById('apply-review');
   var donePanel = document.getElementById('apply-done');
 
+  var path = '';
+  var steps = [];          // the steps of the chosen path, in order
+  var stepButtons = [];
   var current = 0;
   var furthest = 0;
   var busy = false;
@@ -68,16 +79,18 @@
     return form.elements[name];
   }
 
-  /* A single input, or every checkbox sharing the name. */
+  /* A single input, or every checkbox or radio sharing the name. */
   function inputs(name) {
     var c = control(name);
     if (!c) return [];
     return c.tagName ? [c] : toArray(c);
   }
 
+  /* A text field's answer, or the picked radio's value. */
   function value(name) {
     var c = control(name);
-    return c && c.tagName ? c.value.trim() : '';
+    if (!c) return '';
+    return String(c.value || '').trim();
   }
 
   function limit(name) {
@@ -85,22 +98,29 @@
     return (c && c.tagName && Number(c.getAttribute('maxlength'))) || Infinity;
   }
 
-  function title(index) {
-    return steps[index].querySelector('.apply-step__title').textContent;
+  /* 'step-country-title' → 'country': the key the rules below use. */
+  function stepKey(step) {
+    return step.getAttribute('aria-labelledby').replace(/^step-|-title$/g, '');
   }
 
-  function checkedTypes() {
-    return inputs('contentTypes')
+  function title(step) {
+    return step.querySelector('.apply-step__title').textContent;
+  }
+
+  function checked(name) {
+    return inputs(name)
       .filter(function (box) { return box.checked; })
       .map(function (box) { return box.value; });
   }
 
-  function contentList() {
-    var list = checkedTypes();
-    var other = value('contentOther');
+  function withOther(list, otherName) {
+    var other = value(otherName);
     if (other) list.push('Other: ' + other);
     return list;
   }
+
+  function contentList() { return withOther(checked('contentTypes'), 'contentOther'); }
+  function skillList() { return withOther(checked('skills'), 'skillsOther'); }
 
   /* '12,500', '12 500' and '12.500' all mean twelve and a half thousand. */
   function followers(raw) {
@@ -119,11 +139,127 @@
       .filter(Boolean);
   }
 
-  function normalizedLinks() {
-    return linkLines(value('workLinks')).map(function (line) {
+  function normalizedLinks(name) {
+    return linkLines(value(name)).map(function (line) {
       var url = parseLink(line);
       return url ? url.href : line;
     });
+  }
+
+  /* ----------------------------------------------------------------------
+     The country list
+     ----------------------------------------------------------------------
+     Every country in js/countries.js, minus the ones a member already
+     represents. A member takes a country when its flag is that country's
+     file — assets/flags/fr.png takes France — and it has no `geo` of its
+     own, which is how states and historical countries are marked.
+     ---------------------------------------------------------------------- */
+
+  function fold(text) {
+    return String(text).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]+/g, ' ').trim();
+  }
+
+  var members = ((config.members && config.members.list) || []).filter(Boolean);
+
+  var takenCodes = {};
+  members.forEach(function (member) {
+    var match = /\/([a-z]{2}(?:-[a-z]{3})?)\.(png|svg|jpe?g|webp)$/.exec(member.flag || '');
+    if (match && !member.geo) takenCodes[match[1]] = true;
+  });
+
+  /* Member names, without notes like "(Owner)", for the "not on the list" box. */
+  var takenNames = {};
+  members.forEach(function (member) {
+    if (member.name) takenNames[fold(member.name.replace(/\s*\(.*\)\s*$/, ''))] = member.name.replace(/\s*\(.*\)\s*$/, '');
+  });
+
+  var countries = (window.APPLY_COUNTRIES || []).map(function (row) {
+    return {
+      code: row[0],
+      name: row[1],
+      search: [row[1]].concat(row[2] || []).map(fold)
+    };
+  }).sort(function (a, b) { return a.name.localeCompare(b.name, 'en'); });
+
+  countries.forEach(function (c) {
+    c.taken = !!takenCodes[c.code] || c.search.some(function (s) { return takenNames[s]; });
+  });
+  var open = countries.filter(function (c) { return !c.taken; });
+
+  var countryList = document.getElementById('country-list');
+  var countrySearch = document.getElementById('countrySearch');
+  var countryEmpty = document.getElementById('country-empty');
+  var countryChosen = document.getElementById('country-chosen');
+  var countryCount = document.getElementById('country-count');
+  var otherField = document.getElementById('countryOther-field');
+
+  function countryOption(val, label, className) {
+    var option = el('label', 'country-option' + (className ? ' ' + className : ''));
+    var radio = el('input');
+    radio.type = 'radio';
+    radio.name = 'country';
+    radio.value = val;
+    option.append(radio, el('span', null, label));
+    return option;
+  }
+
+  function buildCountries() {
+    var options = open.map(function (c) {
+      var option = countryOption(c.name, c.name);
+      option.setAttribute('data-search', c.search.join('|'));
+      return option;
+    });
+    options.push(countryOption(OTHER, 'Not on the list — a state, region or historical country', 'country-option--other'));
+    countryList.replaceChildren.apply(countryList, options);
+    countryCount.textContent = '· ' + open.length + ' available';
+  }
+
+  function filterCountries() {
+    var query = fold(countrySearch.value);
+    var shown = 0;
+    toArray(countryList.querySelectorAll('.country-option:not(.country-option--other)')).forEach(function (option) {
+      var hit = !query || option.getAttribute('data-search').split('|').some(function (s) {
+        return s.indexOf(query) !== -1;
+      });
+      option.hidden = !hit;
+      if (hit) shown++;
+    });
+
+    if (shown || !query) {
+      countryEmpty.hidden = true;
+      return shown;
+    }
+    var taken = countries.filter(function (c) {
+      return c.taken && c.search.some(function (s) { return s.indexOf(query) !== -1; });
+    });
+    countryEmpty.textContent = taken.length ?
+      taken.slice(0, 3).map(function (c) { return c.name; }).join(', ') +
+        (taken.length === 1 ? ' already has an account in the network, so it isn’t listed.' :
+          ' already have accounts in the network, so they aren’t listed.') :
+      'No country matches “' + countrySearch.value.trim() + '”. If it’s a state, region or historical country, choose “Not on the list” below.';
+    countryEmpty.hidden = false;
+    return 0;
+  }
+
+  /* What the applicant picked, as it goes into the sheet. */
+  function countryName() {
+    var picked = value('country');
+    return picked === OTHER ? value('countryOther') : picked;
+  }
+
+  function syncCountry() {
+    var picked = value('country');
+    otherField.hidden = picked !== OTHER;
+    toArray(countryList.querySelectorAll('.country-option')).forEach(function (option) {
+      option.classList.toggle('is-picked', option.querySelector('input').checked);
+    });
+    if (picked && picked !== OTHER) {
+      countryChosen.textContent = 'You picked ' + picked + '.';
+      countryChosen.hidden = false;
+    } else {
+      countryChosen.hidden = true;
+    }
   }
 
   /* ----------------------------------------------------------------------
@@ -195,9 +331,9 @@
     return isNaN(followers(raw)) ? 'Enter the count as a whole number, like 12500.' : '';
   }
 
-  function linksError() {
-    if (tooLong('workLinks')) return tooLong('workLinks');
-    var lines = linkLines(value('workLinks'));
+  function linksError(name) {
+    if (tooLong(name)) return tooLong(name);
+    var lines = linkLines(value(name));
     if (lines.length > MAX_LINKS) return 'Add up to ' + MAX_LINKS + ' links.';
     for (var i = 0; i < lines.length; i++) {
       if (!parseLink(lines[i])) {
@@ -210,8 +346,22 @@
   }
 
   var RULES = {
+    country: function () {
+      return value('country') ? '' : 'Choose the country you want to represent, or “Not on the list”.';
+    },
+    countryOther: function () {
+      if (value('country') !== OTHER) return '';
+      var text = value('countryOther');
+      if (!text) return 'Enter the place your account will represent.';
+      if (tooLong('countryOther')) return tooLong('countryOther');
+      var taken = takenNames[fold(text)];
+      return taken ? taken + ' already has an account in the network.' : '';
+    },
+    skills: function () {
+      return skillList().length ? '' : 'Choose at least one skill, or describe yours under “Something else”.';
+    },
+    skillsOther: function () { return tooLong('skillsOther'); },
     fullName: function () { return required('fullName', 'Enter your full name.'); },
-    country: function () { return required('country', 'Enter the country you represent.'); },
     age: function () {
       var text = value('age');
       if (!text) return 'Enter your age.';
@@ -241,7 +391,9 @@
     },
     contentOther: function () { return tooLong('contentOther'); },
     experience: function () { return required('experience', 'Tell us about your content creation experience.'); },
-    workLinks: linksError,
+    workLinks: function () { return linksError('workLinks'); },
+    skillExperience: function () { return required('skillExperience', 'Tell us about your experience.'); },
+    portfolio: function () { return linksError('portfolio'); },
     motivation: function () { return required('motivation', 'Tell us why you want to join.'); },
     contribution: function () { return required('contribution', 'Tell us what you could contribute.'); },
     discord: function () {
@@ -255,13 +407,17 @@
     }
   };
 
-  var STEP_FIELDS = [
-    ['fullName', 'country', 'age', 'email'],
-    ['accounts', 'instagram', 'instagramFollowers', 'tiktok', 'tiktokFollowers', 'youtube', 'youtubeFollowers'],
-    ['contentTypes', 'contentOther', 'experience', 'workLinks'],
-    ['motivation', 'contribution', 'discord'],
-    ['rulesAccepted']
-  ];
+  /* The answers each step checks, by step key. */
+  var STEP_FIELDS = {
+    country: ['country', 'countryOther'],
+    skills: ['skills', 'skillsOther'],
+    personal: ['fullName', 'age', 'email'],
+    social: ['accounts', 'instagram', 'instagramFollowers', 'tiktok', 'tiktokFollowers', 'youtube', 'youtubeFollowers'],
+    creator: ['contentTypes', 'contentOther', 'experience', 'workLinks'],
+    work: ['skillExperience', 'portfolio'],
+    motivation: ['motivation', 'contribution', 'discord'],
+    review: ['rulesAccepted']
+  };
 
   /* ----------------------------------------------------------------------
      Showing problems
@@ -282,7 +438,7 @@
   /* Checks one step, shows what is wrong, and returns the names at fault. */
   function check(index) {
     attempted[index] = true;
-    var problems = STEP_FIELDS[index].filter(function (name) {
+    var problems = STEP_FIELDS[stepKey(steps[index])].filter(function (name) {
       var message = RULES[name]();
       show(name, message);
       return !!message;
@@ -297,10 +453,72 @@
   }
 
   function focusProblem(problems) {
-    var name = problems[0] === 'accounts' ? 'instagram' : problems[0];
-    var target = inputs(name)[0];
+    var first = problems[0];
+    var target = first === 'accounts' ? control('instagram') :
+      first === 'country' ? countrySearch : inputs(first)[0];
     if (target) target.focus();
     announce(problems.length === 1 ? 'One answer needs attention.' : problems.length + ' answers need attention.');
+  }
+
+  /* ----------------------------------------------------------------------
+     Choosing a path
+     ---------------------------------------------------------------------- */
+
+  function renderProgress() {
+    stepButtons = steps.map(function (step, n) {
+      var button = el('button', 'apply-progress__step');
+      button.type = 'button';
+      button.setAttribute('data-go', String(n));
+      var num = el('span', 'apply-progress__num', String(n + 1));
+      num.setAttribute('aria-hidden', 'true');
+      button.append(num, el('span', 'apply-progress__label', title(step)),
+        el('span', 'visually-hidden apply-progress__state'));
+      return button;
+    });
+    progressList.replaceChildren.apply(progressList, stepButtons.map(function (button) {
+      var li = el('li', 'apply-progress__item');
+      li.append(button);
+      return li;
+    }));
+  }
+
+  function setHash(hash) {
+    if (window.history && history.replaceState) {
+      history.replaceState(null, '', location.pathname + location.search + hash);
+    }
+  }
+
+  /* Answers typed on one path stay put if the applicant switches and comes
+     back; only the progress through the steps starts again. */
+  function choosePath(name, moveFocus) {
+    if (name !== path) {
+      path = name;
+      current = 0;
+      steps = allSteps.filter(function (step) {
+        var only = step.getAttribute('data-path');
+        return !only || only === name;
+      });
+      allSteps.forEach(function (step) { step.hidden = true; });
+      attempted = [];
+      passed = [];
+      furthest = 0;
+      renderProgress();
+    }
+    pathName.textContent = PATHS[name];
+    setHash('#' + name);
+    pathBox.hidden = true;
+    layout.hidden = false;
+    go(current, moveFocus);
+    if (moveFocus) layout.scrollIntoView({ block: 'start' });
+  }
+
+  function showPaths() {
+    if (busy) return;
+    layout.hidden = true;
+    pathBox.hidden = false;
+    setHash('');
+    var card = pathBox.querySelector('[data-path="' + path + '"]') || pathBox.querySelector('[data-path]');
+    card.focus();
   }
 
   /* ----------------------------------------------------------------------
@@ -321,7 +539,7 @@
       button.querySelector('.apply-progress__state').textContent =
         n === index ? ' (current step)' : passed[n] ? ' (completed)' : '';
     });
-    statusLine.textContent = 'Step ' + (index + 1) + ' of ' + steps.length + ': ' + title(index);
+    statusLine.textContent = 'Step ' + (index + 1) + ' of ' + steps.length + ': ' + title(steps[index]);
 
     backButton.hidden = index === 0;
     nextButton.hidden = last;
@@ -365,79 +583,95 @@
     return count === '' || isNaN(count) ? account : account + ' · ' + count.toLocaleString('en-GB') + unit;
   }
 
-  var REVIEW = [
-    { step: 0, rows: [
+  var REVIEW = {
+    country: [['Country', countryName]],
+    skills: [['Skills', function () { return skillList().join(', '); }]],
+    personal: [
       ['Full name', function () { return value('fullName'); }],
-      ['Country represented', function () { return value('country'); }],
       ['Age', function () { return value('age'); }],
       ['Email address', function () { return value('email'); }]
-    ] },
-    { step: 1, rows: [
+    ],
+    social: [
       ['Instagram', function () { return accountSummary('instagram'); }],
       ['TikTok', function () { return accountSummary('tiktok'); }],
       ['YouTube', function () { return accountSummary('youtube'); }]
-    ] },
-    { step: 2, rows: [
+    ],
+    creator: [
       ['Content', function () { return contentList().join(', '); }],
       ['Experience', function () { return value('experience'); }],
-      ['Links to your work', function () { return normalizedLinks().join('\n'); }]
-    ] },
-    { step: 3, rows: [
+      ['Links to your work', function () { return normalizedLinks('workLinks').join('\n'); }]
+    ],
+    work: [
+      ['Experience', function () { return value('skillExperience'); }],
+      ['Portfolio and links', function () { return normalizedLinks('portfolio').join('\n'); }]
+    ],
+    motivation: [
       ['Why you want to join', function () { return value('motivation'); }],
       ['What you could contribute', function () { return value('contribution'); }],
       ['Discord username', function () { return value('discord').replace(/^@/, ''); }]
-    ] }
-  ];
+    ]
+  };
 
   function renderReview() {
-    reviewBox.replaceChildren.apply(reviewBox, REVIEW.map(function (part) {
-      var name = title(part.step);
+    var parts = steps.slice(0, -1).map(function (step, n) {
+      var name = title(step);
       var section = el('section', 'apply-review__part');
       var head = el('div', 'apply-review__head');
       var edit = el('button', 'apply-edit', 'Edit');
       edit.type = 'button';
       edit.disabled = busy;
-      edit.setAttribute('data-go', String(part.step));
+      edit.setAttribute('data-go', String(n));
       edit.setAttribute('aria-label', 'Edit ' + name.toLowerCase());
       head.append(el('h3', null, name), edit);
 
       var list = el('dl');
-      part.rows.forEach(function (row) {
+      REVIEW[stepKey(step)].forEach(function (row) {
         var text = row[1]();
         list.append(el('dt', null, row[0]), el('dd', text ? null : 'is-empty', text || 'Not provided'));
       });
       section.append(head, list);
       return section;
-    }));
+    });
+    reviewBox.replaceChildren.apply(reviewBox, parts);
   }
 
   /* ----------------------------------------------------------------------
      Sending
      ---------------------------------------------------------------------- */
 
-  /* Field names match the columns the Google Sheet will use (CONFIG.md). */
+  /* Field names match the columns in apps-script/applications.gs. Both
+     paths send `experience` and `workLinks`; only the questions differ. */
   function payload() {
-    return {
+    var data = {
+      track: path,
       timestamp: new Date().toISOString(),
       fullName: value('fullName'),
-      country: value('country'),
       age: Number(value('age')),
       email: value('email'),
-      instagram: value('instagram'),
-      tiktok: value('tiktok'),
-      youtube: value('youtube'),
-      instagramFollowers: followerCount('instagram'),
-      tiktokFollowers: followerCount('tiktok'),
-      youtubeFollowers: followerCount('youtube'),
-      contentTypes: contentList().join(', '),
-      experience: value('experience'),
-      workLinks: normalizedLinks().join('\n'),
       motivation: value('motivation'),
       contribution: value('contribution'),
       discord: value('discord').replace(/^@/, ''),
       rulesAccepted: control('rulesAccepted').checked,
       honeypot: control('website') ? control('website').value : ''
     };
+    if (path === 'country') {
+      data.country = countryName();
+      data.countryListed = value('country') !== OTHER;
+      data.instagram = value('instagram');
+      data.tiktok = value('tiktok');
+      data.youtube = value('youtube');
+      data.instagramFollowers = followerCount('instagram');
+      data.tiktokFollowers = followerCount('tiktok');
+      data.youtubeFollowers = followerCount('youtube');
+      data.contentTypes = contentList().join(', ');
+      data.experience = value('experience');
+      data.workLinks = normalizedLinks('workLinks').join('\n');
+    } else {
+      data.skills = skillList().join(', ');
+      data.experience = value('skillExperience');
+      data.workLinks = normalizedLinks('portfolio').join('\n');
+    }
+    return data;
   }
 
   function setBusy(on) {
@@ -445,6 +679,7 @@
     form.setAttribute('aria-busy', on ? 'true' : 'false');
     submitButton.disabled = on;
     backButton.disabled = on;
+    changePath.disabled = on;
     submitButton.classList.toggle('is-busy', on);
     submitButton.querySelector('.apply-submit__label').textContent = on ? 'Sending…' : 'Submit application';
     stepButtons.forEach(function (button, n) { button.disabled = on || n > furthest; });
@@ -461,13 +696,13 @@
   function succeed() {
     layout.hidden = true;
     donePanel.hidden = false;
+    setHash('');
     donePanel.querySelector('h2').focus({ preventScroll: true });
     donePanel.scrollIntoView({ block: 'start' });
   }
 
   function endpoint() {
-    var apply = (window.SITE_CONFIG && window.SITE_CONFIG.apply) || {};
-    var url = String(apply.endpoint || '').trim();
+    var url = String(settings.endpoint || '').trim();
     return /^(https:\/\/|http:\/\/(localhost|127\.0\.0\.1)(:\d+)?\/)\S*$/i.test(url) ? url : '';
   }
 
@@ -542,7 +777,7 @@
   /* Enter in a field, Next and Submit all land here. */
   form.addEventListener('submit', function (event) {
     event.preventDefault();
-    if (busy) return;
+    if (busy || !path) return;
     if (current < steps.length - 1) jumpTo(current + 1);
     else send();
   });
@@ -551,8 +786,15 @@
     if (!busy && current > 0) go(current - 1, true);
   });
 
-  /* The step list and the review's Edit buttons. */
+  changePath.addEventListener('click', showPaths);
+
+  /* The path cards, the step list and the review's Edit buttons. */
   document.addEventListener('click', function (event) {
+    var card = event.target.closest('[data-path]');
+    if (card && card.tagName === 'BUTTON') {
+      choosePath(card.getAttribute('data-path'), true);
+      return;
+    }
     var trigger = event.target.closest('[data-go]');
     if (trigger && !trigger.disabled) jumpTo(Number(trigger.getAttribute('data-go')));
   });
@@ -563,6 +805,27 @@
   }
   form.addEventListener('input', recheck);
   form.addEventListener('change', recheck);
+
+  buildCountries();
+  filterCountries();     // the browser may have put back an earlier search
+  countrySearch.addEventListener('input', filterCountries);
+  countryList.addEventListener('change', function () {
+    syncCountry();
+    if (value('country') === OTHER) control('countryOther').focus();
+  });
+
+  /* Enter in the search box never sends the step on; when the search is
+     down to one country, it picks that one. */
+  countrySearch.addEventListener('keydown', function (event) {
+    if (event.key !== 'Enter') return;
+    event.preventDefault();
+    var visible = toArray(countryList.querySelectorAll('.country-option:not(.country-option--other):not([hidden]) input'));
+    if (visible.length === 1) {
+      visible[0].checked = true;
+      visible[0].dispatchEvent(new Event('change', { bubbles: true }));
+      visible[0].focus();
+    }
+  });
 
   toArray(form.querySelectorAll('[data-counter]')).forEach(function (input) {
     var out = document.getElementById(input.id + '-count');
@@ -580,6 +843,11 @@
     node.textContent = String(MIN_AGE);
   });
 
-  layout.hidden = false;
-  go(0, false);
+  /* countriesirl.com/apply/#country or #contributor skips the choice. */
+  var start = location.hash.slice(1);
+  if (PATHS[start]) {
+    choosePath(start, false);
+  } else {
+    pathBox.hidden = false;
+  }
 })();

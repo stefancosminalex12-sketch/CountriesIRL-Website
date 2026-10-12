@@ -27,7 +27,8 @@ onto GitHub Pages as-is.
 │   ├── config.js       ← all editable content lives here
 │   ├── main.js         Builds the page from config.js; navigation behaviour
 │   ├── globe.js        The member globe in the hero (plain WebGL, no library)
-│   └── apply.js        The application form's steps, checks and sending
+│   ├── apply.js        The application form's steps, checks and sending
+│   └── countries.js    The countries an applicant can pick
 ├── apps-script/
 │   └── applications.gs The Google Apps Script that files applications in a
 │                       Google Sheet — paste it into the sheet's Apps Script

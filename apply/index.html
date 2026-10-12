@@ -7,7 +7,7 @@
   <!-- This page carries its own title, description and preview tags, so
        main.js leaves the head alone here (see data-page on <html>). -->
   <title>Apply to join CountriesIRL</title>
-  <meta name="description" content="Apply to join CountriesIRL, the global network of country-focused creators. Tell us which country you represent, where you post and what you would bring.">
+  <meta name="description" content="Apply to join CountriesIRL, the global network of country-focused creators — as the account for a country, or as a contributor with a skill to bring.">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://countriesirl.com/apply/">
   <meta name="theme-color" content="#0b1723">
@@ -15,7 +15,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="CountriesIRL">
   <meta property="og:title" content="Apply to join CountriesIRL">
-  <meta property="og:description" content="Apply to join CountriesIRL, the global network of country-focused creators. Tell us which country you represent, where you post and what you would bring.">
+  <meta property="og:description" content="Apply to join CountriesIRL, the global network of country-focused creators — as the account for a country, or as a contributor with a skill to bring.">
   <meta property="og:url" content="https://countriesirl.com/apply/">
   <meta property="og:image" content="https://countriesirl.com/assets/og-image.png?v=2">
   <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
   <meta property="og:image:alt" content="The CountriesIRL logo above the words “The biggest countries network in the world.”">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Apply to join CountriesIRL">
-  <meta name="twitter:description" content="Apply to join CountriesIRL, the global network of country-focused creators. Tell us which country you represent, where you post and what you would bring.">
+  <meta name="twitter:description" content="Apply to join CountriesIRL, the global network of country-focused creators — as the account for a country, or as a contributor with a skill to bring.">
   <meta name="twitter:image" content="https://countriesirl.com/assets/og-image.png?v=2">
   <meta name="twitter:image:alt" content="The CountriesIRL logo above the words “The biggest countries network in the world.”">
 
@@ -32,7 +32,7 @@
   <link rel="apple-touch-icon" href="../assets/logo/apple-touch-icon.png?v=2">
 
   <!-- Same cache buster as index.html — bump both together. -->
-  <link rel="stylesheet" href="../css/style.css?v=202610121400">
+  <link rel="stylesheet" href="../css/style.css?v=202610121700">
 </head>
 
 <body>
@@ -84,24 +84,46 @@
       <div class="container">
         <div class="apply__head">
           <h1 id="apply-title">Apply to join CountriesIRL</h1>
-          <p class="lead">Tell us who you are, which country you represent and where you post. It takes about five minutes, and applications are checked every few days.</p>
+          <p class="lead">Represent a country, or bring a skill to the team behind the network. It takes about five minutes, and applications are checked every few days.</p>
         </div>
 
         <noscript>
           <p class="apply-alert">This application form needs JavaScript. Turn it on and reload the page, or write to the team at <a href="mailto:countriesirlhub@gmail.com">countriesirlhub@gmail.com</a>.</p>
         </noscript>
 
-        <!-- Shown by js/apply.js once it is ready, so the form never appears
-             half-working without it. -->
+        <!-- The first choice: which kind of application. js/apply.js shows it,
+             and the matching steps of the form once one is picked. -->
+        <div class="apply-path" id="apply-path" hidden>
+          <h2 class="apply-path__title">How do you want to join?</h2>
+          <div class="apply-path__grid">
+            <button class="path-card" type="button" data-path="country">
+              <svg class="path-card__icon" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true" focusable="false">
+                <path d="M11 43V6"/><path d="M11 8h26l-5 8 5 8H11"/>
+              </svg>
+              <span class="path-card__kicker">Join as a</span>
+              <span class="path-card__title">Country</span>
+              <span class="path-card__text">Run the CountriesIRL account for a country: post about its culture, history and people, and grow it with the network.</span>
+              <span class="path-card__go">Choose a country <span aria-hidden="true">→</span></span>
+            </button>
+            <button class="path-card" type="button" data-path="contributor">
+              <svg class="path-card__icon" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true" focusable="false">
+                <path d="M24 5l4.6 12.4L41 22l-12.4 4.6L24 39l-4.6-12.4L7 22l12.4-4.6z"/><path d="M39 35v8M35 39h8"/>
+              </svg>
+              <span class="path-card__kicker">Join as a</span>
+              <span class="path-card__title">Contributor</span>
+              <span class="path-card__text">Help behind the scenes with what you do best: video editing, art, design, games, writing and more.</span>
+              <span class="path-card__go">Choose your skills <span aria-hidden="true">→</span></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Shown by js/apply.js once a path is picked, so the form never
+             appears half-working without it. -->
         <div class="apply__layout" id="apply-top" hidden>
           <nav class="apply-progress" aria-label="Application steps">
-            <ol class="apply-progress__list">
-              <li class="apply-progress__item"><button class="apply-progress__step" type="button" data-go="0"><span class="apply-progress__num" aria-hidden="true">1</span><span class="apply-progress__label">Personal information</span><span class="visually-hidden apply-progress__state"></span></button></li>
-              <li class="apply-progress__item"><button class="apply-progress__step" type="button" data-go="1"><span class="apply-progress__num" aria-hidden="true">2</span><span class="apply-progress__label">Social media accounts</span><span class="visually-hidden apply-progress__state"></span></button></li>
-              <li class="apply-progress__item"><button class="apply-progress__step" type="button" data-go="2"><span class="apply-progress__num" aria-hidden="true">3</span><span class="apply-progress__label">Creator experience</span><span class="visually-hidden apply-progress__state"></span></button></li>
-              <li class="apply-progress__item"><button class="apply-progress__step" type="button" data-go="3"><span class="apply-progress__num" aria-hidden="true">4</span><span class="apply-progress__label">Motivation</span><span class="visually-hidden apply-progress__state"></span></button></li>
-              <li class="apply-progress__item"><button class="apply-progress__step" type="button" data-go="4"><span class="apply-progress__num" aria-hidden="true">5</span><span class="apply-progress__label">Review and submit</span><span class="visually-hidden apply-progress__state"></span></button></li>
-            </ol>
+            <p class="apply-progress__path">Applying as a <strong id="apply-path-name"></strong> · <button class="apply-edit" id="apply-change-path" type="button">Change</button></p>
+            <!-- Filled in by js/apply.js: the steps differ between the two paths. -->
+            <ol class="apply-progress__list" id="apply-progress-list"></ol>
             <p class="apply-progress__status" id="apply-status" aria-live="polite"></p>
           </nav>
 
@@ -109,21 +131,71 @@
             <form class="apply-form" id="apply-form" novalidate>
               <p class="apply-form__note">Fields marked <span class="field__req" aria-hidden="true">*</span><span class="visually-hidden">required</span> are required.</p>
 
-              <!-- 1. Personal information -->
-              <fieldset class="apply-step" aria-labelledby="step-1-title">
-                <h2 class="apply-step__title" id="step-1-title" tabindex="-1">Personal information</h2>
-                <p class="apply-step__intro">Who you are, and the place your account covers.</p>
+              <!-- Each step names the path it belongs to in data-path; steps
+                   without one are in both. -->
+
+              <!-- Country: which country -->
+              <fieldset class="apply-step" data-path="country" aria-labelledby="step-country-title" hidden>
+                <h2 class="apply-step__title" id="step-country-title" tabindex="-1">Your country</h2>
+                <p class="apply-step__intro">The country your account will represent. Countries that already have an account aren’t listed.</p>
+                <div class="apply-fields">
+                  <div class="country-picker" aria-describedby="country-error">
+                    <label class="field__label" for="countrySearch">Search <span class="country-picker__count" id="country-count"></span></label>
+                    <input class="field__input country-picker__search" id="countrySearch" type="search" autocomplete="off" spellcheck="false" placeholder="Start typing a country" aria-controls="country-list">
+                    <div class="country-picker__list" id="country-list" role="radiogroup" aria-label="Available countries"></div>
+                    <p class="country-picker__empty" id="country-empty" aria-live="polite" hidden></p>
+                    <p class="country-picker__chosen" id="country-chosen" aria-live="polite" hidden></p>
+                  </div>
+                  <p class="field__error" id="country-error" hidden></p>
+                  <div class="field" id="countryOther-field" hidden>
+                    <label class="field__label" for="countryOther">Which place? <span class="field__req" aria-hidden="true">*</span></label>
+                    <p class="field__hint" id="countryOther-hint">A state or region, a territory, or a historical country — like Texas, Bavaria or the Ottoman Empire.</p>
+                    <input class="field__input" id="countryOther" name="countryOther" type="text" autocomplete="off" maxlength="60" aria-describedby="countryOther-hint countryOther-error">
+                    <p class="field__error" id="countryOther-error" hidden></p>
+                  </div>
+                </div>
+              </fieldset>
+
+              <!-- Contributor: skills -->
+              <fieldset class="apply-step" data-path="contributor" aria-labelledby="step-skills-title" hidden>
+                <h2 class="apply-step__title" id="step-skills-title" tabindex="-1">Your skills</h2>
+                <p class="apply-step__intro">What are you best at? Pick everything that fits.</p>
+                <div class="apply-fields">
+                  <fieldset class="field-group" aria-describedby="skills-error">
+                    <legend class="field__label">Your skills <span class="field__req" aria-hidden="true">*</span></legend>
+                    <div class="choices">
+                      <label class="choice"><input type="checkbox" name="skills" value="Video editing"> Video editing</label>
+                      <label class="choice"><input type="checkbox" name="skills" value="Content creation"> Content creation</label>
+                      <label class="choice"><input type="checkbox" name="skills" value="Digital art and illustration"> Digital art and illustration</label>
+                      <label class="choice"><input type="checkbox" name="skills" value="Animation and motion graphics"> Animation and motion graphics</label>
+                      <label class="choice"><input type="checkbox" name="skills" value="Graphic design and thumbnails"> Graphic design and thumbnails</label>
+                      <label class="choice"><input type="checkbox" name="skills" value="Maps and cartography"> Maps and cartography</label>
+                      <label class="choice"><input type="checkbox" name="skills" value="Game development"> Game development</label>
+                      <label class="choice"><input type="checkbox" name="skills" value="Programming and web"> Programming and web</label>
+                      <label class="choice"><input type="checkbox" name="skills" value="Music and sound"> Music and sound</label>
+                      <label class="choice"><input type="checkbox" name="skills" value="Writing and research"> Writing and research</label>
+                      <label class="choice"><input type="checkbox" name="skills" value="Translation"> Translation</label>
+                      <label class="choice"><input type="checkbox" name="skills" value="Community and moderation"> Community and moderation</label>
+                    </div>
+                    <p class="field__error" id="skills-error" hidden></p>
+                  </fieldset>
+                  <div class="field">
+                    <label class="field__label" for="skillsOther">Something else <span class="field__optional">(optional)</span></label>
+                    <input class="field__input" id="skillsOther" name="skillsOther" type="text" autocomplete="off" maxlength="80" aria-describedby="skillsOther-error">
+                    <p class="field__error" id="skillsOther-error" hidden></p>
+                  </div>
+                </div>
+              </fieldset>
+
+              <!-- Both: personal information -->
+              <fieldset class="apply-step" aria-labelledby="step-personal-title" hidden>
+                <h2 class="apply-step__title" id="step-personal-title" tabindex="-1">Personal information</h2>
+                <p class="apply-step__intro">Who you are, and how the team can reach you.</p>
                 <div class="apply-fields">
                   <div class="field">
                     <label class="field__label" for="fullName">Full name <span class="field__req" aria-hidden="true">*</span></label>
                     <input class="field__input" id="fullName" name="fullName" type="text" autocomplete="name" maxlength="80" required aria-describedby="fullName-error">
                     <p class="field__error" id="fullName-error" hidden></p>
-                  </div>
-                  <div class="field">
-                    <label class="field__label" for="country">Country represented <span class="field__req" aria-hidden="true">*</span></label>
-                    <p class="field__hint" id="country-hint">The country, region or historical state your account covers.</p>
-                    <input class="field__input" id="country" name="country" type="text" autocomplete="off" maxlength="60" required aria-describedby="country-hint country-error">
-                    <p class="field__error" id="country-error" hidden></p>
                   </div>
                   <div class="field field--short">
                     <label class="field__label" for="age">Age <span class="field__req" aria-hidden="true">*</span></label>
@@ -140,9 +212,9 @@
                 </div>
               </fieldset>
 
-              <!-- 2. Social media accounts -->
-              <fieldset class="apply-step" aria-labelledby="step-2-title" hidden>
-                <h2 class="apply-step__title" id="step-2-title" tabindex="-1">Social media accounts</h2>
+              <!-- Country: social media accounts -->
+              <fieldset class="apply-step" data-path="country" aria-labelledby="step-social-title" hidden>
+                <h2 class="apply-step__title" id="step-social-title" tabindex="-1">Social media accounts</h2>
                 <p class="apply-step__intro">Add at least one account. A username like @yourname and a link to the profile both work.</p>
                 <p class="field__error field__error--group" id="accounts-error" role="status" hidden></p>
                 <div class="apply-fields">
@@ -194,9 +266,9 @@
                 </div>
               </fieldset>
 
-              <!-- 3. Creator experience -->
-              <fieldset class="apply-step" aria-labelledby="step-3-title" hidden>
-                <h2 class="apply-step__title" id="step-3-title" tabindex="-1">Creator experience</h2>
+              <!-- Country: creator experience -->
+              <fieldset class="apply-step" data-path="country" aria-labelledby="step-creator-title" hidden>
+                <h2 class="apply-step__title" id="step-creator-title" tabindex="-1">Creator experience</h2>
                 <p class="apply-step__intro">What you make, and what you have made so far.</p>
                 <div class="apply-fields">
                   <fieldset class="field-group" aria-describedby="contentTypes-error">
@@ -235,9 +307,30 @@
                 </div>
               </fieldset>
 
-              <!-- 4. Motivation -->
-              <fieldset class="apply-step" aria-labelledby="step-4-title" hidden>
-                <h2 class="apply-step__title" id="step-4-title" tabindex="-1">Motivation</h2>
+              <!-- Contributor: their work -->
+              <fieldset class="apply-step" data-path="contributor" aria-labelledby="step-work-title" hidden>
+                <h2 class="apply-step__title" id="step-work-title" tabindex="-1">Your work</h2>
+                <p class="apply-step__intro">What you have made with those skills, and where the team can see it.</p>
+                <div class="apply-fields">
+                  <div class="field">
+                    <label class="field__label" for="skillExperience">Your experience <span class="field__req" aria-hidden="true">*</span></label>
+                    <p class="field__hint" id="skillExperience-hint">How long you have been doing it, what you have made, and who for.</p>
+                    <textarea class="field__input" id="skillExperience" name="skillExperience" rows="5" maxlength="1000" data-counter aria-describedby="skillExperience-hint skillExperience-count skillExperience-error"></textarea>
+                    <p class="field__count" id="skillExperience-count"></p>
+                    <p class="field__error" id="skillExperience-error" hidden></p>
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="portfolio">Portfolio and links <span class="field__optional">(optional, but it helps)</span></label>
+                    <p class="field__hint" id="portfolio-hint">Up to 5 links, one per line: a portfolio, a social profile, videos, artwork, a game.</p>
+                    <textarea class="field__input" id="portfolio" name="portfolio" rows="3" maxlength="1000" autocapitalize="none" spellcheck="false" aria-describedby="portfolio-hint portfolio-error"></textarea>
+                    <p class="field__error" id="portfolio-error" hidden></p>
+                  </div>
+                </div>
+              </fieldset>
+
+              <!-- Both: motivation -->
+              <fieldset class="apply-step" aria-labelledby="step-motivation-title" hidden>
+                <h2 class="apply-step__title" id="step-motivation-title" tabindex="-1">Motivation</h2>
                 <p class="apply-step__intro">Why CountriesIRL, and what you would bring to it.</p>
                 <div class="apply-fields">
                   <div class="field">
@@ -262,9 +355,9 @@
                 </div>
               </fieldset>
 
-              <!-- 5. Review and submit -->
-              <fieldset class="apply-step" aria-labelledby="step-5-title" hidden>
-                <h2 class="apply-step__title" id="step-5-title" tabindex="-1">Review and submit</h2>
+              <!-- Both: review and submit -->
+              <fieldset class="apply-step" aria-labelledby="step-review-title" hidden>
+                <h2 class="apply-step__title" id="step-review-title" tabindex="-1">Review and submit</h2>
                 <p class="apply-step__intro">Check your answers before you send them. Use Edit to change anything.</p>
                 <div class="apply-review" id="apply-review"></div>
                 <div class="apply-agree">
@@ -349,6 +442,7 @@
 
   <script src="../js/config.js?v=202610121400"></script>
   <script src="../js/main.js?v=202610121400"></script>
-  <script src="../js/apply.js?v=202610011500"></script>
+  <script src="../js/countries.js?v=202610121600"></script>
+  <script src="../js/apply.js?v=202610121700"></script>
 </body>
 </html>

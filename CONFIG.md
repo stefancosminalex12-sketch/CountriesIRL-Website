@@ -243,8 +243,24 @@ Mixing the two forms in one list is fine.
 ### `apply` — the application form
 
 The form lives at `apply/index.html` (countriesirl.com/apply/) and is run by `js/apply.js`.
-It has five steps — personal information, social accounts, experience, motivation, and a
-review — and checks each one before the next opens.
+It opens on a choice of two halves, and the steps that follow depend on the pick. Each step
+is checked before the next opens.
+
+| Path | Steps |
+| --- | --- |
+| **Country** — run the account for a country | Your country · Personal information · Social media accounts · Creator experience · Motivation · Review |
+| **Contributor** — help with a skill | Your skills · Personal information · Your work · Motivation · Review |
+
+- **The country list** is every country in [`js/countries.js`](js/countries.js), minus the
+  ones a member already has. A member takes a country when its `flag` is that country's file
+  (`assets/flags/fr.png` takes France) and it has no `geo` — so adding a member removes their
+  country from the form with nothing else to do. Searching for a taken country says it is
+  taken. **Not on the list** at the bottom takes a state, region or historical country as
+  text, and refuses one whose name matches a member.
+- **The skills** are checkboxes in `apply/index.html`, in the "Contributor: skills" step. Add
+  or remove a `<label class="choice">` line to change them.
+- `countriesirl.com/apply/#country` and `#contributor` skip the choice and open that path
+  directly — handy for a link in a post.
 
 | Key | What it does |
 | --- | --- |
@@ -259,7 +275,8 @@ them in a Google Sheet. The script is in this repository, ready to paste:
 and the sheet is never exposed to applicants.
 
 **1. Make the sheet.** Create a Google Sheet — any name does, say *CountriesIRL
-applications*. Leave it empty; the script writes its own header row.
+applications*. Leave it empty; the script adds a **Countries** tab and a **Contributors** tab,
+each with its own header row.
 
 **2. Open the editor.** In that sheet: **Extensions → Apps Script**. A project opens with an
 empty `Code.gs`.
@@ -269,8 +286,8 @@ empty `Code.gs`.
 
 **4. Optional — write the header row now.** In the editor, pick the `setup` function and
 press **Run**. Google asks you to authorise it the first time: choose your account,
-*Advanced → Go to (project name)*, then *Allow*. The sheet gets its header row. (The first
-real application does this too, so you can skip this step.)
+*Advanced → Go to (project name)*, then *Allow*. The two tabs appear with their header rows.
+(The first real application of each kind does this too, so you can skip this step.)
 
 **5. Deploy it as a web app.** **Deploy → New deployment**, then:
 
@@ -297,8 +314,8 @@ accepts applications and gives nothing back.
   },
 ```
 
-Save, reload the site, and send yourself a test application. It should appear in the sheet
-within a second or two — delete that row afterwards.
+Save, publish the site, and send yourself a test application of each kind. Each should
+appear in its tab within a second or two — delete those rows afterwards.
 
 **Changing the script later.** Edit it, save, then **Deploy → Manage deployments → the
 pencil → Version: New version → Deploy**. Without a new version the site keeps calling the
@@ -306,10 +323,20 @@ old code.
 
 #### What the sheet holds
 
-One row per application, in these columns:
+One row per application, on the tab for its kind.
 
-| Timestamp | Full name | Country | Age | Email | Instagram | Instagram followers | TikTok | TikTok followers | YouTube | YouTube subscribers | Content types | Experience | Work links | Motivation | Contribution | Discord | Rules accepted | Status | Admin notes |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+**Countries:**
+
+| Timestamp | Country | From the list | Full name | Age | Email | Instagram | Instagram followers | TikTok | TikTok followers | YouTube | YouTube subscribers | Content types | Experience | Work links | Motivation | Contribution | Discord | Rules accepted | Status | Admin notes |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+
+**Contributors:**
+
+| Timestamp | Skills | Full name | Age | Email | Experience | Portfolio and links | Motivation | Contribution | Discord | Rules accepted | Status | Admin notes |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+
+- **From the list** is `TRUE` when the country was picked from the list and `FALSE` when it
+  was typed under "Not on the list" — those are worth a closer look.
 
 - **Timestamp** is the moment the application reached Google, taken there rather than from
   the applicant's computer.
@@ -322,9 +349,10 @@ One row per application, in these columns:
 - The form sends one `POST` with the application as JSON. The request is labelled
   `text/plain` on purpose — an Apps Script web app cannot answer the extra check a JSON
   label makes browsers send first — so the script reads it from `e.postData.contents`.
-- The script checks the application again before storing it: the required answers, a valid
-  email, an age of at least `minimumAge`, at least one social account, follower counts that
-  are whole numbers, answers within the form's length limits, and the community rules
+- The form sends `track` — `"country"` or `"contributor"` — which picks the tab. The
+  script checks the application again before storing it: the required answers for that kind,
+  a valid email, an age of at least `minimumAge`, and for countries at least one social
+  account and follower counts that are whole numbers, answers within the form's length limits, and the community rules
   accepted. Anything else is refused with an error and nothing is written. Checks in the
   browser can be bypassed by anyone posting to the URL directly; these cannot.
 - It replies `{"ok": true, "row": 7}` only once the row exists, and
