@@ -203,10 +203,9 @@ window.SITE_CONFIG = {
         name: 'China',
         flag: 'assets/flags/cn.png',
         priority: 5,
-        followers: 23767,
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/chinairl_/' },
-          { label: 'YouTube', url: 'https://www.youtube.com/@Chinairl1' },
+          { label: 'Instagram', url: 'https://www.instagram.com/chinairlmain/' },
+          { label: 'YouTube', url: 'https://www.youtube.com/@chinairlmain' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@chinairlmain' }
         ]
       },
@@ -442,15 +441,6 @@ window.SITE_CONFIG = {
         followers: 1583,
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/portugalirlmain/' }
-        ]
-      },
-      {
-        name: 'Roman Empire',
-        flag: 'assets/flags/roman.png',
-        geo: { at: [12.48, 41.89] },     // Rome
-        followers: 633,
-        links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/romanempireirl/' }
         ]
       },
       {
