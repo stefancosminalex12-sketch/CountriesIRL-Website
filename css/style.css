@@ -1269,7 +1269,7 @@ textarea.field__input { min-height: 7.5rem; resize: vertical; }
 .apply-done h2 { margin-bottom: 1rem; }
 .apply-done p { color: var(--ink-soft); }
 
-/* The first choice: two halves, Country Creator and Creative team. A card turns navy
+/* The first choice: two halves, Country creator and Creative team. A card turns navy
    under the pointer or keyboard focus. */
 .apply-path__title {
   margin-bottom: 1.25rem;
