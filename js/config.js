@@ -70,7 +70,7 @@ window.SITE_CONFIG = {
      that starts with a digit counts up as you scroll onto it.
      ------------------------------------------------------------------ */
   stats: [
-    { value: '300K+',           label: 'Followers across the network' },
+    { value: '400K+',           label: 'Followers across the network' },
     { value: 'auto:members',    label: 'Creators in the network' },
     { value: 'Est. 2026',       label: 'Founded in March, 2026' }
   ],
@@ -174,7 +174,7 @@ window.SITE_CONFIG = {
         links: [
           { label: 'Instagram', url: 'https://www.instagram.com/brituishirl/' },
           { label: 'YouTube', url: 'https://www.youtube.com/@brituishirl' },
-          { label: 'TikTok', url: 'https://www.tiktok.com/@unitedkingdomirl' }
+          { label: 'TikTok', url: 'https://www.tiktok.com/@brituishirl' }
         ]
       },
       {
@@ -213,9 +213,8 @@ window.SITE_CONFIG = {
         name: 'Fiji',
         flag: 'assets/flags/fj.png',
         priority: 6,
-        followers: null,                 // Instagram: "Profile isn't available"
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/fijiirlmain/' },
+          { label: 'Instagram', url: 'https://www.instagram.com/fijiirl/' },
           { label: 'YouTube', url: 'https://www.youtube.com/@Fijiirl' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@fijiirl' }
         ]
@@ -276,9 +275,8 @@ window.SITE_CONFIG = {
         name: 'Czechoslovakia',
         flag: 'assets/flags/cz.png',
         geo: { at: [14.42, 50.09] },     // Prague
-        followers: 2210,
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/czechoslovakiairlmain/' }
+          { label: 'Instagram', url: 'https://www.instagram.com/czechoslovakiairl/' }
         ]
       },
       {
@@ -394,9 +392,8 @@ window.SITE_CONFIG = {
         name: 'Ohio',
         flag: 'assets/flags/Ohio.svg',
         geo: 'US-OH',
-        followers: 1176,
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/ohio_irl/' },
+          { label: 'Instagram', url: 'https://www.instagram.com/ohio.irl/' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@ohio.irl1' }
         ]
       },
@@ -404,9 +401,8 @@ window.SITE_CONFIG = {
         name: 'Ottoman Empire',
         flag: 'assets/flags/Ot.jpg',
         geo: { at: [28.98, 41.01] },     // Constantinople
-        followers: null,                 // Instagram: "Profile isn't available"
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/ottoman_irl/' },
+          { label: 'Instagram', url: 'https://www.instagram.com/ottomanirl/' },
           { label: 'TikTok', url: 'https://www.tiktok.com/@ottomanempire.irl' }
         ]
       },
@@ -447,9 +443,8 @@ window.SITE_CONFIG = {
         name: 'Russian Empire',
         flag: 'assets/flags/russian-empire-1914.png',
         geo: { at: [30.31, 59.94] },     // Saint Petersburg
-        followers: 4882,
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/russian.empire_irl/' },
+          { label: 'Instagram', url: 'https://www.instagram.com/russianempireirl/' },
           { label: 'YouTube', url: 'https://www.youtube.com/@Russianempireirl' }
         ]
       },
@@ -474,9 +469,8 @@ window.SITE_CONFIG = {
       {
         name: 'Türkiye',
         flag: 'assets/flags/tr.png',
-        followers: 418,
         links: [
-          { label: 'Instagram', url: 'https://www.instagram.com/turkiyeirlmain/' },
+          { label: 'Instagram', url: 'https://www.instagram.com/turkeyirlmain/' },
           { label: 'YouTube', url: 'https://www.youtube.com/@TurkeyIRLmain' }
         ]
       },
