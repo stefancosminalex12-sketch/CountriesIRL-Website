@@ -1,7 +1,7 @@
 /* ==========================================================================
    CountriesIRL — application form (apply/index.html)
    --------------------------------------------------------------------------
-   First a choice of two paths — join as a Country, or join the Creative team —
+   First a choice of two paths — join as a Country Creator, or join the Creative team —
    then the steps for that path. Each step is checked before the next one
    opens; the last shows every answer back for review, then sends the lot
    as JSON to `apply.endpoint` in js/config.js — a Google Apps Script web
@@ -27,7 +27,7 @@
 
   /* The words before and after "Applying …" above the steps, per path. */
   var PATHS = {
-    country: ['Applying as a', 'Country'],
+    country: ['Applying as a', 'Country Creator'],
     creative: ['Applying to the', 'Creative team']
   };
 

@@ -248,7 +248,7 @@ is checked before the next opens.
 
 | Path | Steps |
 | --- | --- |
-| **Country** — run the account for a country | Your country · Personal information · Social media accounts · Creator experience · Motivation · Review |
+| **Country Creator** — run the account for a country | Your country · Personal information · Social media accounts · Creator experience · Motivation · Review |
 | **Creative team** — help with a skill | Your skills · Personal information · Your work · Motivation · Review |
 
 - **The country list** is every country in [`js/countries.js`](js/countries.js), minus the
