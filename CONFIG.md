@@ -249,17 +249,17 @@ is checked before the next opens.
 | Path | Steps |
 | --- | --- |
 | **Country** — run the account for a country | Your country · Personal information · Social media accounts · Creator experience · Motivation · Review |
-| **Contributor** — help with a skill | Your skills · Personal information · Your work · Motivation · Review |
+| **Creative team** — help with a skill | Your skills · Personal information · Your work · Motivation · Review |
 
 - **The country list** is every country in [`js/countries.js`](js/countries.js), minus the
   ones a member already has. A member takes a country when its `flag` is that country's file
   (`assets/flags/fr.png` takes France) and it has no `geo` — so adding a member removes their
   country from the form with nothing else to do. Searching for a taken country says it is
-  taken. **Not on the list** at the bottom takes a state, region or historical country as
-  text, and refuses one whose name matches a member.
-- **The skills** are checkboxes in `apply/index.html`, in the "Contributor: skills" step. Add
+  taken. **Not on the list** at the bottom takes a territory or historical country as text,
+  and refuses a member's name or a U.S. state — states are not open for applications.
+- **The skills** are checkboxes in `apply/index.html`, in the "Creative team: skills" step. Add
   or remove a `<label class="choice">` line to change them.
-- `countriesirl.com/apply/#country` and `#contributor` skip the choice and open that path
+- `countriesirl.com/apply/#country` and `#creative` skip the choice and open that path
   directly — handy for a link in a post.
 
 | Key | What it does |
@@ -275,7 +275,7 @@ them in a Google Sheet. The script is in this repository, ready to paste:
 and the sheet is never exposed to applicants.
 
 **1. Make the sheet.** Create a Google Sheet — any name does, say *CountriesIRL
-applications*. Leave it empty; the script adds a **Countries** tab and a **Contributors** tab,
+applications*. Leave it empty; the script adds a **Countries** tab and a **Creative team** tab,
 each with its own header row.
 
 **2. Open the editor.** In that sheet: **Extensions → Apps Script**. A project opens with an
@@ -330,7 +330,7 @@ One row per application, on the tab for its kind.
 | Timestamp | Country | From the list | Full name | Age | Email | Instagram | Instagram followers | TikTok | TikTok followers | YouTube | YouTube subscribers | Content types | Experience | Work links | Motivation | Contribution | Discord | Rules accepted | Status | Admin notes |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 
-**Contributors:**
+**Creative team:**
 
 | Timestamp | Skills | Full name | Age | Email | Experience | Portfolio and links | Motivation | Contribution | Discord | Rules accepted | Status | Admin notes |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -349,7 +349,7 @@ One row per application, on the tab for its kind.
 - The form sends one `POST` with the application as JSON. The request is labelled
   `text/plain` on purpose — an Apps Script web app cannot answer the extra check a JSON
   label makes browsers send first — so the script reads it from `e.postData.contents`.
-- The form sends `track` — `"country"` or `"contributor"` — which picks the tab. The
+- The form sends `track` — `"country"` or `"creative"` — which picks the tab. The
   script checks the application again before storing it: the required answers for that kind,
   a valid email, an age of at least `minimumAge`, and for countries at least one social
   account and follower counts that are whole numbers, answers within the form's length limits, and the community rules

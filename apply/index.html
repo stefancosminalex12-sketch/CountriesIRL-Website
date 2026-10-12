@@ -7,7 +7,7 @@
   <!-- This page carries its own title, description and preview tags, so
        main.js leaves the head alone here (see data-page on <html>). -->
   <title>Apply to join CountriesIRL</title>
-  <meta name="description" content="Apply to join CountriesIRL, the global network of country-focused creators — as the account for a country, or as a contributor with a skill to bring.">
+  <meta name="description" content="Apply to join CountriesIRL, the global network of country-focused creators — as the account for a country, or on the creative team behind it.">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://countriesirl.com/apply/">
   <meta name="theme-color" content="#0b1723">
@@ -15,7 +15,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="CountriesIRL">
   <meta property="og:title" content="Apply to join CountriesIRL">
-  <meta property="og:description" content="Apply to join CountriesIRL, the global network of country-focused creators — as the account for a country, or as a contributor with a skill to bring.">
+  <meta property="og:description" content="Apply to join CountriesIRL, the global network of country-focused creators — as the account for a country, or on the creative team behind it.">
   <meta property="og:url" content="https://countriesirl.com/apply/">
   <meta property="og:image" content="https://countriesirl.com/assets/og-image.png?v=2">
   <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
   <meta property="og:image:alt" content="The CountriesIRL logo above the words “The biggest countries network in the world.”">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Apply to join CountriesIRL">
-  <meta name="twitter:description" content="Apply to join CountriesIRL, the global network of country-focused creators — as the account for a country, or as a contributor with a skill to bring.">
+  <meta name="twitter:description" content="Apply to join CountriesIRL, the global network of country-focused creators — as the account for a country, or on the creative team behind it.">
   <meta name="twitter:image" content="https://countriesirl.com/assets/og-image.png?v=2">
   <meta name="twitter:image:alt" content="The CountriesIRL logo above the words “The biggest countries network in the world.”">
 
@@ -105,12 +105,12 @@
               <span class="path-card__text">Run the CountriesIRL account for a country: post about its culture, history and people, and grow it with the network.</span>
               <span class="path-card__go">Choose a country <span aria-hidden="true">→</span></span>
             </button>
-            <button class="path-card" type="button" data-path="contributor">
+            <button class="path-card" type="button" data-path="creative">
               <svg class="path-card__icon" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true" focusable="false">
                 <path d="M24 5l4.6 12.4L41 22l-12.4 4.6L24 39l-4.6-12.4L7 22l12.4-4.6z"/><path d="M39 35v8M35 39h8"/>
               </svg>
-              <span class="path-card__kicker">Join as a</span>
-              <span class="path-card__title">Contributor</span>
+              <span class="path-card__kicker">Join the</span>
+              <span class="path-card__title">Creative team</span>
               <span class="path-card__text">Help behind the scenes with what you do best: video editing, art, design, games, writing and more.</span>
               <span class="path-card__go">Choose your skills <span aria-hidden="true">→</span></span>
             </button>
@@ -121,7 +121,7 @@
              appears half-working without it. -->
         <div class="apply__layout" id="apply-top" hidden>
           <nav class="apply-progress" aria-label="Application steps">
-            <p class="apply-progress__path">Applying as a <strong id="apply-path-name"></strong> · <button class="apply-edit" id="apply-change-path" type="button">Change</button></p>
+            <p class="apply-progress__path"><span id="apply-path-lead">Applying as a</span> <strong id="apply-path-name"></strong> · <button class="apply-edit" id="apply-change-path" type="button">Change</button></p>
             <!-- Filled in by js/apply.js: the steps differ between the two paths. -->
             <ol class="apply-progress__list" id="apply-progress-list"></ol>
             <p class="apply-progress__status" id="apply-status" aria-live="polite"></p>
@@ -149,15 +149,15 @@
                   <p class="field__error" id="country-error" hidden></p>
                   <div class="field" id="countryOther-field" hidden>
                     <label class="field__label" for="countryOther">Which place? <span class="field__req" aria-hidden="true">*</span></label>
-                    <p class="field__hint" id="countryOther-hint">A state or region, a territory, or a historical country — like Texas, Bavaria or the Ottoman Empire.</p>
+                    <p class="field__hint" id="countryOther-hint">A territory or a historical country — like the Ottoman Empire or Prussia. U.S. states aren’t open for applications.</p>
                     <input class="field__input" id="countryOther" name="countryOther" type="text" autocomplete="off" maxlength="60" aria-describedby="countryOther-hint countryOther-error">
                     <p class="field__error" id="countryOther-error" hidden></p>
                   </div>
                 </div>
               </fieldset>
 
-              <!-- Contributor: skills -->
-              <fieldset class="apply-step" data-path="contributor" aria-labelledby="step-skills-title" hidden>
+              <!-- Creative team: skills -->
+              <fieldset class="apply-step" data-path="creative" aria-labelledby="step-skills-title" hidden>
                 <h2 class="apply-step__title" id="step-skills-title" tabindex="-1">Your skills</h2>
                 <p class="apply-step__intro">What are you best at? Pick everything that fits.</p>
                 <div class="apply-fields">
@@ -307,8 +307,8 @@
                 </div>
               </fieldset>
 
-              <!-- Contributor: their work -->
-              <fieldset class="apply-step" data-path="contributor" aria-labelledby="step-work-title" hidden>
+              <!-- Creative team: their work -->
+              <fieldset class="apply-step" data-path="creative" aria-labelledby="step-work-title" hidden>
                 <h2 class="apply-step__title" id="step-work-title" tabindex="-1">Your work</h2>
                 <p class="apply-step__intro">What you have made with those skills, and where the team can see it.</p>
                 <div class="apply-fields">
@@ -443,6 +443,6 @@
   <script src="../js/config.js?v=202610121400"></script>
   <script src="../js/main.js?v=202610121400"></script>
   <script src="../js/countries.js?v=202610121600"></script>
-  <script src="../js/apply.js?v=202610121700"></script>
+  <script src="../js/apply.js?v=202610121800"></script>
 </body>
 </html>

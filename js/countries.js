@@ -7,8 +7,8 @@
    England, Scotland, Wales and Northern Ireland use the codes flagcdn uses
    for them (gb-eng and so on), so the UK account does not take them too.
 
-   Anything not here — a U.S. state, a region, a historical country — goes
-   through "Not on the list" on the form instead.
+   A territory or historical country that is not here goes through "Not on
+   the list" on the form instead. U.S. states are not open for applications.
    ========================================================================== */
 
 window.APPLY_COUNTRIES = [

@@ -8,7 +8,7 @@
 
    The form at countriesirl.com/apply/ sends one POST here with the
    application as JSON. There are two kinds — `track` is "country" or
-   "contributor" — and each has its own tab in the sheet. This script checks
+   "creative" (the Creative team) — and each has its own tab in the sheet. This script checks
    the application, adds the time it arrived, and appends one row to the
    right tab with Status "Pending" and Admin notes empty. It answers
    {"ok": true} only once that row exists, so the applicant is never told an
@@ -41,8 +41,8 @@ var TRACKS = {
       motivation: 'the reason for joining', contribution: 'the contribution answer'
     }
   },
-  contributor: {
-    sheet: 'Contributors',
+  creative: {
+    sheet: 'Creative team',
     fields: [
       'skills', 'fullName', 'age', 'email',
       'experience', 'workLinks', 'motivation', 'contribution', 'discord', 'rulesAccepted'

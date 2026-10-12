@@ -1,7 +1,7 @@
 /* ==========================================================================
    CountriesIRL — application form (apply/index.html)
    --------------------------------------------------------------------------
-   First a choice of two paths — join as a Country, or as a Contributor —
+   First a choice of two paths — join as a Country, or join the Creative team —
    then the steps for that path. Each step is checked before the next one
    opens; the last shows every answer back for review, then sends the lot
    as JSON to `apply.endpoint` in js/config.js — a Google Apps Script web
@@ -25,7 +25,11 @@
   var TIMEOUT = 20000;
   var OTHER = '__other';
 
-  var PATHS = { country: 'Country', contributor: 'Contributor' };
+  /* The words before and after "Applying …" above the steps, per path. */
+  var PATHS = {
+    country: ['Applying as a', 'Country'],
+    creative: ['Applying to the', 'Creative team']
+  };
 
   var PLATFORMS = {
     instagram: { label: 'Instagram', hosts: ['instagram.com'], handle: /^@?[a-z0-9._]{1,30}$/i },
@@ -39,6 +43,7 @@
 
   var allSteps = toArray(form.querySelectorAll('.apply-step'));
   var progressList = document.getElementById('apply-progress-list');
+  var pathLead = document.getElementById('apply-path-lead');
   var pathName = document.getElementById('apply-path-name');
   var changePath = document.getElementById('apply-change-path');
   var statusLine = document.getElementById('apply-status');
@@ -210,7 +215,7 @@
       option.setAttribute('data-search', c.search.join('|'));
       return option;
     });
-    options.push(countryOption(OTHER, 'Not on the list — a state, region or historical country', 'country-option--other'));
+    options.push(countryOption(OTHER, 'Not on the list — a territory or historical country', 'country-option--other'));
     countryList.replaceChildren.apply(countryList, options);
     countryCount.textContent = '· ' + open.length + ' available';
   }
@@ -237,9 +242,30 @@
       taken.slice(0, 3).map(function (c) { return c.name; }).join(', ') +
         (taken.length === 1 ? ' already has an account in the network, so it isn’t listed.' :
           ' already have accounts in the network, so they aren’t listed.') :
-      'No country matches “' + countrySearch.value.trim() + '”. If it’s a state, region or historical country, choose “Not on the list” below.';
+      'No country matches “' + countrySearch.value.trim() + '”. If it’s a territory or historical country, choose “Not on the list” below.';
     countryEmpty.hidden = false;
     return 0;
+  }
+
+  /* U.S. states are a separate kind of account, and not open for applications.
+     "Texas", "Texas, USA" and "State of Texas" are all caught; Georgia the
+     country is on the list, so typing it here means the state. */
+  var US_STATES = [
+    'alabama', 'alaska', 'arizona', 'arkansas', 'california', 'colorado', 'connecticut',
+    'delaware', 'florida', 'georgia', 'hawaii', 'idaho', 'illinois', 'indiana', 'iowa',
+    'kansas', 'kentucky', 'louisiana', 'maine', 'maryland', 'massachusetts', 'michigan',
+    'minnesota', 'mississippi', 'missouri', 'montana', 'nebraska', 'nevada', 'new hampshire',
+    'new jersey', 'new mexico', 'new york', 'north carolina', 'north dakota', 'ohio',
+    'oklahoma', 'oregon', 'pennsylvania', 'rhode island', 'south carolina', 'south dakota',
+    'tennessee', 'texas', 'utah', 'vermont', 'virginia', 'washington', 'west virginia',
+    'wisconsin', 'wyoming', 'district of columbia', 'washington dc'
+  ];
+
+  function isState(text) {
+    var name = fold(text)
+      .replace(/^(the )?state of /, '')
+      .replace(/ (state|usa|us|u s|united states( of america)?)$/, '');
+    return US_STATES.indexOf(name) !== -1;
   }
 
   /* What the applicant picked, as it goes into the sheet. */
@@ -355,7 +381,8 @@
       if (!text) return 'Enter the place your account will represent.';
       if (tooLong('countryOther')) return tooLong('countryOther');
       var taken = takenNames[fold(text)];
-      return taken ? taken + ' already has an account in the network.' : '';
+      if (taken) return taken + ' already has an account in the network.';
+      return isState(text) ? 'U.S. states aren’t open for applications — only countries, territories and historical countries.' : '';
     },
     skills: function () {
       return skillList().length ? '' : 'Choose at least one skill, or describe yours under “Something else”.';
@@ -504,7 +531,8 @@
       furthest = 0;
       renderProgress();
     }
-    pathName.textContent = PATHS[name];
+    pathLead.textContent = PATHS[name][0];
+    pathName.textContent = PATHS[name][1];
     setHash('#' + name);
     pathBox.hidden = true;
     layout.hidden = false;
@@ -843,7 +871,7 @@
     node.textContent = String(MIN_AGE);
   });
 
-  /* countriesirl.com/apply/#country or #contributor skips the choice. */
+  /* countriesirl.com/apply/#country or #creative skips the choice. */
   var start = location.hash.slice(1);
   if (PATHS[start]) {
     choosePath(start, false);
