@@ -21,7 +21,7 @@ window.SITE_CONFIG = {
        header shows the mark at 26px, so the site loads IRLLOGO-web.png — the
        same artwork at 128px, on nothing, so it sits on any background.
        Re-export both if you change the logo. */
-    logo: 'assets/logo/IRLLOGO-web.png',
+    logo: 'assets/logo/IRLLOGO-web.png?v=2',
     logoAlt: 'CountriesIRL',
     // Used for SEO canonical + Open Graph tags. Include the trailing slash.
     url: 'https://countriesirl.com/'
@@ -38,7 +38,7 @@ window.SITE_CONFIG = {
     description:
       'Creators from around the world covering countries, culture, history and ' +
       'geography, through educational and entertaining content and documentaries.',
-    ogImage: 'assets/og-image.png'
+    ogImage: 'assets/og-image.png?v=2'
   },
 
   /* ------------------------------------------------------------------
