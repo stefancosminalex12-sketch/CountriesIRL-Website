@@ -555,7 +555,7 @@ window.SITE_CONFIG = {
      never put a password, key or token here.
      ------------------------------------------------------------------ */
   apply: {
-    endpoint: '',
+    endpoint: 'https://script.google.com/macros/s/AKfycbz4I-zjMPee4NuzKGM4OWOrHWsSkCdQH-61NU86ez5321ZUAQyarAiL1CJivCaCMOKipQ/exec',
     minimumAge: 13                     // Instagram, TikTok and YouTube all require 13+
   },
 
