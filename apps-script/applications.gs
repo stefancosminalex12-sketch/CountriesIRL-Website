@@ -78,6 +78,16 @@ var EMAIL = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/;
    Receiving an application
    -------------------------------------------------------------------------- */
 
+/* Rate limits. Anyone can post to this URL, and the honeypot only stops the
+   simplest bots: without a limit, a script could send thousands of
+   applications and bury the real ones. Apps Script cannot see who is
+   posting, so the limits are by email address and on the whole inbox.
+   - One application per email address every EMAIL_MINUTES minutes.
+   - At most HOURLY_LIMIT applications an hour in all — far above any real
+     day, so only a flood ever meets it. */
+var EMAIL_MINUTES = 10;
+var HOURLY_LIMIT = 60;
+
 function doPost(e) {
   try {
     var data = readJson(e);
@@ -94,6 +104,7 @@ function doPost(e) {
     if (problems.length) return json({ ok: false, error: problems.join(' ') });
 
     var row = store(data, track);
+    if (row.limited) return json({ ok: false, limited: true, error: row.limited });
     return json({ ok: true, row: row });
   } catch (error) {
     console.error('Application not stored: ' + (error && error.message ? error.message : error));
@@ -158,10 +169,13 @@ function check(data, track) {
    -------------------------------------------------------------------------- */
 
 function store(data, track) {
-  /* Two applications arriving at once would otherwise race for the same row. */
+  /* Two applications arriving at once would otherwise race for the same row,
+     and for the counts the limits keep. */
   var lock = LockService.getScriptLock();
   lock.waitLock(20000);
   try {
+    var limited = rateLimited(text(data.email));
+    if (limited) return { limited: limited };
     var sheet = trackSheet(track);
     var row = [new Date()];
     track.fields.forEach(function (key) { row.push(cell(data[key])); });
@@ -171,6 +185,28 @@ function store(data, track) {
   } finally {
     lock.releaseLock();
   }
+}
+
+/* Why this application cannot be stored now, or '' — and when it can, it is
+   counted. The counts live in the script cache, which forgets them by itself:
+   nothing about an applicant is kept beyond a hash of the email address, for
+   EMAIL_MINUTES minutes. */
+function rateLimited(email) {
+  var cache = CacheService.getScriptCache();
+  var hour = 'hour:' + Math.floor(Date.now() / 3600000);
+  var count = Number(cache.get(hour) || 0);
+  if (count >= HOURLY_LIMIT) {
+    return 'The application inbox is very busy right now. Please try again in an hour.';
+  }
+  var digest = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, email.toLowerCase());
+  var who = 'email:' + Utilities.base64Encode(digest);
+  if (cache.get(who)) {
+    return 'An application from this email address arrived a few minutes ago. If you need to ' +
+      'change it, email countriesirlhub@gmail.com instead of sending it again.';
+  }
+  cache.put(hour, String(count + 1), 3600);
+  cache.put(who, '1', EMAIL_MINUTES * 60);
+  return '';
 }
 
 function trackSheet(track) {

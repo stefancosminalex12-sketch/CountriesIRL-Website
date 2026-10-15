@@ -778,6 +778,13 @@
       .then(function (text) {
         var reply = null;
         try { reply = JSON.parse(text); } catch (error) { /* not JSON: not a confirmation */ }
+        /* Turned away by the inbox's rate limit: say why, in the inbox's words. */
+        if (reply && reply.limited && reply.error) {
+          window.clearTimeout(timer);
+          setBusy(false);
+          fail(String(reply.error));
+          return;
+        }
         if (!reply || reply.ok !== true) {
           throw new Error('no confirmation' + (reply && reply.error ? ': ' + reply.error : ''));
         }
