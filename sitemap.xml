@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Two pages: the home page and the application form. About, Members,
+<!-- Three pages: the home page, the application form and the privacy notice. About, Members,
      Community and Join are sections of the home page (#about, #members, …),
      and search engines index pages, not #fragments. The map editor lives on
      its own subdomain, maps.countriesirl.com, which needs its own sitemap. -->
@@ -9,5 +9,8 @@
   </url>
   <url>
     <loc>https://countriesirl.com/apply/</loc>
+  </url>
+  <url>
+    <loc>https://countriesirl.com/privacy/</loc>
   </url>
 </urlset>

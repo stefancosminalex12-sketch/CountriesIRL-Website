@@ -163,6 +163,12 @@ h2 + .lead { margin-top: 1.25rem; }
 }
 
 .prose > p + p { margin-top: 1.15em; }
+
+/* The privacy notice (privacy/): plain sections of prose under the page title. */
+.privacy__body { max-width: 46rem; }
+.privacy__body h2 { margin-top: 2.25rem; font-size: 1.35rem; }
+.privacy__body h2 + p { margin-top: 0.6rem; }
+.privacy__body a { color: var(--accent); }
 .prose p { max-width: var(--measure); color: var(--ink-soft); }
 
 /* Small tracked label used for section numbers and list captions. */

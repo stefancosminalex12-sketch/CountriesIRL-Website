@@ -34,11 +34,9 @@ window.SITE_CONFIG = {
      it there too.
      ------------------------------------------------------------------ */
   meta: {
-    title: 'CountriesIRL — a global network of country-focused creators',
-    description:
-      'Creators from around the world covering countries, culture, history and ' +
-      'geography, through educational and entertaining content and documentaries.',
-    ogImage: 'assets/og-image.png?v=2'
+    title: 'CountriesIRL | A network of country creators',
+    description: 'A network of creators making videos about countries.',
+    ogImage: 'assets/og-image.png?v=3'
   },
 
   /* ------------------------------------------------------------------
