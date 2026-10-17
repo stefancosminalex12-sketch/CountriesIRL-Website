@@ -1381,6 +1381,18 @@ textarea.field__input { min-height: 7.5rem; resize: vertical; }
 .country-picker__empty { color: var(--ink-soft); }
 .country-picker__chosen { color: var(--ink); font-weight: 600; }
 
+/* The 404 page (404.html): a big rust number over the usual heading. */
+.notfound { min-height: 55vh; }
+.notfound__code {
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 2.5rem + 4vw, 6rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
 /* The spam trap: off screen for people, still in the form for bots. */
 .apply-trap {
   position: absolute;

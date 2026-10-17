@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" data-page="404">
+<head>
+  <meta charset="utf-8">
+  <!-- Security policy (GitHub Pages sends no headers of our own): scripts, styles and pictures
+       from this site only, and the one outside connection the application form makes, to its
+       Google Apps Script inbox. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- This page carries its own title and description, so main.js leaves the
+       head alone here (see data-page on <html>). -->
+  <title>Page not found | CountriesIRL</title>
+  <meta name="description" content="This page doesn’t exist on CountriesIRL.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0b1723">
+
+  <!-- Square icons on the logo's white, so tabs and search results show the
+       logo on white rather than bare letters. The mark sits inside a circle,
+       since Google crops favicons round. -->
+  <link rel="icon" href="/favicon.ico?v=4" sizes="48x48">
+  <link rel="icon" href="/assets/logo/favicon.png?v=4" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/assets/logo/apple-touch-icon.png?v=3">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <!-- Same cache buster as index.html — bump both together. -->
+  <link rel="stylesheet" href="/css/style.css?v=202610172330">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header__inner">
+      <a class="brand" href="/">
+        <img class="brand__mark" src="/assets/logo/IRLLOGO-web.png?v=2" alt="" width="26" height="26">
+        <span class="brand__name" data-text="brand.name">CountriesIRL</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="nav-toggle__box" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="visually-hidden">Menu</span>
+      </button>
+
+      <nav class="nav" id="primary-nav" aria-label="Primary">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="/">Home</a></li>
+          <li><a class="nav__link" href="/#about">About</a></li>
+          <li><a class="nav__link" href="/#members">Members</a></li>
+          <li><a class="nav__link" href="/#community">Community</a></li>
+          <li><a class="nav__cta" href="/#join">Join</a></li>
+        </ul>
+      </nav>
+
+      <!-- The donation link, from `support` in js/config.js; hidden until it has one. -->
+      <a class="support-link" data-render="support" href="#" hidden>
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.1 5.3 3 1.7-1.9 3.2-3 5.3-3 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg>
+        <span class="support-link__label" data-support-label>Support us</span>
+      </a>
+
+      <!-- The Studio: every CountriesIRL tool in one place (studio.countriesirl.com). -->
+      <a class="studio-link" href="https://studio.countriesirl.com">Studio</a>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="apply notfound" aria-labelledby="notfound-title">
+      <div class="container">
+        <div class="apply__head">
+          <p class="notfound__code">404</p>
+          <h1 id="notfound-title">This page doesn’t exist</h1>
+          <p class="lead">The link may be old or mistyped. Here’s where you can go instead.</p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="/">Home</a>
+          <a class="btn btn--secondary" href="/#members">Members</a>
+          <a class="btn btn--secondary" href="/apply/">Apply to join</a>
+          <a class="btn btn--secondary" href="https://studio.countriesirl.com">Studio</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a class="brand" href="/">
+            <img class="brand__mark" src="/assets/logo/IRLLOGO-web.png?v=2" alt="" width="26" height="26">
+            <span class="brand__name" data-text="brand.name">CountriesIRL</span>
+          </a>
+          <p class="footer__note" data-text="footer.note"></p>
+        </div>
+
+        <div>
+          <h2 class="footer__col-title">Sections</h2>
+          <ul class="footer__list">
+            <li><a href="/#about">About</a></li>
+            <li><a href="/#members">Members</a></li>
+            <li><a href="/#community">Community</a></li>
+            <li><a href="https://studio.countriesirl.com">Studio</a></li>
+            <li><a href="https://maps.countriesirl.com">Map Editor</a></li>
+            <li><a href="/#join">Join</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="footer__col-title">Elsewhere</h2>
+          <ul class="footer__list" data-render="social"></ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p><span data-render="year"></span> <span data-text="brand.name"></span></p>
+        <p data-render="contact"></p>
+        <p><a href="/privacy/">Privacy</a></p>
+        <p hidden><a data-render="support" href="#">Support us</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/config.js?v=202610172300"></script>
+  <script src="/js/main.js?v=202610172300"></script>
+</body>
+</html>
