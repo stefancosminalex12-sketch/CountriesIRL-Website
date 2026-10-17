@@ -588,6 +588,6 @@ window.SITE_CONFIG = {
      ------------------------------------------------------------------ */
   support: {
     label: 'Support us',
-    url: ''
+    url: 'https://ko-fi.com/L1Y628Z7U0'
   }
 };
