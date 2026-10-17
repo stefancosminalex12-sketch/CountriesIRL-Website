@@ -377,22 +377,14 @@ One row per application, on the tab for its kind.
 | `social` | The "Elsewhere" column in the footer. Each entry is `{ label, url }`. When an official profile is added or changes, update `sameAs` in the structured data in `index.html` as well. |
 | `footer.note` | The line under the logo in the footer. |
 
-### `tools` — the nine-dot menu
+### The Studio button
 
-The button in the top-right corner of every page opens a panel of tools, three to a row.
-
-| Key | What it does |
-| --- | --- |
-| `tools.title` | The small heading at the top of the panel. |
-| `tools.note` | The line under the tiles. Empty hides it — clear it once there are more tools. |
-| `tools.list` | One entry per tool: `{ name, url, icon }`. `icon` is a square image as a path from the site root — put it in `assets/tools/`. An SVG or a PNG of at least 80 × 80 stays sharp. With no entries, the button is hidden. |
-
-```js
-list: [
-  { name: 'Map Editor', url: 'https://maps.countriesirl.com', icon: 'assets/tools/map-editor.svg' },
-  { name: 'Quiz',       url: 'https://quiz.countriesirl.com', icon: 'assets/tools/quiz.svg' }
-]
-```
+The **Studio** button in the top-right corner of every page links to
+[studio.countriesirl.com](https://studio.countriesirl.com), where all the tools live: the
+Downloader, the Map Editor, the Editor and the ones still to come. It is plain HTML in each
+page's header (`index.html`, `apply/index.html`, `privacy/index.html`), and the Studio is
+listed in the footer too. The tools themselves are listed in the Studio's own
+`src/tools.ts`.
 
 ---
 

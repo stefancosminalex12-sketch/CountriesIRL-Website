@@ -10,11 +10,6 @@
 
   var config = window.SITE_CONFIG;
 
-  /* Config paths are written from the site root. Pages below it (apply/)
-     reach the root through this script's own address. */
-  var script = document.currentScript;
-  var siteRoot = script ? script.src.replace(/js\/main\.js(\?.*)?$/, '') : '';
-
   if (!config) {
     console.error('CountriesIRL: js/config.js did not load, so the page has no content to show.');
     return;
@@ -258,34 +253,6 @@
       node.hidden = false;
       if (node.parentElement && node.parentElement.hidden) node.parentElement.hidden = false;
     }
-  };
-
-  /* Tiles for the nine-dot tools menu. With no tools listed, the button
-     goes too rather than opening an empty panel. */
-  renderers.tools = function (node) {
-    var tools = (get('tools.list') || []).filter(function (t) { return t && t.name && t.url; });
-    var apps = node.closest('.apps');
-    if (!tools.length) {
-      if (apps) apps.hidden = true;
-      return;
-    }
-    node.replaceChildren.apply(node, tools.map(function (tool) {
-      var li = el('li');
-      var a = el('a', 'apps__item');
-      a.href = tool.url;
-      var icon = el('span', 'apps__icon');
-      if (tool.icon) {
-        var img = el('img');
-        img.src = isExternal(tool.icon) ? tool.icon : siteRoot + tool.icon.replace(/^\//, '');
-        img.alt = '';
-        img.width = 40;
-        img.height = 40;
-        icon.append(img);
-      }
-      a.append(icon, el('span', 'apps__name', tool.name));
-      li.append(a);
-      return li;
-    }));
   };
 
   function runRenderers() {
@@ -778,47 +745,6 @@
   }
 
   /* ----------------------------------------------------------------------
-     Tools menu (the nine-dot button)
-     ---------------------------------------------------------------------- */
-
-  function initApps() {
-    var toggle = document.querySelector('.apps__toggle');
-    var panel = document.getElementById('apps-panel');
-    if (!toggle || !panel) return;
-
-    function close() {
-      toggle.setAttribute('aria-expanded', 'false');
-      panel.removeAttribute('data-open');
-    }
-
-    toggle.addEventListener('click', function () {
-      if (toggle.getAttribute('aria-expanded') === 'true') return close();
-      toggle.setAttribute('aria-expanded', 'true');
-      panel.setAttribute('data-open', 'true');
-    });
-
-    document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
-        close();
-        toggle.focus();
-      }
-    });
-
-    /* A click anywhere else closes it, including the mobile menu button, so
-       the two never sit open on top of each other. */
-    document.addEventListener('click', function (event) {
-      if (toggle.getAttribute('aria-expanded') !== 'true') return;
-      if (!panel.contains(event.target) && !toggle.contains(event.target)) close();
-    });
-
-    /* Tabbing past the last tile leaves the menu, so close it behind. */
-    panel.addEventListener('focusout', function (event) {
-      if (event.relatedTarget && !panel.contains(event.relatedTarget) &&
-          event.relatedTarget !== toggle) close();
-    });
-  }
-
-  /* ----------------------------------------------------------------------
      Start
      ---------------------------------------------------------------------- */
 
@@ -827,7 +753,6 @@
   initMembers();
   applyMeta();
   initNav();
-  initApps();
   initReveal();
   renderStats();
 })();

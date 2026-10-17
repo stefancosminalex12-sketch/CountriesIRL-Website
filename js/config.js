@@ -566,22 +566,7 @@ window.SITE_CONFIG = {
   },
 
   /* ------------------------------------------------------------------
-     10. TOOLS
-     The nine-dot button in the top-right corner opens this menu. Add a
-     tool by adding an entry to `list`: `icon` is a square image, as a
-     path from the site root — drop it into assets/tools/. The tiles show
-     in the order listed, three to a row.
-     ------------------------------------------------------------------ */
-  tools: {
-    title: 'Tools',
-    note: 'More tools are on the way.',   // empty hides it
-    list: [
-      { name: 'Map Editor', url: 'https://maps.countriesirl.com', icon: 'assets/tools/map-editor.svg' }
-    ]
-  },
-
-  /* ------------------------------------------------------------------
-     11. SUPPORT
+     10. SUPPORT
      The donation link: a "Support us" button in the header of every
      page, and a link in the footer. Paste the Ko-fi page's address into
      `url`; while it is empty, both stay hidden.

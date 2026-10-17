@@ -42,7 +42,7 @@
   <link rel="manifest" href="../site.webmanifest">
 
   <!-- Same cache buster as index.html — bump both together. -->
-  <link rel="stylesheet" href="../css/style.css?v=202610171200">
+  <link rel="stylesheet" href="../css/style.css?v=202610172300">
 </head>
 
 <body>
@@ -76,22 +76,8 @@
         <span class="support-link__label" data-support-label>Support us</span>
       </a>
 
-      <!-- The nine-dot tools menu. Its tiles come from `tools` in js/config.js. -->
-      <div class="apps">
-        <button class="apps__toggle" type="button" aria-expanded="false" aria-controls="apps-panel">
-          <svg class="apps__dots" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" focusable="false">
-            <circle cx="3" cy="3" r="2"/><circle cx="10" cy="3" r="2"/><circle cx="17" cy="3" r="2"/>
-            <circle cx="3" cy="10" r="2"/><circle cx="10" cy="10" r="2"/><circle cx="17" cy="10" r="2"/>
-            <circle cx="3" cy="17" r="2"/><circle cx="10" cy="17" r="2"/><circle cx="17" cy="17" r="2"/>
-          </svg>
-          <span class="visually-hidden">Tools</span>
-        </button>
-        <div class="apps__panel" id="apps-panel">
-          <p class="apps__title" data-text="tools.title">Tools</p>
-          <ul class="apps__list" data-render="tools"></ul>
-          <p class="apps__note" data-text="tools.note"></p>
-        </div>
-      </div>
+      <!-- The Studio: every CountriesIRL tool in one place (studio.countriesirl.com). -->
+      <a class="studio-link" href="https://studio.countriesirl.com">Studio</a>
     </div>
   </header>
 
@@ -438,6 +424,7 @@
             <li><a href="../#about">About</a></li>
             <li><a href="../#members">Members</a></li>
             <li><a href="../#community">Community</a></li>
+            <li><a href="https://studio.countriesirl.com">Studio</a></li>
             <li><a href="https://maps.countriesirl.com">Map Editor</a></li>
             <li><a href="../#join">Join</a></li>
           </ul>
@@ -458,8 +445,8 @@
     </div>
   </footer>
 
-  <script src="../js/config.js?v=202610172200"></script>
-  <script src="../js/main.js?v=202610171200"></script>
+  <script src="../js/config.js?v=202610172300"></script>
+  <script src="../js/main.js?v=202610172300"></script>
   <script src="../js/countries.js?v=202610121600"></script>
   <script src="../js/apply.js?v=202610171200"></script>
 </body>
