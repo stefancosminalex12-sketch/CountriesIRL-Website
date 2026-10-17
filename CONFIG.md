@@ -147,8 +147,9 @@ these too:
 
 | File | Used for | Referenced in |
 | --- | --- | --- |
-| `assets/logo/favicon.png` | Browser tab icon | `<link rel="icon">` in `index.html` |
-| `assets/logo/apple-touch-icon.png` | Home-screen icon | `<link rel="apple-touch-icon">` in `index.html` |
+| `favicon.ico` and `assets/logo/favicon.png` | Browser tab and search-result icon: square, on the logo's white, with the mark inside a circle because Google crops favicons round (16–48px and 192px) | `<link rel="icon">` in every page's head |
+| `assets/logo/apple-touch-icon.png` | iPhone home-screen icon (180px) | `<link rel="apple-touch-icon">` in every page's head |
+| `assets/logo/icon-512.png`, `icon-maskable-512.png` | Android home-screen icons | `site.webmanifest` |
 | `assets/og-image.png` | Link preview when the site is shared (1200 × 630) | `meta.ogImage`, plus `og:image` in `index.html` |
 
 ---
