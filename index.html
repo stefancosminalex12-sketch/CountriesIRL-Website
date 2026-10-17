@@ -85,7 +85,7 @@
        max-age, so without it a fresh index.html can pair with a stale
        stylesheet or config and render a half-broken page. Bump it on any
        change to css/style.css, js/config.js or js/main.js. -->
-  <link rel="stylesheet" href="css/style.css?v=202610151200">
+  <link rel="stylesheet" href="css/style.css?v=202610171200">
 </head>
 
 <body>
@@ -115,6 +115,12 @@
           <li><a class="nav__cta" href="#join">Join</a></li>
         </ul>
       </nav>
+
+      <!-- The donation link, from `support` in js/config.js; hidden until it has one. -->
+      <a class="support-link" data-render="support" href="#" hidden>
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.1 5.3 3 1.7-1.9 3.2-3 5.3-3 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg>
+        <span class="support-link__label" data-support-label>Support us</span>
+      </a>
 
       <!-- The nine-dot tools menu. Its tiles come from `tools` in js/config.js. -->
       <div class="apps">
@@ -286,12 +292,13 @@
         <p><span data-render="year"></span> <span data-text="brand.name"></span></p>
         <p data-render="contact"></p>
         <p><a href="privacy/">Privacy</a></p>
+        <p hidden><a data-render="support" href="#">Support us</a></p>
       </div>
     </div>
   </footer>
 
-  <script src="js/config.js?v=202610151200"></script>
-  <script src="js/main.js?v=202610121400"></script>
+  <script src="js/config.js?v=202610171200"></script>
+  <script src="js/main.js?v=202610171200"></script>
   <script src="js/globe.js?v=202609252200" defer></script>
 </body>
 </html>

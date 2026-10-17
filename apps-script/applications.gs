@@ -59,7 +59,7 @@ var TRACKS = {
 };
 
 var DEFAULT_STATUS = 'Pending';
-var MIN_AGE = 13;                 // matches apply.minimumAge in js/config.js
+var MIN_AGE = 16;                 // matches apply.minimumAge in js/config.js
 var MAX_AGE = 120;
 var MAX_FOLLOWERS = 1e10;
 

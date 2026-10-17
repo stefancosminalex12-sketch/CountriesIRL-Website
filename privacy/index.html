@@ -21,7 +21,7 @@
   <link rel="apple-touch-icon" href="../assets/logo/apple-touch-icon.png?v=2">
 
   <!-- Same cache buster as index.html — bump both together. -->
-  <link rel="stylesheet" href="../css/style.css?v=202610151200">
+  <link rel="stylesheet" href="../css/style.css?v=202610171200">
 </head>
 
 <body>
@@ -48,6 +48,12 @@
           <li><a class="nav__cta" href="../#join">Join</a></li>
         </ul>
       </nav>
+
+      <!-- The donation link, from `support` in js/config.js; hidden until it has one. -->
+      <a class="support-link" data-render="support" href="#" hidden>
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.1 5.3 3 1.7-1.9 3.2-3 5.3-3 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg>
+        <span class="support-link__label" data-support-label>Support us</span>
+      </a>
 
       <!-- The nine-dot tools menu. Its tiles come from `tools` in js/config.js. -->
       <div class="apps">
@@ -81,19 +87,26 @@
           <p>The application form asks for your name, age and email address, your social media accounts and follower counts, and your answers about your work. You can also add your Discord username.</p>
           <p>We use this only to review your application and to contact you about it. We don’t sell it or share it with anyone outside the CountriesIRL team.</p>
           <p>Your answers are saved in a private Google Sheet that only the team can open, so Google stores them for us (<a href="https://policies.google.com/privacy">Google’s privacy policy</a>).</p>
-          <p>You need to be 13 or older to apply.</p>
+          <p>We use your answers because you asked us to consider your application. You can withdraw your application at any time by emailing us.</p>
+          <p>You need to be 16 or older to apply.</p>
 
           <h2>Seeing or deleting your answers</h2>
           <p>We keep an application while we review it, and a member’s for as long as they are in the network. Email <a href="mailto:countriesirlhub@gmail.com">countriesirlhub@gmail.com</a> and we will send you what we have, correct it, or delete it.</p>
+
+          <h2>Supporting us</h2>
+          <p>Donations go through Ko-fi, and payments are handled by Ko-fi and PayPal. We never see your card or bank details. Ko-fi tells us the name you donate under and any message you leave, and your email address if you choose to share it. We use these only to thank you. A donation is a gift: it doesn’t buy anything.</p>
+
+          <h2>Your rights</h2>
+          <p>You can ask us for a copy of your information, ask us to correct it or delete it, or object to how we use it. Email us and we will reply within a month. If you are unhappy with our answer, you can complain to Romania’s data protection authority, the <a href="https://www.dataprotection.ro">ANSPDCP</a>, or to the authority in your own country.</p>
 
           <h2>Other services</h2>
           <p>This site is hosted on GitHub Pages. GitHub keeps visitors’ IP addresses in its server logs for security (<a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub’s privacy statement</a>).</p>
           <p>Links to Instagram, TikTok, YouTube and Discord take you to those services, which have their own privacy policies.</p>
           <p>The <a href="https://maps.countriesirl.com">Map Editor</a> collects nothing: the maps you make stay on your device.</p>
 
-          <h2>Contact</h2>
-          <p><a href="mailto:countriesirlhub@gmail.com">countriesirlhub@gmail.com</a></p>
-          <p>Last updated 15 October 2026.</p>
+          <h2>Who runs CountriesIRL</h2>
+          <p>CountriesIRL is run from Romania. For anything about your information, write to <a href="mailto:countriesirlhub@gmail.com">countriesirlhub@gmail.com</a>.</p>
+          <p>Last updated 17 October 2026.</p>
         </div>
       </div>
     </section>
@@ -132,11 +145,12 @@
         <p><span data-render="year"></span> <span data-text="brand.name"></span></p>
         <p data-render="contact"></p>
         <p><a href="./" aria-current="page">Privacy</a></p>
+        <p hidden><a data-render="support" href="#">Support us</a></p>
       </div>
     </div>
   </footer>
 
-  <script src="../js/config.js?v=202610151200"></script>
-  <script src="../js/main.js?v=202610121400"></script>
+  <script src="../js/config.js?v=202610171200"></script>
+  <script src="../js/main.js?v=202610171200"></script>
 </body>
 </html>

@@ -37,7 +37,7 @@
   <link rel="apple-touch-icon" href="../assets/logo/apple-touch-icon.png?v=2">
 
   <!-- Same cache buster as index.html — bump both together. -->
-  <link rel="stylesheet" href="../css/style.css?v=202610151200">
+  <link rel="stylesheet" href="../css/style.css?v=202610171200">
 </head>
 
 <body>
@@ -64,6 +64,12 @@
           <li><a class="nav__cta" href="../#join">Join</a></li>
         </ul>
       </nav>
+
+      <!-- The donation link, from `support` in js/config.js; hidden until it has one. -->
+      <a class="support-link" data-render="support" href="#" hidden>
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.1 5.3 3 1.7-1.9 3.2-3 5.3-3 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg>
+        <span class="support-link__label" data-support-label>Support us</span>
+      </a>
 
       <!-- The nine-dot tools menu. Its tiles come from `tools` in js/config.js. -->
       <div class="apps">
@@ -204,7 +210,7 @@
                   </div>
                   <div class="field field--short">
                     <label class="field__label" for="age">Age <span class="field__req" aria-hidden="true">*</span></label>
-                    <p class="field__hint" id="age-hint">You need to be <span data-min-age>13</span> or older to apply.</p>
+                    <p class="field__hint" id="age-hint">You need to be <span data-min-age>16</span> or older to apply.</p>
                     <input class="field__input" id="age" name="age" type="text" inputmode="numeric" autocomplete="off" maxlength="3" required aria-describedby="age-hint age-error">
                     <p class="field__error" id="age-error" hidden></p>
                   </div>
@@ -442,13 +448,14 @@
         <p><span data-render="year"></span> <span data-text="brand.name"></span></p>
         <p data-render="contact"></p>
         <p><a href="../privacy/">Privacy</a></p>
+        <p hidden><a data-render="support" href="#">Support us</a></p>
       </div>
     </div>
   </footer>
 
-  <script src="../js/config.js?v=202610151200"></script>
-  <script src="../js/main.js?v=202610121400"></script>
+  <script src="../js/config.js?v=202610171200"></script>
+  <script src="../js/main.js?v=202610171200"></script>
   <script src="../js/countries.js?v=202610121600"></script>
-  <script src="../js/apply.js?v=202610151800"></script>
+  <script src="../js/apply.js?v=202610171200"></script>
 </body>
 </html>

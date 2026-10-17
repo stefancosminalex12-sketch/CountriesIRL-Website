@@ -265,7 +265,7 @@ is checked before the next opens.
 | Key | What it does |
 | --- | --- |
 | `apply.endpoint` | Where finished applications are sent. Empty until the Google Sheet is set up — until then the form works, but refuses to send and tells the applicant so. Never put a password, key or token here: this URL is public, because every applicant's browser calls it. |
-| `apply.minimumAge` | The youngest age the form accepts. `13`, because Instagram, TikTok and YouTube all require it. |
+| `apply.minimumAge` | The youngest age the form accepts: `16`. In Romania, under-16s need a parent's consent before their personal data can be used (GDPR article 8). Change `MIN_AGE` in `apps-script/applications.gs` to match, and redeploy it. |
 
 #### Connecting it to a Google Sheet
 
@@ -310,7 +310,7 @@ accepts applications and gives nothing back.
 ```js
   apply: {
     endpoint: 'https://script.google.com/macros/s/AKfycb…/exec',
-    minimumAge: 13
+    minimumAge: 16
   },
 ```
 

@@ -19,7 +19,7 @@
 
   var config = window.SITE_CONFIG || {};
   var settings = config.apply || {};
-  var MIN_AGE = typeof settings.minimumAge === 'number' ? settings.minimumAge : 13;
+  var MIN_AGE = typeof settings.minimumAge === 'number' ? settings.minimumAge : 16;
   var MAX_AGE = 120;
   var MAX_LINKS = 5;
   var TIMEOUT = 20000;

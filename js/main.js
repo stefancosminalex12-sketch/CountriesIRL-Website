@@ -243,6 +243,20 @@
 
     year: function (node) {
       node.textContent = '© ' + new Date().getFullYear();
+    },
+
+    /* The donation link. Hidden until support.url is set; the header
+       button keeps its heart and only takes the label. */
+    support: function (node) {
+      var url = get('support.url');
+      if (!url) return;
+      node.setAttribute('href', url);
+      node.target = '_blank';
+      node.rel = 'noopener noreferrer';
+      var label = node.querySelector('[data-support-label]') || node;
+      label.textContent = get('support.label') || 'Support us';
+      node.hidden = false;
+      if (node.parentElement && node.parentElement.hidden) node.parentElement.hidden = false;
     }
   };
 

@@ -538,7 +538,9 @@ window.SITE_CONFIG = {
      ------------------------------------------------------------------ */
   apply: {
     endpoint: 'https://script.google.com/macros/s/AKfycbz4I-zjMPee4NuzKGM4OWOrHWsSkCdQH-61NU86ez5321ZUAQyarAiL1CJivCaCMOKipQ/exec',
-    minimumAge: 13                     // Instagram, TikTok and YouTube all require 13+
+    /* 16: in Romania, under-16s need a parent's consent before their personal
+       data can be used (GDPR article 8), so applications start at 16. */
+    minimumAge: 16
   },
 
   /* ------------------------------------------------------------------
@@ -576,5 +578,16 @@ window.SITE_CONFIG = {
     list: [
       { name: 'Map Editor', url: 'https://maps.countriesirl.com', icon: 'assets/tools/map-editor.svg' }
     ]
+  },
+
+  /* ------------------------------------------------------------------
+     11. SUPPORT
+     The donation link: a "Support us" button in the header of every
+     page, and a link in the footer. Paste the Ko-fi page's address into
+     `url`; while it is empty, both stay hidden.
+     ------------------------------------------------------------------ */
+  support: {
+    label: 'Support us',
+    url: ''
   }
 };

@@ -372,6 +372,35 @@ a:hover { color: var(--accent-dark); }
 .nav-toggle[aria-expanded="true"] .nav-toggle__box span:nth-child(2) { opacity: 0; }
 .nav-toggle[aria-expanded="true"] .nav-toggle__box span:nth-child(3) { transform: translateY(-5.25px) rotate(-45deg); }
 
+/* The donation link, beside the tools button on every page. On phones it
+   shrinks to the heart. */
+.support-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: var(--size-small);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+.support-link svg { flex: none; fill: currentColor; }
+.support-link:hover { background: var(--accent); color: var(--paper); }
+@media (max-width: 30em) {
+  .support-link { padding: 0.5rem; }
+  .support-link__label {
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
 /* The nine-dot tools menu, top right on every screen size. */
 .apps { position: relative; }
 .apps__toggle {
